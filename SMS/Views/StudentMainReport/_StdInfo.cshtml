@@ -1,0 +1,231 @@
+﻿
+@model SMS.Models.Student
+@{
+    ViewBag.Title = "DetailStd";
+}
+
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">@Html.DisplayFor(model => model.pr.perName)'s Info  <a href="@Url.Action("PrintStdDetail", "Student", new { id = @Html.DisplayFor(model => model.stdId)})" target="_blank" class="btn btn-success" value="Print info" style="float:right">Print Info</a></h3>
+
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-body" id="Print">
+                        <div id="rootwizard">
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="exampleInputName"><b>Student Name:</b></label>
+                                    <label for="exampleInputName">&nbsp;&nbsp; @Html.DisplayFor(model => model.pr.perName)</label>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="exampleInputName"><b>Father/Gaurdian Name:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.pr.perGarName)
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="exampleInputName"><b>Roll Number:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.stdRollNo)
+                                </div>
+                            </div>
+
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="exampleInputName"><b>Email:</b> </label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.pr.perEmail)
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="exampleInputName"><b>CNIC:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.pr.perCNIC)
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="exampleInputName"><b>DOB:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.pr.perDOB)
+                                </div>
+                            </div>
+
+                            <hr />
+                            <div class="row">
+
+                                <div class="col-md-3">
+                                    <label for="exampleInputName"><b>Blood Group:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.pr.perBloodGrp)
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="exampleInputName"><b>Contact One:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.pr.perContactOne)
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="exampleInputName"><b>Contact Two:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.pr.perContactTwo)
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="exampleInputName"><b>Student Status:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.stdStatus)
+                                </div>
+                            </div>
+                            <hr />
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="exampleInputName"><b>Campus:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.cam.campusname)
+
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="exampleInputName"><b>Session:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.ses.sesName)
+
+
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="exampleInputName"><b>Section:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.sec.secName)
+                                </div>
+
+                                <div class="col-md-3">
+                                    &nbsp;&nbsp;
+                                    <label for="exampleInputName"><b>Class:</b></label>
+                                    @Html.DisplayFor(model => model.cls.classname)
+                                </div>
+                            </div>
+
+                            <hr />
+                            <div class="row">
+
+                                <div class="col-md-4">
+                                    <label for="exampleInputName"><b>City:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.pr.city.CityName)
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="exampleInputName"><b>Area:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.pr.area.AreaName)
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="exampleInputName"><b>Student Image:</b></label>
+                                    <img src="~/Images/@Model.pr.perImage" alt="Image" height="35" width="35" />
+                                </div>
+                            </div>
+
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="exampleInputName"><b>Cast:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.pr.perCast)
+                                </div>
+
+                                <div class="col-lg-offset-4">
+                                    <label for="exampleInputName"><b>Religion:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.pr.perReligion)
+                                </div>
+
+                            </div>
+                            <hr />
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="exampleInputName"><b>Current Address:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.pr.perCurrentAdrs)
+                                </div>
+
+                                <div class="col-lg-offset-6">
+                                    <label for="exampleInputName"><b>Permanent Address:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.pr.perPermanantAdrs)
+                                </div>
+
+                            </div>
+                            @if (TempData["PreInfo"] != null)
+                            {
+                                <hr />
+                                var std = TempData["PreInfo"] as SMS.Models.StudentPreEduInfo;
+                                <h3 class="breadcrumb-header">@Html.DisplayFor(model => model.pr.perName)'s Previous Educational Info  </h3>
+                                <div class="row">
+
+                                    <div class="col-md-4">
+                                        <label for="exampleInputName"><b>Degree:</b></label>
+                                        &nbsp;&nbsp;
+                                        @std.degree.DegreeName
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="exampleInputName"><b>Institute:</b></label>
+                                        &nbsp;&nbsp;
+                                        @std.stdIns.Name
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="exampleInputName"><b>Passing Date:</b></label>
+                                        &nbsp;&nbsp;
+                                        @std.PassingDate.ToString("dd-MMM-yyyy")
+                                    </div>
+
+                                </div>
+
+                                <hr />
+                                <div class="row">
+
+                                    <div class="col-md-4">
+                                        <label for="exampleInputName"><b>Total Marks:</b></label>
+                                        &nbsp;&nbsp;
+                                        @std.TotalMarks
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="exampleInputName"><b>Obtain Marks:</b></label>
+                                        &nbsp;&nbsp;
+                                        @std.ObtainMarks
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="exampleInputName"><b>Roll Number:</b></label>
+                                        &nbsp;&nbsp;
+                                        @std.RollNo
+                                    </div>
+
+                                </div>
+
+                                <hr />
+                            }
+                        </div>
+
+                    </div>
+                    <hr />
+
+                </div>
+
+            </div>
+
+        </div><!-- Row -->
+    </div><!-- Main Wrapper -->
+
+</div>
+
+
+
+
+

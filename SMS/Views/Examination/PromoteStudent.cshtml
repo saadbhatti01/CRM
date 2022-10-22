@@ -1,0 +1,322 @@
+﻿
+@{
+    ViewBag.Title = "PromoteStudent";
+}
+
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">
+            Promote Students
+            <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-sm" style="float: right;">Read Me</a>
+        </h3>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">  Usefull Info</h4>
+                    </div>
+                    <div class="modal-body">
+                        You can promote students here from one class to the next.
+                        Pass students will be promoted to next class.
+                        Select Exam type --------> Select Current Session -------> Select Next Session -------> Select Current Class --------> Select Next Class --------> Click "PROMOTE".
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+        </div>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["SuccessMessage"].
+            </div>
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-body">
+                        <div id="rootwizard">
+                            <div class="row m-b-lg">
+                                <div class="col-md-12">
+                                    <form action="~/Examination/PromoteStudent" method="post">
+                                        <div class="row">
+                                            <div class="form-group col-md-4">
+                                                <label for="ageRangeField">Select Exam Type</label>
+                                                @Html.DropDownList("etId", (SelectList)ViewData["ExamType"], "--Select Exam Type--", new { @Name = "ExamId", required = "required", @class = "form-control" })
+                                            </div>
+                                            <div class="form-group  col-md-4">
+                                                <label for="ageRangeField">From Session</label>
+                                                @Html.DropDownList("sesId", (SelectList)ViewData["Session"], "--Select Session--", new { @Name = "FromSes", required = "required", @class = "form-control" })
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="ageRangeField">To Session</label>
+                                                @Html.DropDownList("sesId", (SelectList)ViewData["Session"], "--Select Session--", new { @Name = "ToSes", required = "required", @class = "form-control" })
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-4">
+                                                <label for="ageRangeField">From Class</label>
+                                                @Html.DropDownList("classId", (SelectList)ViewData["Class"], "--Select Class--", new { @Name = "FromClass", required = "required", @class = "form-control" })
+                                            </div>
+
+                                            <div class="form-group col-md-4">
+                                                <label for="ageRangeField">To Class</label>
+                                                @Html.DropDownList("classId", (SelectList)ViewData["Class"], "--Select Class--", new { @Name = "ToClass", required = "required", @class = "form-control" })
+                                            </div>
+
+                                            <div class="form-group col-md-12">
+                                                <input class="btn btn-primary" type="submit" name="submitButton" value="Promote">
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+
+                            @if (@TempData["Promoted"] != null)
+                            {
+                                <div class="panel-heading clearfix">
+                                    <h2 class="panel-title">
+                                        <b>Promoted Student</b>
+                                        <input type="button" class="btn btn-success" value="Print Passed Student List" onclick="print()" style="float:right" />
+                                    </h2>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Student Name</th>
+                                                <th>Roll Number</th>
+                                                <th>CNIC</th>
+                                                <th>Contact Number</th>
+                                                <th>Image</th>
+                                            </tr>
+                                        </thead>
+                                        @foreach (var i in (List<SMS.Models.StdFeeDetail>)TempData["Promoted"])
+                                        {
+                                            <tbody>
+                                                <tr>
+                                                    <td>@i.Stdname</td>
+                                                    <td>@i.RollNo</td>
+                                                    <td>@i.CNIC</td>
+                                                    <td>@i.Phone</td>
+                                                    <td>
+                                                        <img src="~/Images/@i.Image" alt="Image" height="40" width="40" />
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        }
+
+                                    </table>
+                                </div>
+                            }
+
+                            @if (@TempData["Promoted"] != null)
+                            {
+                                
+                                <div hidden id="PassedStudent">
+                                    <div class="panel-heading clearfix">
+                                        @if (Session["InsName"] != null)
+                                        {
+                                            <p>
+                                                <img src="@Session["InsImage"]" width="65" height="65" />
+                                                <h2 style="text-align: center;">@Session["InsName"]</h2>
+                                                <h3>Promoted Student</h3>
+                                            </p>
+                                        }
+                                    </div>
+                                   
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Student Name</th>
+                                                    <th>Roll Number</th>
+                                                    <th>CNIC</th>
+                                                    <th>Contact Number</th>
+                                                    <th>Image</th>
+                                                </tr>
+                                            </thead>
+                                            @foreach (var i in (List<SMS.Models.StdFeeDetail>)TempData["Promoted"])
+                                            {
+                                                <tbody>
+                                                    <tr>
+                                                        <td>@i.Stdname</td>
+                                                        <td>@i.RollNo</td>
+                                                        <td>@i.CNIC</td>
+                                                        <td>@i.Phone</td>
+                                                        <td>
+                                                            <img src="~/Images/@i.Image" alt="Image" height="40" width="40" />
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            }
+
+                                        </table>
+                                   
+                                </div>
+
+                            }
+
+
+
+                        </div>
+
+                        <div class="col-md-12">
+                            @if (@TempData["Failed"] != null)
+                            {
+                                <div class="panel-heading clearfix">
+                                    <h2 class="panel-title">
+                                        <b>Failed Student</b>
+                                        <input type="button" class="btn btn-success" value="Print Failed Student List" onclick="print1()" style="float:right" />
+                                    </h2>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Student Name</th>
+                                                <th>Roll Number</th>
+                                                <th>CNIC</th>
+                                                <th>Contact Number</th>
+                                                <th>Image</th>
+                                            </tr>
+                                        </thead>
+                                        @foreach (var i in (List<SMS.Models.StdFeeDetail>)TempData["Failed"])
+                                        {
+                                            <tbody>
+                                                <tr>
+                                                    <td>@i.Stdname</td>
+                                                    <td>@i.RollNo</td>
+                                                    <td>@i.CNIC</td>
+                                                    <td>@i.Phone</td>
+                                                    <td>
+                                                        <img src="~/Images/@i.Image" alt="Image" height="40" width="40" />
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        }
+
+                                    </table>
+                                </div>
+                            }
+
+                            @if (@TempData["Failed"] != null)
+                            {
+
+                                <div hidden id="FailedStudent">
+                                    <div class="panel-heading clearfix">
+                                        @if (Session["InsName"] != null)
+                                        {
+                                            <p>
+                                                <img src="@Session["InsImage"]" width="65" height="65" />
+                                                <h2 style="text-align: center;">@Session["InsName"]</h2>
+                                                <h3>Failed Student</h3>
+                                            </p>
+                                        }
+                                    </div>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Student Name</th>
+                                                <th>Roll Number</th>
+                                                <th>CNIC</th>
+                                                <th>Contact Number</th>
+                                                <th>Image</th>
+                                            </tr>
+                                        </thead>
+                                        @foreach (var i in (List<SMS.Models.StdFeeDetail>)TempData["Failed"])
+                                        {
+                                            <tbody>
+                                                <tr>
+                                                    <td>@i.Stdname</td>
+                                                    <td>@i.RollNo</td>
+                                                    <td>@i.CNIC</td>
+                                                    <td>@i.Phone</td>
+                                                    <td>
+                                                        <img src="~/Images/@i.Image" alt="Image" height="40" width="40" />
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        }
+
+                                    </table>
+                                </div>
+
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div><!-- Row -->
+    </div><!-- Main Wrapper -->
+
+</div>
+
+<script src="../../assets/plugins/jquery/jquery-3.1.0.min.js"></script>
+
+
+
+<script type="text/javascript">
+    function print() {
+        var prtContent = document.getElementById('PassedStudent');
+        var mywindow = window.open('', '', 'height=700,width=900');
+        mywindow.document.write('<html><head>');
+        mywindow.document.write('<link href = "/Content/bootstrap.min.css" rel = "stylesheet" />')
+        mywindow.document.write('<link href = "/Content/Print.css" rel = "stylesheet" />')
+        mywindow.document.write('</head><body>');
+        mywindow.document.write(prtContent.innerHTML);
+        mywindow.document.write('</body></html>');
+        mywindow.document.close();
+        setTimeout(function () {
+            mywindow.print();
+            mywindow.close();
+        }, 500)
+
+    }
+</script>
+
+<script type="text/javascript">
+    function print1() {
+        var prtContent = document.getElementById('FailedStudent');
+        var mywindow = window.open('', '', 'height=700,width=900');
+        mywindow.document.write('<html><head>');
+        mywindow.document.write('<link href = "/Content/bootstrap.min.css" rel = "stylesheet" />')
+        mywindow.document.write('<link href = "/Content/Print.css" rel = "stylesheet" />')
+        mywindow.document.write('</head><body>');
+        mywindow.document.write(prtContent.innerHTML);
+        mywindow.document.write('</body></html>');
+        mywindow.document.close();
+        setTimeout(function () {
+            mywindow.print();
+            mywindow.close();
+        }, 500)
+
+    }
+</script>
+

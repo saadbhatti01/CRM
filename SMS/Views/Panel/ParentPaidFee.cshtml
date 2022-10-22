@@ -1,0 +1,107 @@
+﻿
+@{
+    ViewBag.Title = "ParentPaidFee";
+}
+
+<div class="page-inner">
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            Oh snap! @TempData["Error"].
+        </div>
+    }
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            Oh snap! @TempData["SuccessMessage"].
+        </div>
+
+    }
+    @if (TempData["Info"] != null)
+    {
+        <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            Oh snap! @TempData["Info"].
+        </div>
+    }
+    @if (TempData["StdId"] != null)
+    {
+        foreach (var s in (List<SMS.Models.StdFeeDetail>)TempData["StdId"])
+        {
+            <div id="main-wrapper">
+                <div class="page-title">
+                    <h3 class="breadcrumb-header">@s.Stdname's Paid Fee</h3>
+
+                </div>
+
+                <!-- Row -->
+                <div class="row">
+                    @if (TempData["Fee"] != null)
+                    {
+                        foreach (var i in (List<SMS.Models.StdFeeDetail>)TempData["Fee"])
+                        {
+                            if (s.stdId == i.stdId)
+                            {
+                                <div class="col-lg-4 col-md-8">
+                                    <div class="panel panel-white stats-widget">
+                                        <div class="panel-body">
+                                            <div class="pull-left">
+                                                <span class="stats-number">@Convert.ToDecimal(@i.FeeAmt).ToString("#,##0.00") /Rs.</span>
+                                                <p class="stats-info">Paid Fee</p>
+                                            </div>
+                                            <div class="pull-right">
+                                                <i class="fa fa-usd stats-icon" style="color:lightgreen;"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Fee Type</th>
+                                    <th>Amount</th>
+                                    <th>Pending</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+
+
+                            @foreach (var i in (List<SMS.Models.StdFeeDetail>)TempData["DetailFee"])
+                            {
+                                if (s.stdId == i.stdId)
+                                {
+                                    <tbody>
+                                        <tr>
+                                            <td>@i.FeeName</td>
+                                            <td>@Convert.ToDecimal(@i.PaidAmt).ToString("#,##0.00") /Rs.</td>
+
+                                            <td>@Convert.ToDecimal(@i.Panding).ToString("#,##0.00") /Rs.</td>
+
+                                            <td>@i.FeeStatus</td>
+                                            <td>@i.FeeDate.ToString("dd MMM yyyy")</td>
+                                        </tr>
+                                    </tbody>
+                                }
+                            }
+
+
+                        </table>
+                    }
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="card-title">
+            <h3>No Record found</h3>
+        </div>
+    }
+    <!-- Main Wrapper -->
+</div>
+

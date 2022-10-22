@@ -1,0 +1,42 @@
+﻿@if (TempData["No"] != null)
+{
+    <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        Info! @TempData["No"].
+    </div>
+}
+
+@if (TempData["Docs"] != null)
+{
+    <div class="panel-heading clearfix">
+        <h2 class="panel-title">
+            <b>Uploaded Documents</b>
+
+        </h2>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Document Title</th>
+                    <th>Subject</th>
+                    <th>Note</th>
+                    <th>Expiry Date</th>
+                    <th>Download</th>
+
+                </tr>
+            </thead>
+            @foreach (var i in (List<SMS.Models.Documents>)TempData["Docs"])
+            {
+                <tr>
+                    <td>@i.DocTitle</td>
+                    <td>@i.subject.subName-@i.subject.subCode</td>
+                    <td>@i.Note</td>
+                    <td>@i.ExpiryDate.ToString("dd-MMM-yyyy")</td>
+                    <td><a target="_blank" class="btn btn-default" href="@Url.Action("DownloadDocument", "Home", new { id = i.DocId})"><i class="fa fa-download"> Download</i></a></td>
+                </tr>
+            }
+
+        </table>
+    </div>
+}

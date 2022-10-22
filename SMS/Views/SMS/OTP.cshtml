@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "OTP";
+}
+
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">
+            Custom OTP
+        </h3>
+        @if (ViewBag.MSG != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @ViewBag.MSG
+            </div>
+        }
+
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <form action="~/SMS/OTP" method="post">
+                                    <input type="number" class="form-control" name="number" />
+                                    <br />
+                                    <input type="submit" class="btn btn-flickr" value="Send OTP" />
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

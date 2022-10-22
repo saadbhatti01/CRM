@@ -1,0 +1,94 @@
+﻿@model SMS.Models.SMSAllotment
+
+@{
+    ViewBag.Title = "EditAllotmentDetails";
+}
+
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">SMS Allotment</h3>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["SuccessMessage"].
+            </div>
+
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @using (Html.BeginForm())
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    @Html.HiddenFor(model => model.saId)
+                                    <div class="row">
+                                        <div class="col-md-4 form-group">
+                                            <label for="ageRangeField">SMS Quantity</label>
+                                            @Html.EditorFor(model => model.saQty, new { htmlAttributes = new { @class = "form-control" } })
+                                        </div>
+
+                                        <div class="col-md-4 form-group">
+                                            <label for="ageRangeField">Amount</label>
+                                            @Html.EditorFor(model => model.saAmount, new { htmlAttributes = new { @class = "form-control" } })
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label for="ageRangeField">Amount Paid Date</label>
+                                            @Html.EditorFor(model => model.saPaidAmountDate, new { htmlAttributes = new { @class = "form-control date-picker" } })
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4 form-group">
+                                            <label for="ageRangeField">Approval Date</label>
+                                            @Html.EditorFor(model => model.saApprovalDate, new { htmlAttributes = new { @class = "form-control date-picker" } })
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label for="ageRangeField">Expiry Date</label>
+                                            @Html.EditorFor(model => model.saExpiryDate, new { htmlAttributes = new { @class = "form-control date-picker" } })
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label for="ageRangeField">Status</label>
+                                            <select name="saStatus" class="form-control" required>
+                                                <option value="Active">Active</option>
+                                                <option value="Deactive">Deactive</option>
+                                                <option value="Pending">Pending</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                    <div class="row col-md-12 form-group">
+                                        <input class="btn btn-primary" type="submit" name="submitButton" value="Update">
+                                    </div>
+
+                                }
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

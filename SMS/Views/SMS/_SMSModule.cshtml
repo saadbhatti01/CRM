@@ -1,0 +1,39 @@
+﻿@if (TempData["Module"] != null)
+{
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Module Name</th>
+                    <th>Module Text</th>
+                    <th>Module Status</th>
+                    <th>Status Change Date</th>
+                    <th>Approved</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            @foreach (var item in (List<SMS.Models.SMSModule>)TempData["Module"])
+            {
+                <tbody>
+                    <tr>
+
+                        <td>@item.moduleName.mName</td>
+                        <td>@item.smText</td>
+                        <td>@item.smStatus</td>
+                        <td>@item.smStatusChangeDate</td>
+                        <td>@item.isLocked</td>
+                        <td>
+                            <a title="Update Detail" class="counter" href="@Url.Action("EditSMSModule", new { id = item.smId })">
+                                <i class="fa fa-edit" style="font-size:20px"></i>
+                            </a>
+
+                            <a title="Delete Detail" class="counter" href="@Url.Action("DelSMSModule", new { id = item.smId })">
+                                <i class="fa fa-trash" style="font-size:20px;color:red"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            }
+        </table>
+    </div>
+}

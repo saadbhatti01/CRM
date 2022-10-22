@@ -1,0 +1,235 @@
+﻿
+
+<script type="text/javascript">
+    function print1() {
+        var prtContent = document.getElementById('Print');
+        var mywindow = window.open('', '', 'height=700,width=900');
+        mywindow.document.write('<html><head>');
+        mywindow.document.write('<link href = "/Content/bootstrap.min.css" rel = "stylesheet" />')
+        mywindow.document.write('<link href = "/Content/Print.css" rel = "stylesheet" />')
+        mywindow.document.write('</head><body>');
+        mywindow.document.write(prtContent.innerHTML);
+        mywindow.document.write('</body></html>');
+        mywindow.document.close();
+        setTimeout(function () {
+            mywindow.print();
+            mywindow.close();
+        }, 500)
+
+    }
+</script>
+
+@if (TempData["No"] != null)
+{
+    <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        Info! @TempData["No"].
+    </div>
+}
+
+@if (TempData["StdAttendance"] != null)
+{
+    <div>
+        <input type="button" class="btn btn-success" value="Print Report" onclick="print1()" />
+    </div>
+    <br />
+    <div id="table-wrapper">
+        <div id="table-scroll">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Roll#</th>
+                            <th>D1</th>
+                            <th>D2</th>
+                            <th>D3</th>
+                            <th>D4</th>
+                            <th>D5</th>
+                            <th>D6</th>
+                            <th>D7</th>
+                            <th>D8</th>
+                            <th>D9</th>
+                            <th>D10</th>
+                            <th>D11</th>
+                            <th>D12</th>
+                            <th>D13</th>
+                            <th>D14</th>
+                            <th>D15</th>
+                            <th>D16</th>
+                            <th>D17</th>
+                            <th>D18</th>
+                            <th>D19</th>
+                            <th>D20</th>
+                            <th>D21</th>
+                            <th>D22</th>
+                            <th>D23</th>
+                            <th>D24</th>
+                            <th>D25</th>
+                            <th>D26</th>
+                            <th>D27</th>
+                            <th>D28</th>
+                            <th>D29</th>
+                            <th>D30</th>
+                            <th>D31</th>
+
+                        </tr>
+                    </thead>
+
+                    @foreach (var item in (List<SMS.Models.AttendenceRegister>)TempData["StdAttendance"])
+                    {
+                        <tbody>
+                            <tr>
+                                <td>@item.RollNo</td>
+                                <td>@item.D1</td>
+                                <td>@item.D2</td>
+                                <td>@item.D3</td>
+                                <td>@item.D4</td>
+                                <td>@item.D5</td>
+                                <td>@item.D6</td>
+                                <td>@item.D7</td>
+                                <td>@item.D8</td>
+                                <td>@item.D9</td>
+                                <td>@item.D10</td>
+                                <td>@item.D11</td>
+                                <td>@item.D12</td>
+                                <td>@item.D13</td>
+                                <td>@item.D14</td>
+                                <td>@item.D15</td>
+                                <td>@item.D16</td>
+                                <td>@item.D17</td>
+                                <td>@item.D18</td>
+                                <td>@item.D19</td>
+                                <td>@item.D20</td>
+                                <td>@item.D21</td>
+                                <td>@item.D22</td>
+                                <td>@item.D23</td>
+                                <td>@item.D24</td>
+                                <td>@item.D25</td>
+                                <td>@item.D26</td>
+                                <td>@item.D27</td>
+                                <td>@item.D28</td>
+                                <td>@item.D29</td>
+                                <td>@item.D30</td>
+                                <td>@item.D31</td>
+                            </tr>
+                        </tbody>
+                    }
+                </table>
+
+            </div>
+        </div>
+    </div>
+}
+
+@if (TempData["StdAttendance"] != null)
+{
+    <div hidden id="Print">
+        <div class="panel-heading clearfix">
+            @if (Session["InsName"] != null)
+            {
+                <p>
+                    <img src="@Session["InsImage"]" width="65" height="65" />
+                    <h2 style="text-align: center;">@Session["InsName"]</h2>
+                    <h3 style="text-align: center;">  @TempData["Month"]</h3>
+                </p>
+            }
+            @if (@ViewBag.ReportNo != null)
+            {
+                if (@ViewBag.ReportNo == 1)
+                {
+                    <p style="text-align: center;">Session: @TempData["Session"], Class: @TempData["ClassName"], Section: @TempData["Section"] </p>
+                }
+                if (@ViewBag.ReportNo == 2)
+                {
+                    <p style="text-align: center;"> Session: @TempData["Session"] </p>
+                }
+            }
+        </div>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Roll#</th>
+                    <th>D1</th>
+                    <th>D2</th>
+                    <th>D3</th>
+                    <th>D4</th>
+                    <th>D5</th>
+                    <th>D6</th>
+                    <th>D7</th>
+                    <th>D8</th>
+                    <th>D9</th>
+                    <th>D10</th>
+                    <th>D11</th>
+                    <th>D12</th>
+                    <th>D13</th>
+                    <th>D14</th>
+                    <th>D15</th>
+                    <th>D16</th>
+                    <th>D17</th>
+                    <th>D18</th>
+                    <th>D19</th>
+                    <th>D20</th>
+                    <th>D21</th>
+                    <th>D22</th>
+                    <th>D23</th>
+                    <th>D24</th>
+                    <th>D25</th>
+                    <th>D26</th>
+                    <th>D27</th>
+                    <th>D28</th>
+                    <th>D29</th>
+                    <th>D30</th>
+                    <th>D31</th>
+
+                </tr>
+            </thead>
+
+            @foreach (var item in (List<SMS.Models.AttendenceRegister>)TempData["StdAttendance"])
+            {
+                <tbody>
+                    <tr>
+                        <td>@item.RollNo</td>
+                        <td>@item.D1</td>
+                        <td>@item.D2</td>
+                        <td>@item.D3</td>
+                        <td>@item.D4</td>
+                        <td>@item.D5</td>
+                        <td>@item.D6</td>
+                        <td>@item.D7</td>
+                        <td>@item.D8</td>
+                        <td>@item.D9</td>
+                        <td>@item.D10</td>
+                        <td>@item.D11</td>
+                        <td>@item.D12</td>
+                        <td>@item.D13</td>
+                        <td>@item.D14</td>
+                        <td>@item.D15</td>
+                        <td>@item.D16</td>
+                        <td>@item.D17</td>
+                        <td>@item.D18</td>
+                        <td>@item.D19</td>
+                        <td>@item.D20</td>
+                        <td>@item.D21</td>
+                        <td>@item.D22</td>
+                        <td>@item.D23</td>
+                        <td>@item.D24</td>
+                        <td>@item.D25</td>
+                        <td>@item.D26</td>
+                        <td>@item.D27</td>
+                        <td>@item.D28</td>
+                        <td>@item.D29</td>
+                        <td>@item.D30</td>
+                        <td>@item.D31</td>
+                    </tr>
+                </tbody>
+            }
+        </table>
+
+
+    </div>
+}
+
+
+
+

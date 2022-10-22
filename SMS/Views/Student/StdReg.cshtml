@@ -1,0 +1,389 @@
+﻿@model SMS.Models.RegViewModel
+@{
+    ViewBag.Title = "StdReg";
+}
+
+<div class="page-inner">
+    <div class="page-title">
+
+        <h3 class="breadcrumb-header">
+            Student Registration
+            <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-sm" style="float: right;">Read Me</a>
+
+        </h3>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title"> Student Registration Info</h4>
+                    </div>
+                    <div class="modal-body">
+                        Fill all mendatory fields and then click on ADD button.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["SuccessMessage"].
+            </div>
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-body">
+                        <div id="rootwizard">
+                            @using (Html.BeginForm("StdReg", "Student", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+                                <div class="row m-b-lg">
+                                    <div class="col-md-12">
+
+                                        <div class="row">
+                                            <div class="form-group col-md-3">
+                                                <label for="exampleInputName">Name<span style="color:red"> *</span></label>
+                                                @Html.EditorFor(model => model.perName, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                                            </div>
+                                            <div class="form-group  col-md-3">
+                                                <label for="exampleInputName2">Father Name<span style="color:red"> *</span></label>
+                                                @Html.EditorFor(model => model.perGarName, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="exampleInputEmail">CNIC</label>
+                                                <input type="text" placeholder="" name="perCNIC" class="form-control" pattern="[\d]{13}" title="CNIC must contain 13 digits" id="nameField">
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="exampleInputPassword1">Email</label>
+                                                @Html.EditorFor(model => model.perEmail, new { htmlAttributes = new { @class = "form-control", @type = "email" } })
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-3">
+                                                <label for="exampleInputName">DOB</label>
+                                                <input type="text" class="form-control date-picker" name="perDOB">
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="exampleInputName2">Select Blood Group</label>
+                                                <select id="blood" name="perBloodGrp" class="form-control">
+                                                    <option value="notEntered">Select Blood Group</option>
+                                                    <option value="A+">A+</option>
+                                                    <option value="A-">A-</option>
+                                                    <option value="AB+">AB+</option>
+                                                    <option value="AB-">AB-</option>
+                                                    <option value="B+">B+</option>
+                                                    <option value="B-">B-</option>
+                                                    <option value="O-">O-</option>
+                                                    <option value="O+">O+</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="exampleInputEmail">Contact One<span style="color:red"> *</span></label>
+                                                <input type="text" placeholder="" name="perContactOne" class="form-control" pattern="[\d]{11}" title="Phone must contain 11 digits" id="nameField" required>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="exampleInputPassword1">Contact Two</label>
+                                                <input type="text" placeholder="" name="perContactTwo" class="form-control" id="nameField">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label for="exampleInputName">Current Address</label>
+                                                @Html.EditorFor(model => model.perCurrentAdrs, new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+                                            <div class="form-group  col-md-6">
+                                                <label for="exampleInputName2">Permanent Address</label>
+                                                @Html.EditorFor(model => model.perPermanantAdrs, new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+
+                                            <div class="form-group col-md-3">
+                                                <label for="ageRangeField">Cast</label>
+                                                <input type="text" name="perCasts" id="perImage" class="form-control">
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="ageRangeField">Religion</label>
+                                                <select name="perReligion" class="form-control">
+                                                    <option value="Islam">Islam</option>
+                                                    <option value="Sikhism">Sikhism</option>
+                                                    <option value="Hinduism">Hinduism</option>
+                                                    <option value="Atheist">Atheist</option>
+                                                    <option value="Buddhism">Buddhism</option>
+                                                    <option value="Chinese traditional religion">Chinese traditional religion</option>
+                                                    <option value="Christianity">Christianity</option>
+                                                    <option value="Secular">Secular</option>
+                                                    <option value="Other">Other</option>
+                                                </select>
+                                            </div>
+
+                                         
+                                            <div class="form-group col-md-3">
+                                                <label for="exampleInputName">Select City<span style="color:red"> *</span></label>
+                                                @Html.DropDownList("CityId", (SelectList)ViewData["City"], new { required = "required", @class = "form-control", @onchange = "javascript:GetLoction(this.value);" })
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Select Location <span style="color:red"> *</span></label>
+                                                <select id="ddlLoction" name="AreaId" class="form-control" required></select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+
+                                            <div class="form-group  col-md-3">
+                                                <label for="exampleInputName">Campus<span style="color:red"> *</span></label>
+                                                @Html.DropDownList("camId", (SelectList)ViewData["Campus"], new { required = "required", @class = "form-control" })
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="exampleInputName">Session<span style="color:red"> *</span></label>
+                                                @Html.DropDownList("sesId", (SelectList)ViewData["Session"], new { required = "required", @class = "form-control" })
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="exampleInputName">Class<span style="color:red"> *</span></label>
+                                                @Html.DropDownList("classId", (SelectList)ViewData["Class"], "--Select Class--", new { required = "required", @class = "form-control" })
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="exampleInputName">Section<span style="color:red"> *</span></label>
+                                                @Html.DropDownList("secId", (SelectList)ViewData["Section"], "--Select Section--", new { required = "required", @class = "form-control" })
+
+                                            </div>
+                                        </div>
+
+
+
+
+                                        <div class="row">
+                                            <div class="form-group col-md-3">
+                                                <label for="exampleInputName">Roll Number<span style="color:red"> *</span></label>
+                                                <input type="text" placeholder="" name="stdRollNo" id="StdId" maxlength="10" class="form-control" required>
+                                            </div>
+                                            <div class="form-group  col-md-3">
+                                                <label for="exampleInputName2">Student Status</label>
+                                                <select id="ageRangeField" name="stdStatus" class="form-control">
+                                                    <option value="Active">Active</option>
+                                                    <option value="Freeze">Freeze</option>
+                                                    <option value="Deactive">Deactive</option>
+                                                    <option value="Left">Left</option>
+                                                    <option value="Suspeded">Suspended</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="ageRangeField">Image</label>
+                                                <input type="file" name="perImage" id="perImage" class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="row form-group col-md-12 ">
+                                            <button type="button" class="btn btn-default" onclick="return show();">Add Student Previous Education Info <i class="fa fa-plus-circle"></i> </button>
+                                        </div>
+
+                                        <div id="Agency" style="display: none;">
+                                            <div class="row">
+                                                <div class="form-group col-md-3">
+                                                    <label for="exampleInputName2">Select Institute<span style="color:red"> *</span></label>
+                                                    @Html.DropDownList("StdInsId", (SelectList)ViewData["Institute"], "Select Institute", new { @class = "form-control" })
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label for="exampleInputName">Select Degree<span style="color:red"> *</span></label>
+                                                    @Html.DropDownList("DegreeId", (SelectList)ViewData["Degree"], "Select Degree", new { @class = "form-control" })
+                                                </div>
+
+                                                <div class="form-group col-md-3">
+                                                    <label for="exampleInputEmail">Total marks<span style="color:red"> *</span></label>
+                                                    <input type="number" placeholder="" name="TotalMarks" class="form-control" id="nameField">
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label for="exampleInputPassword1">Obtain Marks <span style="color:red"> *</span></label>
+                                                    <input type="number" placeholder="" name="ObtainMarks" class="form-control" id="nameField">
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group col-md-3">
+                                                    <label for="exampleInputName">Roll Number<span style="color:red"> *</span></label>
+                                                   <input type="text" placeholder="Roll Number" class="form-control" name="RollNo" />
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label for="exampleInputName2">Passing Date<span style="color:red"> *</span></label>
+                                                    <input type="text" class="form-control date-picker" name="PassingDate">
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label>If you don't want to Add Any Info</label>
+                                                    <button type="button" class="btn btn-default" onclick="return hide();">Plz Close It <i class="fa fa-times-circle "></i></button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row form-group col-md-12">
+                                            <input class="btn btn-primary" type="submit" value="Save">
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- Row -->
+    </div><!-- Main Wrapper -->
+
+</div>
+
+<link href="../../assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css" rel="stylesheet" type="text/css" />
+
+
+<script src="../../assets/plugins/jquery/jquery-3.1.0.min.js"></script>
+
+<script src="../../assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+@*Jquery for check if Barcode exist already*@
+<script type="text/javascript">
+    $(function () {
+
+        $("#StdId").change(function () {
+
+            var t = $(this).val();
+
+            if (t !== "") {
+
+                $.post("@Url.Action("isRollNoExist", "Student")?val=" + t, function (res) {
+                    if (res.Success === "true") {
+                        return true;
+                    }
+                    else if (res.Success === "false") {
+                        $('#StdId').val('');
+                        $('#StdId').focus();
+                        alert("This Roll Number is already exist try another one!");
+                        return false;
+                    }
+                });
+            } else {
+                alert("Please Enter Roll Number!");
+                $('#StdId').focus();
+                //return false;
+            }
+
+        });
+    });
+
+</script>
+
+
+<script type="text/javascript">
+    $(function () {
+
+        $("#secId").change(function () {
+
+            var secId = $(this).val();
+            var sesId = $("#sesId").val();
+            var classId = $("#classId").val();
+            var campId = $("#camId").val();
+
+            if (secId !== "" && sesId !== "" && classId !== "" && campId !== "") {
+                $.post("@Url.Action("GenRollNo", "Student")?SecId=" + secId + "&SesId=" + sesId + "&ClassId=" + classId + "&CampId=" + campId, function (res) {
+                    if (res.Success === "true") {
+
+                        //Pass ROllNo
+
+                        $("#StdId").val(res.Data.MakeRollNo);
+                        //$("#smt1").prop('disabled', false).val(res.Data.s1);
+                    }
+                    
+                });
+            } else {
+
+
+            }
+
+        });
+    });
+
+</script>
+
+
+
+
+@*Populate Area using javascript*@
+<script language="javascript" type="text/javascript">
+
+    function GetLoction(_cityId) {
+
+        if (_cityId > 0) {
+            var procemessage = "<option value='0'> Please wait...</option>";
+            $("#ddlLoction").html(procemessage).show();
+            var url = "/Student/Populatlocation/";
+
+            $.ajax({
+                url: url,
+                data: { cityId: _cityId },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    //var markup = "<option value='0'>---Select Location---</option>";
+                    if (data.length == 0) {
+                        var markup = "<option value= 'null'>No Record Found</option>";
+                    } else {
+                        var markup = "<option value=" + data[0].Value + ">" + data[0].Text + "</option>";
+                    }
+
+                    for (var x = 1; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#ddlLoction").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("Whooaaa! Something went wrong..");
+                }
+            });
+        } else {
+            var markup = "<option value='0'>---Select Location---</option>";
+            $("#ddlLoction").html(markup).show();
+        }
+
+
+    }
+</script>
+
+<script>
+    var cityId = $("#CityId").val();
+    window.onload = GetLoction(cityId);
+</script>
+
+<script>
+    function show() {
+        if (document.getElementById('Agency').style.display == 'none') {
+            document.getElementById('Agency').style.display = 'block';
+        }
+        return false;
+    }
+    function hide() {
+        if (document.getElementById('Agency').style.display == 'block') {
+            document.getElementById('Agency').style.display = 'none';
+        }
+        return false;
+
+    }
+</script>

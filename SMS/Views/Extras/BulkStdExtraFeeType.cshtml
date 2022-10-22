@@ -1,0 +1,117 @@
+﻿@model SMS.Models.StudentExtraFee
+
+@{
+    ViewBag.Title = "BulkStdExtraFeeType";
+}
+
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">
+            Receive Bulk Student Extra Fee
+            <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-sm" style="float: right;">Read Me</a>
+        </h3>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">  Usefull Info</h4>
+                    </div>
+                    <div class="modal-body">
+                        Here you can receive the fee of any extra activity of All Students at a time.
+                        Select Session --------> Select Section --------> Select Class -------> Select Fee Type --------> Enter Amount --------> Select Date ----------> Click "SUBMIT" , by clicking you will see Student Extra Fee received Successfully 
+                    <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+        </div>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["Success"].
+            </div>
+
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+
+        <div class="row">
+          
+            <div class="col-md-12">
+                <div class="panel panel-white">
+
+
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <form action="~/Extras/BulkStdExtraFeeType" method="post">
+
+                                    <div class="row">
+                                        <div class="col-md-6 form-group">
+                                            <label for="ageRangeField">Session</label>
+                                            @Html.DropDownList("sesId", (SelectList)ViewData["Session"], "--Select Session--", new { required = "required", @class = "form-control" })
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label for="ageRangeField">Section</label>
+                                            @Html.DropDownList("secId", (SelectList)ViewData["Section"], "--Select Section--", new { required = "required", @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 form-group">
+                                            <label for="ageRangeField">Class</label>
+                                            @Html.DropDownList("classId", (SelectList)ViewData["Class"], "--Select Class--", new { required = "required", @class = "form-control" })
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label for="ageRangeField">Fee Type</label>
+                                            @Html.DropDownList("eftId", (SelectList)ViewData["EFeeType"], "--Select Extra Fee Type--", new { required = "required", @class = "form-control" })
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 form-group">
+                                            <label for="nameField">Paid Amount</label>
+                                            <input type="number" placeholder="0" contextmenu="0" min="0" name="Amount" value="" required class="form-control">
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label for="nameField">Date</label>
+                                            <input type="text" name="eDate" value="" required class="form-control date-picker">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 form-group">
+                                            <label for="ageRangeField">Remarks</label>
+                                            <input type="text" name="Remarks" placeholder="Remarks" class="form-control" />
+                                        </div>
+                                        <div class="col-md-12 form-group">
+                                            <input class="btn btn-primary" type="submit" name="submitButton" value="Submit">
+                                        </div>
+                                    </div>
+
+                                   
+                                </form>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

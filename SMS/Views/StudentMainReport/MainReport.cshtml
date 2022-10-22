@@ -1,0 +1,263 @@
+﻿
+@{
+    ViewBag.Title = "MainReport";
+}
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">
+           Current Session Student History Report
+            <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-sm" style="float: right;">Read Me</a>
+        </h3>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">  Usefull Info</h4>
+                    </div>
+                    <div class="modal-body">
+                        In this page you can find the student full Educational info of current session like his profile,
+                        Accounts, Examination, Attendance etc.
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+        </div>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["Success"].
+            </div>
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-body">
+                        <div id="rootwizard">
+                            <div class="row m-b-lg">
+                                <div class="col-md-12">
+                                    <form action="~/StudentMainReport/MainReport" method="post">
+                                        <div class="row">
+                                            <div class="form-group col-md-3">
+                                                <label for="ageRangeField" id="code">Enter RollNo</label>
+                                                <input type="text" placeholder="" name="RollNo" id="nameField" value="@TempData["RollNo"]" class="form-control" required>
+                                                <input type="hidden" value="@TempData["RollNo"]" id="StdRollNo" />
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <input class="btn btn-primary" name="submitButton" type="submit" value="Show">
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <hr />
+                                    @if (@TempData["RollNo"] != null)
+                                    {
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <input class="btn btn-default" type="button" id="Info" value="Student Complete Info">
+                                            </div>
+                                            <div class="Info">
+
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <input class="btn btn-default" type="button" id="Accounts" value="Student Accounts Info">
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <div class="Accounts">
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <input class="btn btn-default" type="button" id="Examinations" value="Student Examination Info">
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <div class="Examinations">
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <input class="btn btn-default" type="button" id="Attendance" value="Student Attendance Info">
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <div class="Attendance">
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <input class="btn btn-default" type="button" id="AllReports" value="Student Complete History">
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <div class="AllReports">
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <hr />
+                                     }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- Row -->
+    </div><!-- Main Wrapper -->
+</div>
+
+<script src="../../assets/plugins/jquery/jquery-3.1.0.min.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#Info").click(function (event) {
+            var rollNo = $("#StdRollNo").val();
+            if (rollNo != "" && rollNo != null) {
+                $.ajax({
+                    url: "@Url.Action("_StdInfo", "StudentMainReport")",
+                    data: { RollNo: rollNo },
+                    type: "Get",
+                    dataType: "html",
+                    success: function (data) {
+                        //Whatever result you have got from your controller with html partial view replace with a specific html.
+                        // HTML DOM replace
+                        $(".Info").html(data);
+                    }
+                });
+            } else {
+                alert("please Enter Roll Number");
+            }
+
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#Accounts").click(function (event) {
+            var rollNo = $("#StdRollNo").val();
+            if (rollNo != "" && rollNo != null) {
+                $.ajax({
+                    url: "@Url.Action("_StdAccounts", "StudentMainReport")",
+                    data: { RollNo: rollNo },
+                    type: "Get",
+                    dataType: "html",
+                    success: function (data) {
+                        //Whatever result you have got from your controller with html partial view replace with a specific html.
+                        // HTML DOM replace
+                        $(".Accounts").html(data);
+                    }
+                });
+            } else {
+                alert("please Enter Roll Number");
+            }
+
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#Examinations").click(function (event) {
+            var rollNo = $("#StdRollNo").val();
+            if (rollNo != "" && rollNo != null) {
+                $.ajax({
+                    url: "@Url.Action("_StdExamination", "StudentMainReport")",
+                    data: { RollNo: rollNo },
+                    type: "Get",
+                    dataType: "html",
+                    success: function (data) {
+                        //Whatever result you have got from your controller with html partial view replace with a specific html.
+                        // HTML DOM replace
+                        $(".Examinations").html(data);
+                    }
+                });
+            } else {
+                alert("please Enter Roll Number");
+            }
+
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#Attendance").click(function (event) {
+            var rollNo = $("#StdRollNo").val();
+            if (rollNo != "" && rollNo != null) {
+                $.ajax({
+                    url: "@Url.Action("_StdAttendance", "StudentMainReport")",
+                    data: { RollNo: rollNo },
+                    type: "Get",
+                    dataType: "html",
+                    success: function (data) {
+                        //Whatever result you have got from your controller with html partial view replace with a specific html.
+                        // HTML DOM replace
+                        $(".Attendance").html(data);
+                    }
+                });
+            } else {
+                alert("please Enter Roll Number");
+            }
+
+        });
+    });
+</script>
+
+
+<script type="text/javascript">
+    $(function () {
+        $("#AllReports").click(function (event) {
+            var rollNo = $("#StdRollNo").val();
+            if (rollNo != "" && rollNo != null) {
+                $.ajax({
+                    url: "@Url.Action("_StdHistory", "StudentMainReport")",
+                    data: { RollNo: rollNo },
+                    type: "Get",
+                    dataType: "html",
+                    success: function (data) {
+                        //Whatever result you have got from your controller with html partial view replace with a specific html.
+                        // HTML DOM replace
+                        $(".AllReports").html(data);
+                    }
+                });
+            } else {
+                alert("please Enter Roll Number");
+            }
+
+        });
+    });
+</script>

@@ -1,0 +1,183 @@
+﻿@model SMS.Models.Person
+@{
+    ViewBag.Title = "EmpRegistration";
+}
+
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">
+            Person Registration
+            <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-sm" style="float: right;">Read Me</a>
+
+        </h3>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">  Person Registration Info</h4>
+                    </div>
+                    <div class="modal-body">
+                        Here you can add the detais of childrens' Parents, Data Entry Operator, General Staff &Aacute; Admin.
+                        Fill all mendatory fields and then click on "SAVE" button.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["Success"].
+            </div>
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-body">
+                        <div id="rootwizard">
+                            @using (Html.BeginForm("EmpRegistration", "Employee", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+                                <div class="row m-b-lg">
+                                    <div class="col-md-12">
+
+                                        <div class="row">
+                                            <div class="form-group col-md-3">
+                                                <label for="ageRangeField">Person Name<span style="color:red"> *</span></label>
+                                                <input type="text" placeholder="" name="perName" class="form-control" id="nameField" required>
+                                            </div>
+                                            <div class="form-group  col-md-3">
+                                                <label for="ageRangeField">Father/Gaurdian Name </label>
+                                                <input type="text" placeholder="" name="perGarName" class="form-control" id="nameField" >
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="exampleInputEmail">CNIC<span style="color:red"> *</span></label>
+                                                <input type="text" placeholder="" name="perCNIC" class="form-control" pattern="[\d]{13}" title="CNIC must contain 13 digits" id="nameField" required>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="ageRangeField">Email </label>
+                                                <input type="email" plac eholder="" name="perEmail" class="form-control" id="nameField">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+
+                                            <div class="form-group col-md-3">
+                                                <label for="exampleInputEmail">Conatct One<span style="color:red"> *</span></label>
+                                                <input type="text" placeholder="" name="perContactOne" class="form-control" pattern="[\d]{11}" title="Phone must contain 11 digits" id="nameField" required>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="ageRangeField">Select Role<span style="color:red"> *</span></label>
+                                                @Html.DropDownList("roleId", (SelectList)ViewData["Role"], "--Select Role--", new { required = "required", @class = "form-control" })
+                                            </div>
+                                            <div class="form-group  col-md-3">
+                                                <label for="ageRangeField">City <span style="color:red">*</span></label>
+                                                @Html.DropDownList("CityId", (SelectList)ViewData["City"], new { required = "required", @class = "form-control", @onchange = "javascript:GetLoction(this.value);" })
+                                            </div>
+                                            <div class="form-group  col-md-3">
+                                                <label>Select Location <span style="color:red"> *</span></label>
+                                                <select id="ddlLoction" name="AreaId" class="form-control" required></select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label for="exampleInputName">Current Address</label>
+                                                @Html.EditorFor(model => model.perCurrentAdrs, new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+                                            <div class="form-group  col-md-6">
+                                                <label for="exampleInputName2">Permanent Address</label>
+                                                @Html.EditorFor(model => model.perPermanantAdrs, new { htmlAttributes = new { @class = "form-control"} })
+                                            </div>
+
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <div class="form-group col-md-3">
+                                                <label for="ageRangeField">Image</label>
+
+                                                <input type="file" name="perImage" id="perImage" class="form-control">
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <input class="btn btn-primary" type="submit" value="Save">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            }
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div><!-- Row -->
+    </div><!-- Main Wrapper -->
+
+</div>
+
+<script src="../../assets/plugins/jquery/jquery-3.1.0.min.js"></script>
+
+<script language="javascript" type="text/javascript">
+
+    function GetLoction(_cityId) {
+
+        if (_cityId > 0) {
+            var procemessage = "<option value='0'> Please wait...</option>";
+            $("#ddlLoction").html(procemessage).show();
+            var url = "/Employee/Populatlocation/";
+
+            $.ajax({
+                url: url,
+                data: { cityId: _cityId },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    //var markup = "<option value='0'>---Select Location---</option>";
+                    if (data.length == 0) {
+                        var markup = "<option value= 'null'>No Record Found</option>";
+                    } else {
+                        var markup = "<option value=" + data[0].Value + ">" + data[0].Text + "</option>";
+                    }
+
+                    for (var x = 1; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#ddlLoction").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("Whooaaa! Something went wrong..");
+                }
+            });
+        } else {
+            var markup = "<option value='0'>---Select Location---</option>";
+            $("#ddlLoction").html(markup).show();
+        }
+
+
+    }
+</script>
+
+<script>
+    var cityId = $("#CityId").val();
+    window.onload = GetLoction(cityId);
+</script>s

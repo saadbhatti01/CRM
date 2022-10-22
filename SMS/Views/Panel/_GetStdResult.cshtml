@@ -1,0 +1,61 @@
+﻿@if (TempData["No"] != null)
+{
+    <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        Info! @TempData["No"].
+    </div>
+}
+
+@if (TempData["StdMarks"] != null)
+{
+    <div class="page-title">
+        <h3 class="breadcrumb-header">Your Marks Detail
+            <a title="Print Student Report" class="counter" href="@Url.Action("PrintStdMarkSheet", "Examination", new { stId = @ViewBag.StdId, ssId = @ViewBag.Ses, scId = @ViewBag.Sec, clId = @ViewBag.Class })">
+                <i class="fa fa-print" style="font-size:30px; float:right"></i>
+            </a>
+        </h3>
+    </div>
+
+    <div id="table-wrapper">
+        <div id="table-scroll">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Subject</th>
+                            <th>Exam</th>
+                            <th>Oral</th>
+                            <th>Obj</th>
+                            <th>Sub</th>
+                            <th>Total Obtain</th>
+                            <th>Total</th>
+                            <th>Percentage</th>
+                        </tr>
+                    </thead>
+
+
+                    @foreach (var i in (List<SMS.Models.StdObtainMarks>)TempData["StdMarks"])
+                    {
+                        <tbody>
+                            <tr>
+                                <td>@i.sb.subName</td>
+                                <td>@i.et.etname</td>
+                                <td>@i.smt1</td>
+                                <td>@i.smt2</td>
+                                <td>@i.smt3</td>
+                                <td>@i.totalObtainMarks</td>
+                                <td>@i.subTotalMarks</td>
+                                <td>@(i.totalObtainMarks * 100 / i.subTotalMarks)% </td>
+                            </tr>
+                        </tbody>
+                    }
+
+
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+}
+

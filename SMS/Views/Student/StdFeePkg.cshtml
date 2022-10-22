@@ -1,0 +1,270 @@
+﻿
+@{
+    ViewBag.Title = "StdFeePkg";
+}
+
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">
+            Make Student Fee Package
+            <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-sm" style="float: right;">Read Me</a>
+        </h3>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">  Usefull Info</h4>
+                    </div>
+                    <div class="modal-body">
+                        Make Student Fee Package here.
+                        Enter roll no -----> Click on "SHOW" button, by clicking you will see student information -------> Now Select fee type ------->
+                        (If you want to give discount then select discount type and set discount %.)otherwise leave them empty -------->Click Create Package.
+                        When one fee type will be created then create other fee type package of this student.
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["SuccessMessage"].
+            </div>
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-body">
+                        <div id="rootwizard">
+                            <div class="row m-b-lg">
+                                <div class="col-md-6">
+                                    <form action="~/Student/StdFeePkg" method="post">
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label for="exampleInputName2">Enter Roll Number</label>
+                                                <input type="text" placeholder="Enter Roll Number" class="form-control" name="StdRoll" id="nameField" required>
+                                                <input type="hidden" id="rollNo" value="@TempData["RollNo"]" />
+                                            </div>
+
+                                            <div class="form-group col-md-12">
+
+                                                <input class="btn btn-primary" name="submitButton" type="submit" value="Show">
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <hr />
+                                    <form action="" method="post">
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label for="ageRangeField">Roll Number</label>
+                                                <input type="text" placeholder="" name="RollNo" class="form-control" value="@ViewBag.StdRoll" id="nameField" required readonly>
+                                            </div>
+
+                                            <div class="form-group col-md-6">
+                                                <label for="ageRangeField">Student Name</label>
+                                                <input type="text" placeholder="" name="cfpAmt" class="form-control" value="@ViewBag.StdName" id="nameField" required readonly>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label for="ageRangeField">Session</label>
+                                                <input type="text" placeholder="" name="sesId" class="form-control" value="@ViewBag.StdSes" id="nameField" required readonly>
+                                            </div>
+
+                                            <div class="form-group col-md-6">
+                                                <label for="ageRangeField">Class</label>
+                                                <input type="text" placeholder="" class="form-control" name="classId" value="@ViewBag.StdClass" id="nameField" required readonly>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label for="ageRangeField">Section</label>
+                                                <input type="text" placeholder="" name="secId" class="form-control" value="@ViewBag.StdSec" id="nameField" required readonly>
+                                            </div>
+
+                                            <div class="form-group col-md-6">
+                                                @if (ViewData["FeeType"] != null)
+                                                {
+                                                    <label for="ageRangeField">Fee Type</label>
+                                                    @Html.DropDownList("feeTypeId", (SelectList)ViewData["FeeType"], "--Select Fee Type--", new { required = "required", @class = "form-control" })
+                                                }
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label for="nameField">Discount Type</label>
+                                                <select name="DicOpt" class="form-control" id="dis">
+
+                                                    <option name="DicOpt" value="InPercent">In Percent</option>
+                                                    <option name="DicOpt" value="InAmount">In Amount</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group col-md-6">
+                                                <label for="nameField" id="Disopt">Discount(%)</label>
+                                                <input type="number" placeholder="0" contextmenu="0" class="form-control" min="0" name="FeeDis" id="MaxDic" value="">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <input type="text" name="sfpRemarks" placeholder="Remarks" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <input type="submit" value="Create Package" class="btn btn-primary" />
+                                            </div>
+                                        </div>
+
+                                    </form>
+
+                                </div>
+                                <div class="col-md-6">
+                                    @if (TempData["FeeDetail"] != null)
+                                    {
+                                        <div class="panel-heading clearfix">
+                                            <h2 class="panel-title"><b>Class Fee Packages</b></h2>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Fee Type</th>
+                                                        <th>Fee Amount(/Rs.)</th>
+                                                        <th>Max Discount</th>
+                                                    </tr>
+                                                </thead>
+                                                @foreach (var item in (List<SMS.Models.StdFeeDetail>)TempData["FeeDetail"])
+                                                {
+                                                    <tbody>
+
+                                                        <tr>
+                                                            <td>@item.FeeName</td>
+                                                            <td>@item.FeeAmt</td>
+                                                            <td>@item.Dis%</td>
+                                                        </tr>
+                                                    </tbody>
+                                                }
+
+                                            </table>
+                                        </div>
+                                    }
+                                </div>
+
+                                <div class="col-md-6">
+                                    @if (ViewData["FeDetail"] != null)
+                                    {
+                                        <div class="panel-heading clearfix">
+                                            <h2 class="panel-title"><b>Student Fee Packages</b></h2>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Fee Type</th>
+                                                        <th>Fee Amount(/Rs.)</th>
+                                                        <th>Discount</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                @foreach (var item in (List<SMS.Models.StdFeeDetail>)ViewData["FeDetail"])
+                                                {
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>@item.FeeName</td>
+                                                            <td>@item.FeeAmt</td>
+                                                            <td>@item.Dis./Rs</td>
+                                                            <td>
+                                                                <a title="Update Package" class="counter" href="@Url.Action("EditStdFeePkg", new {  id = item.sfpId, RollNo = @ViewBag.StdRoll, Page = "Package"  })">
+                                                                    <i class="fa fa-edit" style="font-size:15px"></i>
+                                                                </a>
+                                                                &nbsp;
+                                                                <a title="Delete Package" class="counter" href="@Url.Action("DelStdFee", new { id = item.sfpId, RollNo = @ViewBag.StdRoll, Page = "Package"})">
+                                                                    <i class="fa fa-trash" style="font-size:15px;color:red"></i>
+                                                                </a>
+                                                                &nbsp;
+                                                                <a title="Print Current Month Voucher" class="counter" target="_blank" href="@Url.Action("DownloadVoucher", new { id = item.sfpId })">
+                                                                    <i class="fa fa-print" style="font-size:15px;"></i>
+                                                                </a>
+
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                }
+
+                                            </table>
+                                        </div>
+                                    }
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div><!-- Row -->
+    </div><!-- Main Wrapper -->
+
+</div>
+
+
+
+<script src="../../assets/plugins/jquery/jquery-3.1.0.min.js"></script>
+
+
+
+
+
+<script type="text/javascript">
+    $(function () {
+
+        $("#dis").change(function () {
+
+            var dic = $(this).val();
+
+
+
+            if (dic === "InPercent") {
+                $("#Disopt").text('Discount(%)');
+
+            } else if (dic === "InAmount") {
+
+                $("#Disopt").text('Discount(Rs.)');
+            }
+
+
+        });
+    });
+
+</script>

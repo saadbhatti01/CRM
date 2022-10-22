@@ -1,0 +1,156 @@
+﻿@model SMS.Models.SMSAllotment
+
+@{
+    ViewBag.Title = "SMSAllotment";
+}
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">SMS Allotment</h3>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["Success"].
+            </div>
+
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-body">
+                        <div class="row">
+                            @if (Convert.ToInt32(Session["RoleId"]) == 10)
+                            {
+                                <div class="col-md-12">
+                                    <form action="~/SMS/SMSAllotment" method="post" name="ClassForm">
+                                        <div class="row">
+                                            <div class="col-md-4 form-group">
+                                                <label for="ageRangeField">SMS Quantity</label>
+                                                <input type="text" placeholder="" name="saQty" required class="form-control">
+                                            </div>
+
+                                            <div class="col-md-4 form-group">
+                                                <label for="ageRangeField">Amount</label>
+                                                <input type="text" name="saAmount" required class="form-control">
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label for="ageRangeField">Amount Paid Date</label>
+                                                <input type="text" name="saPaidAmountDate" required class="form-control date-picker">
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4 form-group">
+                                                <label for="ageRangeField">Approval Date</label>
+                                                <input type="text" name="saApprovalDate" required class="form-control date-picker">
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label for="ageRangeField">Expiry Date</label>
+                                                <input type="text" name="saExpiryDate" required class="form-control date-picker">
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label for="ageRangeField">Status</label>
+                                                <select name="saStatus" class="form-control" required>
+                                                    <option value="Active">Active</option>
+                                                    <option value="Deactive">Deactive</option>
+                                                    <option value="Pending">Pending</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                        <div class="row col-md-12 form-group">
+                                            <input class="btn btn-primary" type="submit" name="submitButton" value="Save">
+                                        </div>
+                                    </form>
+                                </div>
+                            }
+
+
+                            @if (TempData["SMSAllotment"] != null)
+                            {
+                                <div class="col-md-12">
+                                    <div class="page-title">
+                                        <h3 class="breadcrumb-header">Allotment Details</h3>
+                                    </div>
+
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+
+                                                    <th>SMS Qty</th>
+                                                    <th>Remaing Qty</th>
+                                                    <th>Amount</th>
+                                                    <th>Amount Paid Date</th>
+                                                    <th>Approval Date</th>
+                                                    <th>Expiray Date</th>
+                                                    <th>Status</th>
+                                                    @if (Convert.ToInt32(Session["RoleId"]) == 10)
+                                                    {
+                                                        <th>Action</th>
+                                                    }
+
+                                                </tr>
+                                            </thead>
+                                            @foreach (var item in (IEnumerable<SMS.Models.SMSAllotment>)TempData["SMSAllotment"])
+                                            {
+                                                <tbody>
+
+                                                    <tr>
+                                                        <td>@item.saQty</td>
+                                                        <td>@item.saRemainingQty</td>
+                                                        <td>@item.saAmount</td>
+                                                        <td>@item.saPaidAmountDate</td>
+                                                        <td>@item.saApprovalDate</td>
+                                                        <td>@item.saExpiryDate</td>
+                                                        <td>@item.saStatus</td>
+                                                        @if (Convert.ToInt32(Session["RoleId"]) == 10)
+                                                        {
+                                                            <td>
+
+                                                                <a title="Update Detail" class="counter" href="@Url.Action("EditAllotmentDetails", new { id = item.saId })">
+                                                                    <i class="fa fa-edit" style="font-size:20px"></i>
+                                                                </a>
+
+                                                                <a title="Delete Detail" class="counter" href="@Url.Action("DelAllotment", new { id = item.saId })">
+                                                                    <i class="fa fa-trash" style="font-size:20px;color:red"></i>
+                                                                </a>
+                                                            </td>
+                                                        }
+
+
+
+                                                    </tr>
+                                                </tbody>
+                                            }
+
+                                        </table>
+                                    </div>
+
+                                </div>
+                            }
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,154 @@
+﻿
+@{
+    ViewBag.Title = "ShowStdMarks";
+}
+
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">
+            Student Marks Detail
+            <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-sm" style="float: right;">Read Me</a>
+        </h3>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">  Usefull Info</h4>
+                    </div>
+                    <div class="modal-body">
+                        You can check student marks obtain in all subjects term wise.
+                        Enter roll no --------> Select Session ---------> Select Exam Type ---------> Click "SHOW", by clicking you will see the complete marks sheet.
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+        </div>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["SuccessMessage"].
+            </div>
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-body">
+                        <div id="rootwizard">
+                            <div class="row m-b-lg">
+                                <div class="col-md-6">
+                                    <form action="~/Examination/ShowStdMarks" method="post">
+                                        <div class="row">
+                                            <div class="form-group col-md-4">
+                                                <label for="exampleInputName2">Enter Roll Number</label>
+                                                <input type="text" placeholder="Enter Roll Number" class="form-control" name="StdRoll" id="nameField" required>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="ageRangeField">Session</label>
+                                                @Html.DropDownList("sesId", (SelectList)ViewData["Session"], "Select Session", new { required = "required", @class = "form-control" })
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="ageRangeField">Exam Type</label>
+                                                @Html.DropDownList("etId", (SelectList)ViewData["ExamType"], "Select Exam Type", new { required = "required", @class = "form-control" })
+                                            </div>
+
+                                            <div class="form-group col-md-12">
+                                                <input class="btn btn-primary" name="submitButton" type="submit" value="Show">
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <hr />
+                                </div>
+                                <div class="col-md-6">
+                                    @if (TempData["StdMarks"] != null)
+                                    {
+                                        <div class="panel-heading clearfix">
+                                            <h2 class="panel-title">
+                                                <b>Student Marks Detail</b>
+                                                <a title="Print Student Report" class="counter" href="@Url.Action("PrintStdMarkSheet", new { stId = @ViewBag.StdId, ssId = @ViewBag.Ses, scId = @ViewBag.Sec, clId = @ViewBag.Class, etId =  ViewBag.Exam })">
+                                                    <i class="fa fa-print" style="font-size:30px; float:right"></i>
+                                                </a>
+                                            </h2>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Subject</th>
+                                                        <th>Exam</th>
+                                                        <th>Oral</th>
+                                                        <th>Obj</th>
+                                                        <th>Sub</th>
+                                                        <th>Obtain</th>
+                                                        <th>Total</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                @foreach (var i in (List<SMS.Models.StdObtainMarks>)TempData["StdMarks"])
+                                                {
+                                                    <tbody>
+
+                                                        <tr>
+                                                            <td>@i.sb.subName-@i.sb.subCode</td>
+                                                            <td>@i.et.etname</td>
+                                                            <td>@i.smt1</td>
+                                                            <td>@i.smt2</td>
+                                                            <td>@i.smt3</td>
+                                                            <td><b>@i.totalObtainMarks</b></td>
+                                                            <td>@i.subTotalMarks</td>
+                                                            <td>
+
+                                                                <a title="Update Marks" class="counter" href="@Url.Action("EditMarks", new {  id = i.somID  })">
+                                                                    <i class="fa fa-edit" style="font-size:15px"></i>
+                                                                </a>
+                                                                &nbsp;
+                                                                <a title="Delete Marks" class="counter" href="@Url.Action("DelStdMarks", new { id = i.somID })">
+                                                                    <i class="fa fa-trash" style="font-size:15px;color:red"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                }
+
+                                            </table>
+                                        </div>
+                                    }
+                                </div>
+
+
+
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div><!-- Row -->
+    </div><!-- Main Wrapper -->
+
+</div>

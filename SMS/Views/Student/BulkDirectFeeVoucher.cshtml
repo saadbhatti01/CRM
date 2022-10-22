@@ -1,0 +1,197 @@
+﻿@model SMS.Models.RegViewModel
+
+@{
+    ViewBag.Title = "BulkDirectFeeVoucher";
+}
+
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">
+            Print Bulk Fee Voucher
+            <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-sm" style="float: right;">Read Me</a>
+        </h3>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">  Usefull Info</h4>
+                    </div>
+                    <div class="modal-body">
+                        You can download fee voucher of whole class.
+                        Enter session -------> Enter class --------> Select section --------> Enter Voucher due date --------> Select month --------> Select year ---------> Click Print Voucher
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+
+
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    Oh snap! @TempData["Error"].
+                </div>
+            }
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    Success! @TempData["Success"].
+                </div>
+            }
+            @if (TempData["Info"] != null)
+            {
+                <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    Info! @TempData["Info"].
+                </div>
+            }
+        </div>
+        <div id="main-wrapper">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-white">
+                        <div class="panel-body">
+                            <div id="rootwizard">
+                                <div class="row m-b-lg">
+                                    <div class="col-md-12">
+                                        <form action="~/Student/BulkDirectFeeVoucher" method="post">
+                                            <div class="row">
+                                                <div class="form-group col-md-3">
+                                                    <label for="ageRangeField">Campus</label>
+                                                    @Html.DropDownList("camId", (SelectList)ViewData["Campus"], new { required = "required", @class = "form-control" })
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label for="ageRangeField">Session</label>
+                                                    @Html.DropDownList("sesId", (SelectList)ViewData["Session"], new { required = "required", @class = "form-control" })
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label for="ageRangeField">Class</label>
+                                                    @Html.DropDownList("classId", (SelectList)ViewData["Class"], "Select Class", new { required = "required", @class = "form-control" })
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label for="ageRangeField">Section</label>
+                                                    @Html.DropDownList("secId", (SelectList)ViewData["Section"], "Select Section", new { required = "required", @class = "form-control" })
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label for="ageRangeField">Fee</label>
+                                                    @Html.DropDownList("feeTypeId", (SelectList)ViewData["FeeType"], "Select Fee", new { required = "required", @class = "form-control" })
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label for="ageRangeField">Fee Amount</label>
+                                                    <input type="number" min="0" class="form-control" name="Amount" required>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label for="ageRangeField">Voucher Month</label>
+                                                    <input type="text" class="form-control date-picker" name="feeMonth" required>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label for="exampleInputName2">Voucher Due Date</label>
+                                                    <input type="text" class="form-control date-picker" name="Due" required>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-12">
+                                                    <input class="btn btn-primary" type="submit" value="Print Voucher">
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <hr />
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- Row -->
+        </div><!-- Main Wrapper -->
+    </div>
+
+</div>
+<script src="../../assets/plugins/jquery/jquery-3.1.0.min.js"></script>
+
+
+
+<script type="text/javascript">
+    $(function () {
+        $(".table").on('change', '.checkthis', function () {
+            if ($(this).prop('checked')) {
+
+                $("#btnOn").show();
+            }
+            //else {
+
+            //    $("#btnOn").hide();
+            //}
+
+        });
+    });
+
+</script>
+
+<script type="text/javascript">
+
+    function getAllDetails() {
+        var data = [];
+
+        $('tr.Data').each(function () {
+            if ($(this).find("#check").prop("checked") == true) {
+                var sesId = $(this).find("#sesId").val();
+                var classId = $(this).find("#classId").val();
+                var secId = $(this).find("#secId").val();
+                var feeId = $(this).find("#feeId").val();
+
+            }
+                var alldata = {
+                    'sesId': sesId,
+                    'classId': classId,
+                    'secId': secId,
+                    'feeTypeId': feeId
+
+                }
+            data.push(alldata);
+
+        });
+        return data;
+    }
+    $("#btnOn").click(function (e) {
+        var data = JSON.stringify(getAllDetails());
+        var feemonth = $("#FeeMonth").val();
+        var Due = $("#DueDate").val();
+        var bank = $("#BankId").val();
+        if (bank == 0) {
+            bank = "0000";
+        }
+        var dataObject = JSON.stringify({
+            FeeMonth: feemonth,
+            DueDate: Due,
+            BankId: bank,
+        });
+
+        $.ajax({
+            url: "@Url.Action("_GenBulkVoucher", "Student")",
+            type: "Post",
+            datatype: 'json',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify({ 'Ids': data, 'Data': dataObject }),
+
+            success: function (data) {
+                {
+
+                    $("#Voucher").html(data);
+                }
+            },
+            error: function (e) {
+                alert("Error " + e + "");
+
+            }
+        });
+
+    });
+</script>
+

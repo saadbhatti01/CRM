@@ -1,0 +1,54 @@
+﻿@model SMS.Models.SubMarkType
+@{
+    ViewBag.Title = "UpdateSubjectMarkType";
+}
+@using (Html.BeginForm("UpdateSubjectMarkType", "Examination", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="page-inner">
+        <div class="panel-title">
+            <h3 class="breadcrumb-header"> Update Subject Mark Type</h3>
+        </div>
+        <div id="main-wrapper">
+            <div class="row">
+
+                <div class="col-md-12">
+
+                    <div class="panel panel-white">
+                        <div class="panel-body">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(model => model.smtId)
+
+                            <div class="col-md-3">
+
+                                <div class="form-group">
+                                    <label>Mark Type Name</label>
+                                    @Html.EditorFor(model => model.smtName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.smtName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 form-group">
+                                <label for="ageRangeField">Mark Type Status</label>
+                                <div class="checkbox">
+                                    @Html.EditorFor(model => model.smtStatus)
+                                    @Html.ValidationMessageFor(model => model.smtStatus, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group">
+
+                                    <input type="submit" value="Save" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+
+

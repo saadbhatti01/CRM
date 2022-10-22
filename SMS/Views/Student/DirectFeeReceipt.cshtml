@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "DirectFeeReceipt";
+}
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">Download Direct Student Fee Receipt</h3>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["SuccessMessage"].
+            </div>
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-body">
+                        <div id="rootwizard">
+                            <div class="row m-b-lg">
+                                <div class="col-md-12">
+                                    <form action="~/Student/DirectFeeReceipt" method="post" id="ClassForm">
+                                        <div class="row">
+
+                                            <div class="form-group col-md-3">
+                                                <label for="exampleInputName2">Enter Roll Number</label>
+                                                <input type="text" class="form-control" name="RollNo" required>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="ageRangeField">Fee Type</label>
+                                                @Html.DropDownList("feeTypeId", (SelectList)ViewData["FeeType"], new { @Name = "feeId", required = "required", @class = "form-control" })
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="ageRangeField">Fee Month</label>
+                                                <input type="text" placeholder="" name="feeMonth" class="date-picker form-control" required>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-3">
+                                                <input class="btn btn-primary" type="submit" formtarget="_blank" value="Generate Voucher" name="submitButton">
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+
+                            </div>
+                            <hr />
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div><!-- Row -->
+        </div><!-- Main Wrapper -->
+
+    </div>
+</div>

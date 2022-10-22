@@ -1,0 +1,328 @@
+﻿
+@{
+    ViewBag.Title = "AddStdToShortCourse";
+}
+
+@{
+    var s = TempData["Std"] as SMS.Models.Student;
+}
+
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">
+            Short Course Received Fee
+            <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-sm" style="float: right;">Read Me</a>
+        </h3>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">  Usefull Info</h4>
+                    </div>
+                    <div class="modal-body">
+                        You can Recieve Short courses Fees here.
+                        Enter Roll Number -------> Click "SHOW" ,  by clicking you will see student information ----------->
+                        Select Class --------> Select Course , by selecting course name will show course details --------->
+                        Enter Paid Amount ---------> Enter Paid Date --------> (If you want to give discount then set discount %.)otherwise leave them empty  ----------->
+                        (If there is any due date then select date .)otherwise leave them empty --------> Click on "SAVE" button, by clicking you will see received fee details.
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+        </div>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["Success"].
+            </div>
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-body">
+                        <div id="rootwizard">
+                            <div class="row m-b-lg">
+                                <div class="col-md-6">
+                                    <form action="~/ShortCourse/AddStdToShortCourse" method="post">
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label for="exampleInputName2">Enter Roll Number</label>
+                                                <input type="text" placeholder="Enter Roll Number" class="form-control" name="StdRoll" id="nameField" required>
+                                            </div>
+
+                                            <div class="form-group col-md-12">
+
+                                                <input class="btn btn-primary" name="submitButton" type="submit" value="Show">
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <form action="" method="post">
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <input type="hidden" name="stdId" class="stdId" value="@ViewBag.StdId">
+                                                <input type="hidden" name="RollNo" value="@ViewBag.RollNo">
+                                                <label for="ageRangeField">Select Class</label>
+                                                @Html.DropDownList("classId", (SelectList)ViewData["Class"], "--Select Class--", new { required = "required", @class = "form-control", @onchange = "javascript:GetCourse(this.value);" })
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="ageRangeField">Select Course</label>
+                                                <select id="ddlCourse" name="scsId" class="courseId form-control" required></select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label for="nameField">Paid Amount</label>
+                                                <input type="number" placeholder="0" min="0" name="scReceivedFee" class="form-control" value="" required>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="nameField">Paid Date</label>
+                                                <input type="text" min="0" class="form-control date-picker" name="scfPaidDate" value="" required>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label for="nameField">Discount(if any)</label>
+                                                <input type="number" id="Dis" placeholder="0" min="0" name="scDiscount" value="" class="form-control">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="nameField">Upcomming Due Date(if any)</label>
+                                                <input type="text" s min="0" class="form-control date-picker" name="scPendingDate" value="">
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <input class="btn btn-primary" name="submitButton" type="submit" value="Save">
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <hr />
+                                </div>
+                                <div class="col-md-6">
+                                    @if (TempData["Std"] != null)
+                                    {
+                                        <div class="panel-heading clearfix">
+                                            <h2 class="panel-title">
+                                                <b>Student Detail</b>
+
+                                            </h2>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Student Name</th>
+                                                        <th>Roll Numer</th>
+                                                        <th>Contact No</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+
+                                                    <tr>
+                                                        <td>@s.pr.perName</td>
+                                                        <td>@s.stdRollNo</td>
+                                                        <td>@s.pr.perContactOne</td>
+                                                    </tr>
+                                                </tbody>
+
+
+                                            </table>
+                                        </div>
+                                    }
+                                </div>
+
+                                <div class="col-md-6">
+                                    @if (TempData["StdFee"] != null)
+                                    {
+                                        <div class="panel-heading clearfix">
+                                            <h2 class="panel-title">
+                                                <b>Student Fee Detail</b>
+
+                                            </h2>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Course</th>
+                                                        <th>Received(Rs)</th>
+                                                        <th>Pending(Rs.)</th>
+                                                        <th>Discount</th>
+
+                                                        <th>Pending Date</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                @foreach (var i in (List<SMS.Models.short_course_Registration>)TempData["StdFee"])
+                                                {
+                                                    <tr>
+                                                        <td>@i.scSub.scsName</td>
+                                                        <td>@i.scReceivedFee</td>
+                                                        <td>@i.scPendingFee</td>
+                                                        <td>@i.scDiscount</td>
+                                                        @if (i.scPendingFee != 0)
+                                                        {
+                                                            <td>@i.scPendingDate.ToString("dd-MMM-yyyy")</td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>---</td>
+                                                        }
+                                                        <td>
+                                                            <a title="Update Course Fee" class="counter" href="@Url.Action("UpdateShortCourseReceivedFee",  new { id = i.scrId, StdRoll = @ViewBag.RollNo })">
+                                                                <i class="fa fa-edit" style="font-size:14px"></i>
+                                                            </a>
+
+
+
+                                                            <a title="Update Course Status" class="counter" href="@Url.Action("UpdateShortCourseStatus", new { id = i.scrId , StdRoll = @ViewBag.RollNo })">
+                                                                <i class="fa fa-check-circle" style="font-size:13px"></i>
+                                                            </a>
+
+                                                            <a title="Delete Course Fees" class="counter" href="@Url.Action("DeleteShortCourseReceivedFee", new { id = i.scrId  , StdRoll = @ViewBag.RollNo })">
+                                                                <i class="fa fa-trash" style="font-size:13px;color:red"></i>
+                                                            </a>
+                                                            <a title="DOwnload Course Fees Receipt" class="counter" target="_blank" href="@Url.Action("DownloadFeeReceipt", new { id = i.scrId  , StdRoll = @ViewBag.RollNo })">
+                                                                <i class="fa fa-print" style="font-size:13px"></i>
+                                                            </a>
+                                                            @*@if (i.scStatus == "Completed")
+                                                                {
+                                                                    <a title="Delete Course Fees" class="counter" href="@Url.Action("DeleteShortCourseReceivedFee", new { id = i.scrId  , StdRoll = @ViewBag.RollNo })">
+                                                                        <i class="fa fa-trash" style="font-size:13px;color:red"></i>
+                                                                    </a>
+                                                                }*@
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </table>
+                                        </div>
+                                    }
+                                </div>
+
+
+                                <div class="col-md-6">
+                                    <div id="Course">
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div><!-- Row -->
+    </div><!-- Main Wrapper -->
+
+</div>
+
+<script src="../../assets/plugins/jquery/jquery-3.1.0.min.js"></script>
+
+<script language="javascript" type="text/javascript">
+
+    function GetCourse(_classId) {
+
+        if (_classId > 0) {
+            var procemessage = "<option value='0'> Please wait...</option>";
+            $("#ddlCourse").html(procemessage).show();
+            var url = "/ShortCourse/PopulatCourse/";
+
+            $.ajax({
+                url: url,
+                data: { ClassId: _classId },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup = "<option value='0'>---Select Course---</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#ddlCourse").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("Whooaaa! Something went wrong..");
+                }
+            });
+        } else {
+            var markup = "<option value='0'>---Select Course---</option>";
+            $("#ddlCourse").html(markup).show();
+        }
+    }
+</script>
+<script type="text/javascript">
+    $(function () {
+        $("#ddlCourse").change(function (event) {
+            var subId = $(this).val();
+            if (subId != "" || subId != null) {
+                $.ajax({
+                    url: "@Url.Action("_ShortSub", "ShortCourse")",
+                    data: { SubId: subId },
+                    type: "Get",
+                    dataType: "html",
+                    success: function (data) {
+                        //Whatever result you have got from your controller with html partial view replace with a specific html.
+                        // HTML DOM replace
+                        $("#Course").html(data);
+                    }
+                });
+            } else {
+
+            }
+
+        });
+    });
+</script>
+
+<script type="text/javascript">
+ $(function(){
+
+     $(".courseId").change(function () {
+
+         var t = $(this).val();
+         var StdId = $(".stdId").val();
+
+             if (t !== "") {
+                 $.post("@Url.Action("DiscountCheck", "ShortCourse")?sId=" + StdId + "&val= " + t, function(res) {
+                     if (res.Success === "true")
+                     {
+                         //enable the text boxes and set the value
+
+                         $("#Dis").prop('readonly', true);
+                     }
+
+                     else
+                     {
+                         $("#Dis").prop('readonly', false);
+                     }
+                 });
+             }
+
+
+        });
+ });
+
+</script>

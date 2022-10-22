@@ -1,0 +1,626 @@
+﻿
+@{
+    ViewBag.Title = "Mark";
+    Layout = null;
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Student Management System is a very user-friendly online web based software for your institute  management.">
+    <meta name="keywords" content="SMS, Student Management System, Student Management System">
+    <meta name="author" content="Universal Solz">
+    <!-- The above 6 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <!-- Title -->
+    <title>Student Management System(ERP)</title>
+    <link rel="shortcut icon" href="~/img/logo.png" type="image/x-icon">
+
+    <!-- Styles -->
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <link href="../../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../../assets/plugins/icomoon/style.css" rel="stylesheet">
+    <link href="../../assets/plugins/uniform/css/default.css" rel="stylesheet" />
+    <link href="../../assets/plugins/switchery/switchery.min.css" rel="stylesheet" />
+
+    <!-- Theme Styles -->
+    <link href="../../assets/css/space.min.css" rel="stylesheet">
+    <link href="../../assets/css/custom.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="text-center">
+    <div class="page-title">
+        <h2 class="page-header text-center">Mark your Attendance</h2>
+    </div>
+    <!-- /Page Header -->
+    <!-- Page Inner -->
+    <div class="page-inner">
+        @if (TempData["Error"] != null)
+        {
+            <div id="Error" class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["Success"] != null)
+        {
+            <div id="Success" class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["Success"].
+            </div>
+
+        }
+        @if (TempData["Marked"] != null)
+        {
+            <div id="Info" class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Marked"]
+            </div>
+        }
+        <div id="main-wrapper">
+            <div class="row">
+
+
+                @{
+                    var s = TempData["Std"] as SMS.Models.Student;
+                    var p = TempData["Person"] as SMS.Models.Person;
+                }
+                @if (s != null)
+                {
+                    <div class="col-md-12">
+                        <div class="panel panel-white">
+
+
+                            <div class="panel-body">
+                                <form action="" method="post">
+
+                                    <div class="col-md-8">
+                                        <div class="row">
+                                            <div class=" col-md-4 col-sm-offset-5  form-group">
+                                                <input type="text" placeholder="" id="RFID" name="RFID" required class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label for="ageRangeField" style="font-size:30px;">Name:</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 form-group">
+                                                <label for="ageRangeField" id="name" style="font-size:30px;">
+                                                    @if (s != null)
+                                                    {@s.pr.perName}
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label for="ageRangeField" style="font-size:30px;">Roll No:</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 form-group">
+                                                <label for="ageRangeField" id="name" style="font-size:30px;">
+                                                    @if (s != null)
+                                                    {@s.stdRollNo}
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label for="ageRangeField" style="font-size:30px;">Class:</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 form-group">
+                                                <label for="ageRangeField" id="name" style="font-size:30px;">
+                                                    @if (s != null)
+                                                    {@s.cls.classname}
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label for="ageRangeField" style="font-size:30px;">Section:</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 form-group">
+                                                <label for="ageRangeField" id="name" style="font-size:30px;">
+                                                    @if (s != null)
+                                                    {@s.sec.secName}
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label for="ageRangeField" style="font-size:30px;">Status:</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 form-group">
+                                                <label for="ageRangeField" id="name" style="font-size:30px;">
+                                                    @if (s != null)
+                                                    {@s.stdStatus}
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label for="ageRangeField" style="font-size:30px;">Attendance:</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 form-group">
+                                                <label for="ageRangeField" id="name" style="font-size:30px;">
+                                                    @ViewBag.attenType
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                </form>
+                                <div class="col-md-4">
+                                    @if (s != null)
+                                    {<img src="~/Images/@s.pr.perImage" alt="Image" height="280" width="200" style="padding-top:100px;" />}
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                }
+                else if (p != null)
+                {
+                    <div class="col-md-12">
+                        <div class="panel panel-white">
+
+
+                            <div class="panel-body">
+
+
+                                <form action="" method="post" name="ClassForm">
+
+                                    <div class="col-md-8">
+                                        <div class="row">
+                                            <div class=" col-md-4 col-sm-offset-5  form-group">
+                                                <input type="text" placeholder="" id="RFID" name="RFID" required class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label for="ageRangeField" style="font-size:30px;">Name:</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 form-group">
+                                                <label for="ageRangeField" id="name" style="font-size:30px;">
+                                                    @if (p != null)
+                                                    {@p.perName}
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+
+                                                <div class="form-group">
+
+                                                    <label for="ageRangeField" style="font-size:30px;">
+                                                        Code No:
+
+
+                                                    </label>
+
+
+
+                                                </div>
+
+                                            </div>
+                                            <div class="col-sm-6 form-group">
+                                                <label for="ageRangeField" id="name" style="font-size:30px;">
+                                                    @if (p != null)
+                                                    {@p.perCode}
+                                                </label>
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+
+                                            <div class="col-sm-4">
+
+                                                <div class="form-group">
+
+                                                    <label for="ageRangeField" style="font-size:30px;">
+                                                        Role:
+
+
+                                                    </label>
+
+
+
+                                                </div>
+
+                                            </div>
+                                            <div class="col-sm-6 form-group">
+                                                <label for="ageRangeField" id="name" style="font-size:30px;">
+                                                    @if (p != null)
+                                                    {@p.role.name}
+                                                </label>
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+
+                                            <div class="col-sm-4">
+
+                                                <div class="form-group">
+
+                                                    <label for="ageRangeField" style="font-size:30px;">
+                                                        Contact:
+
+
+                                                    </label>
+
+
+
+                                                </div>
+
+                                            </div>
+                                            <div class="col-sm-6 form-group">
+                                                <label for="ageRangeField" id="name" style="font-size:30px;">
+                                                    @if (p != null)
+                                                    {@p.perContactOne}
+                                                </label>
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+
+                                            <div class="col-sm-4">
+
+                                                <div class="form-group">
+
+                                                    <label for="ageRangeField" style="font-size:30px;">
+                                                        Blood:
+
+
+                                                    </label>
+
+
+
+                                                </div>
+
+                                            </div>
+                                            <div class="col-sm-6 form-group">
+                                                <label for="ageRangeField" id="name" style="font-size:30px;">
+                                                    @if (p != null)
+                                                    {@p.perBloodGrp}
+                                                </label>
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+
+                                            <div class="col-sm-4">
+
+                                                <div class="form-group">
+
+                                                    <label for="ageRangeField" style="font-size:30px;">
+                                                        Attendance:
+
+
+                                                    </label>
+
+
+
+                                                </div>
+
+                                            </div>
+                                            <div class="col-sm-6 form-group">
+                                                <label for="ageRangeField" id="name" style="font-size:30px;">
+                                                    @ViewBag.attenType
+                                                </label>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </form>
+                                <div class="col-md-4">
+                                    @if (p != null)
+                                    {<img src="~/Images/@p.perImage" alt="Image" height="200" width="200" style="padding-top:100px;" />}
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                }
+                else
+                {
+
+                    <div class="col-md-12">
+                        <div class="panel panel-white">
+
+
+                            <div class="panel-body">
+
+                                <form action="" method="post" name="ClassForm">
+
+                                    <div class="col-md-8">
+                                        <div class="row">
+                                            <div class=" col-md-4 col-sm-offset-5  form-group">
+                                                <input type="text" placeholder="" id="RFID" name="RFID" required class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label for="ageRangeField" style="font-size:30px;">Name:</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 form-group">
+                                                <label for="ageRangeField" id="name" style="font-size:30px;"></label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+
+                                                <div class="form-group">
+
+                                                    <label for="ageRangeField" style="font-size:30px;">
+                                                        Roll No:
+
+
+                                                    </label>
+
+
+
+                                                </div>
+
+                                            </div>
+                                            <div class="col-sm-6 form-group">
+                                                <label for="ageRangeField" id="name" style="font-size:30px;"></label>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+
+                                            <div class="col-sm-4">
+
+                                                <div class="form-group">
+
+                                                    <label for="ageRangeField" style="font-size:30px;">
+                                                        Class:
+
+
+                                                    </label>
+
+
+
+                                                </div>
+
+                                            </div>
+                                            <div class="col-sm-6 form-group">
+                                                <label for="ageRangeField" id="name" style="font-size:30px;"></label>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+
+                                            <div class="col-sm-4">
+
+                                                <div class="form-group">
+
+                                                    <label for="ageRangeField" style="font-size:30px;">
+                                                        Section:
+
+
+                                                    </label>
+
+
+
+                                                </div>
+
+                                            </div>
+                                            <div class="col-sm-6 form-group">
+                                                <label for="ageRangeField" id="name" style="font-size:30px;"></label>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+
+                                            <div class="col-sm-4">
+
+                                                <div class="form-group">
+
+                                                    <label for="ageRangeField" style="font-size:30px;">
+                                                        Status:
+
+
+                                                    </label>
+
+
+
+                                                </div>
+
+                                            </div>
+                                            <div class="col-sm-6 form-group">
+                                                <label for="ageRangeField" id="name" style="font-size:30px;"></label>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+
+                                            <div class="col-sm-4">
+
+                                                <div class="form-group">
+
+                                                    <label for="ageRangeField" style="font-size:30px;">
+                                                        Attendance:
+
+
+                                                    </label>
+
+
+
+                                                </div>
+
+                                            </div>
+                                            <div class="col-sm-6 form-group">
+                                                <label for="ageRangeField" id="name" style="font-size:30px;"></label>
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="row">
+                    <div class="column column-offset-20">
+                        <div style="font-size:45px; color:cornflowerblue; width:100%">
+                            <b>@DateTime.Now.ToString("dd-MMM-yyyy")</b>
+                            <b><span id="clock"></span></b>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- Row -->
+        </div><!-- Main Wrapper -->
+        <div class="page-footer col-sm-offset-5">
+            <p align="center">Powered by <a href="http://universalsolz.com/" target="_blank">Universal Solz</a></p>
+        </div>
+    </div><!-- /Page Inner -->
+    <!-- Javascripts -->
+
+    <script src="../../assets/plugins/jquery/jquery-3.1.0.min.js"></script>
+    <script src="../../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="../../assets/plugins/uniform/js/jquery.uniform.standalone.js"></script>
+    <script src="../../assets/plugins/switchery/switchery.min.js"></script>
+    <script src="../../assets/js/space.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            setTimeout(function () {
+                $("#Success").fadeOut();
+            }, 8000);
+        });
+        $(document).ready(function () {
+            setTimeout(function () {
+                $("#Error").fadeOut();
+            }, 8000);
+        });
+        $(document).ready(function () {
+            setTimeout(function () {
+                $("#Info").fadeOut();
+            }, 8000);
+        });
+    </script>
+    <script>
+
+        $(document).ready(function () {
+            $('#RFID').focus();
+        });
+    </script>
+
+    <script type="text/javascript">
+        setInterval("settime()", 1000);
+
+        function settime() {
+
+            var date = new Date();
+            var hours = date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
+            var am_pm = date.getHours() >= 12 ? "PM" : "AM";
+            hours = hours < 10 ? "0" + hours : hours;
+            var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+            var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+            var Time = hours + ":" + minutes + ":" + seconds + " " + am_pm;
+
+
+
+            var dateTime = new Date();
+            var hour = dateTime.getHours();
+            var minute = dateTime.getMinutes();
+            var second = dateTime.getSeconds();
+
+            if (minute < 10)
+                minute = "0" + minute;
+
+            if (second < 10)
+                second = "0" + second;
+
+            var time = "" + hour + ":" + minute + ":" + second;
+
+            document.getElementById("clock").innerHTML = Time;
+
+        }
+    </script>
+
+
+
+    <script>
+    $('#RFID').attr('maxlength', '10');
+    $(document).on('keyup', '#RFID', function (e) {
+        if ($(this).val().length >= 10) {
+            var ID = $(this).val();
+            var Id = $('#RFID').val();
+            $.ajax({
+                    url: "@Url.Action("Mark", "Attendance")",
+                    data: { RFID: Id},
+                    type: "Get",
+                    dataType: "html",
+                    success: function (data) {
+
+
+                        //Whatever result you have got from your controller with html partial view replace with a specific html.
+                        // HTML DOM replace
+                        //$('#name').html("");
+                        //$(data.Name).appendTo('#name');
+
+                        $("#card").html(data);
+
+
+                    }
+                });
+
+            document.getElementById("namee").innerHTML = "Hi Me";
+            $('#RFID').val('');
+            $('#RFID').focus();
+
+        }
+    });
+    </script>
+
+
+</body>
+</html>

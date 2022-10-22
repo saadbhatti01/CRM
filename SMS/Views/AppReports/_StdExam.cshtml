@@ -1,0 +1,156 @@
+﻿
+
+<script type="text/javascript">
+    function print1() {
+        var prtContent = document.getElementById('Print');
+        var mywindow = window.open('', '', 'height=700,width=900');
+        mywindow.document.write('<html><head>');
+        mywindow.document.write('<link href = "/Content/bootstrap.min.css" rel = "stylesheet" />')
+        mywindow.document.write('<link href = "/Content/Print.css" rel = "stylesheet" />')
+        mywindow.document.write('</head><body>');
+        mywindow.document.write(prtContent.innerHTML);
+        mywindow.document.write('</body></html>');
+        mywindow.document.close();
+        setTimeout(function () {
+            mywindow.print();
+            mywindow.close();
+        }, 500)
+
+    }
+</script>
+
+@if (TempData["No"] != null)
+{
+    <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        Info! @TempData["No"].
+    </div>
+}
+
+@if (TempData["StdMarks"] != null)
+{
+    <div>
+        <input type="button" class="btn btn-success" value="Print Report" onclick="print1()" />
+    </div>
+    <br />
+    <div id="table-wrapper">
+        <div id="table-scroll">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Roll #</th>
+                            <th>Subject</th>
+                            <th>Exam</th>
+                            <th>Oral</th>
+                            <th>Obj</th>
+                            <th>Sub</th>
+                            <th>Obtain</th>
+                            <th>Total</th>
+
+                        </tr>
+                    </thead>
+
+                    @foreach (var i in (List<SMS.Models.StdObtainMarks>)TempData["StdMarks"])
+                    {
+                        <tbody>
+                            <tr>
+                                <td>@i.std.pr.perName</td>
+                                <td>@i.std.stdRollNo</td>
+                                <td>@i.sb.subName-@i.sb.subCode</td>
+                                <td>@i.et.etname</td>
+                                <td>@i.smt1</td>
+                                <td>@i.smt2</td>
+                                <td>@i.smt3</td>
+                                <td>@i.totalObtainMarks</td>
+                                <td>@i.subTotalMarks</td>
+                            </tr>
+                        </tbody>
+                    }
+
+
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+}
+
+@if (TempData["StdMarks"] != null)
+{
+    <div hidden id="Print">
+        <div class="panel-heading clearfix">
+            @if (Session["InsName"] != null)
+            {
+                <p>
+                    <img src="@Session["InsImage"]" width="65" height="65" />
+                    <h2 style="text-align: center;">@Session["InsName"]</h2>
+                    <h3 style="text-align: center;">Student Exam Report</h3>
+                </p>
+            }
+            @if (@ViewBag.ReportNo != null)
+            {
+                if (@ViewBag.ReportNo == 1)
+                {
+                    <p style="text-align: center;">Session: @TempData["Session"], Class: @TempData["ClassName"] </p>
+                }
+                if (@ViewBag.ReportNo == 2)
+                {
+                    <p style="text-align: center;">Session: @TempData["Session"], Class: @TempData["ClassName"], Section: @TempData["Section"], </p>
+                }
+                if (@ViewBag.ReportNo == 3)
+                {
+                    <p style="text-align: center;">Session: @TempData["Session"], Class: @TempData["ClassName"],  Section: @TempData["Section"], @TempData["Subject"]  </p>
+                }
+                if (@ViewBag.ReportNo == 4)
+                {
+                    <p style="text-align: center;">Session: @TempData["Session"], Class: @TempData["ClassName"], Section: @TempData["Section"], Exam Type: @TempData["Exam"]  </p>
+                }
+            }
+        </div>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Roll #</th>
+                    <th>Subject</th>
+                    <th>Exam</th>
+                    <th>Oral</th>
+                    <th>Obj</th>
+                    <th>Sub</th>
+                    <th>Obtain</th>
+                    <th>Total</th>
+
+                </tr>
+            </thead>
+
+            @foreach (var i in (List<SMS.Models.StdObtainMarks>)TempData["StdMarks"])
+            {
+                <tbody>
+                    <tr>
+                        <td>@i.std.pr.perName</td>
+                        <td>@i.std.stdRollNo</td>
+                        <td>@i.sb.subName-@i.sb.subCode</td>
+                        <td>@i.et.etname</td>
+                        <td>@i.smt1</td>
+                        <td>@i.smt2</td>
+                        <td>@i.smt3</td>
+                        <td>@i.totalObtainMarks</td>
+                        <td>@i.subTotalMarks</td>
+                    </tr>
+                </tbody>
+            }
+
+
+
+        </table>
+
+
+    </div>
+}
+
+
+

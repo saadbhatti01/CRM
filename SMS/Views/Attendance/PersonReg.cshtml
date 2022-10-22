@@ -1,0 +1,216 @@
+﻿
+@{
+    ViewBag.Title = "PersonReg";
+}
+@{
+    var std = TempData["Std"] as SMS.Models.Student;
+    var person = TempData["Person"] as SMS.Models.Person;
+}
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">
+            Attendance Registration
+            <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-sm" style="float: right;">Read Me</a>
+        </h3>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">  Usefull Info</h4>
+                    </div>
+                    <div class="modal-body">
+                        You can Registor Student, Teacher, Data Entry Operator  for attendence.
+                        Assign Barcode or RFID to each role.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["Success"].
+            </div>
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-body">
+                        <div id="rootwizard">
+                            <div class="row m-b-lg">
+                                <div class="col-md-6">
+                                    <form action="~/Attendance/PersonReg" method="post">
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label for="ageRangeField">Select Role<span style="color:red">*</span></label>
+                                                @Html.DropDownList("roleId", (SelectList)ViewData["Role"], "--Select Role--", new { required = "required", @class = "form-control" })
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="ageRangeField" id="code">Enter Code</label>
+                                                <input type="text" placeholder="" name="Code" id="nameField" class="form-control" required>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <input class="btn btn-primary" name="submitButton" type="submit" value="Show">
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <hr />
+                                    <form action="~/Attendance/PersonReg" method="post">
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label for="ageRangeField">Barcode</label>
+                                                <input type="text" placeholder="" name="prBarcode" value="@ViewBag.Code" id="nameField" class="form-control" readonly>
+                                                <input type="hidden" placeholder="" name="roleId" value="@ViewBag.roleId" id="nameField" readonly>
+                                                <input type="hidden" placeholder="" name="perId" value="@ViewBag.perId" id="nameField" readonly>
+                                            </div>
+                                            <input type="hidden" placeholder="" name="perId"
+                                                   value=" @if(std != null)
+                                               {
+                                                    @std.pr.perId
+                                               }" id="nameField">
+                                            <input type="hidden" placeholder="" name="perId"
+                                                   value=" @if(person != null)
+                                               {
+                                                    @person.perId
+                                               }" id="nameField">
+                                            <div class="form-group col-md-6">
+                                                <label for="ageRangeField">Enter RFID</label>
+                                                <input type="text" placeholder="" name="prRFID" value="" class="form-control" id="nameField">
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                             <div class="form-group col-md-12">
+                                                <input class="btn btn-primary" name="submitButton" type="submit" value="Save">
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <hr />
+                                </div>
+                                <div class="col-md-6">
+                                    @if (TempData["Std"] != null)
+                                    {
+                                        <div class="panel-heading clearfix">
+                                            <h2 class="panel-title">
+                                                <b>Student Detail</b>
+
+                                            </h2>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Roll #</th>
+                                                        <th>Contact #</th>
+                                                        <th>Image</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tr>
+                                                    <td>@std.pr.perName</td>
+                                                    <td>@std.stdRollNo</td>
+                                                    <td>@std.pr.perContactOne</td>
+                                                    <td>
+                                                        <img src="~/Images/@std.pr.perImage" alt="Image" height="40" width="40" />
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="col-md-6">
+                                    @if (TempData["Person"] != null)
+                                    {
+                                        <div class="panel-heading clearfix">
+                                            <h2 class="panel-title">
+                                                <b>Person Detail</b>
+
+                                            </h2>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Code</th>
+                                                        <th>Contact Number</th>
+                                                        <th>Image</th>
+                                                    </tr>
+                                                </thead>
+                                                <tr>
+                                                    <td>@person.perName</td>
+                                                    <td>@person.perCode</td>
+                                                    <td>@person.perContactOne</td>
+                                                    <td>
+                                                        <img src="~/Images/@person.perImage" alt="Image" height="40" width="40" />
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    }
+                                </div>
+
+
+
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div><!-- Row -->
+    </div><!-- Main Wrapper -->
+
+</div>
+
+
+<script src="../../assets/plugins/jquery/jquery-3.1.0.min.js"></script>
+
+
+<script type="text/javascript">
+    $(function () {
+
+        $("#roleId").change(function () {
+
+            var role = $(this).val();
+            if (role == 3) {
+                $("#code").text('Enter Roll Number');
+
+            } else  {
+
+                $("#code").text('Enter Code');
+            }
+
+
+        });
+    });
+
+</script>

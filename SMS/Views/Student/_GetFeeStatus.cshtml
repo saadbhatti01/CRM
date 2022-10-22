@@ -1,0 +1,279 @@
+﻿<script type="text/javascript">
+    function print1() {
+        var prtContent = document.getElementById('Print');
+        var mywindow = window.open('', '', 'height=1000,width=1400');
+        mywindow.document.write('<html><head>');
+        mywindow.document.write('<link href = "/Content/bootstrap.min.css" rel = "stylesheet" />')
+        mywindow.document.write('<link href = "/Content/Print.css" rel = "stylesheet" />')
+        mywindow.document.write('</head><body>');
+        mywindow.document.write(prtContent.innerHTML);
+        mywindow.document.write('</body></html>');
+        mywindow.document.close();
+        setTimeout(function () {
+            mywindow.print();
+            mywindow.close();
+        }, 500)
+
+    }
+</script>
+
+@if (TempData["No"] != null)
+{
+    <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        Info! @TempData["No"].
+    </div>
+}
+
+@if (TempData["Fee"] != null)
+{
+    double TotalFee = 0;
+    <div>
+        <input type="button" class="btn btn-success" value="Print Report" onclick="print1()" />
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Roll No
+                </th>
+                <th>
+                    Session
+                </th>
+                <th>
+                    Section
+                </th>
+                <th>
+                    Class
+                </th>
+                <th>
+                    Fee
+                </th>
+                <th>
+                    Amount(Rs.)
+                </th>
+                <th>
+                    Pending(Rs.)
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Date
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+
+            @foreach (var i in (List<SMS.Models.StdFeeDetail>)TempData["Fee"])
+            {
+                <tr>
+                    <td hidden>@i.feeId</td>
+                    <td>@i.Stdname</td>
+                    <td>@i.RollNo</td>
+                    <td>@i.Ses</td>
+                    <td>@i.Sec</td>
+                    <td>@i.Class</td>
+                    <td>@i.Fee</td>
+                    <td>@i.FeeAmt</td>
+                    @if (i.FeePaidStatus == "Partial")
+                    {
+                        <td>@i.PandingAmt</td>
+                    }
+                    else
+                    {
+                        <td>0</td>
+                    }
+                    <td>@i.FeePaidStatus</td>
+
+                    <td>@i.FeeDate.ToString("dd MMM yyyy")</td>
+                    @if (i.FeePaidStatus == "UnPaid")
+                    {
+                        <td>---</td>
+                    }
+                    else
+                    {
+                        <td>
+                            <a title="Update Fee" class="counter" href="@Url.Action("UpdateDirectRecFee", new {  id = i.feeId  })">
+                                <i class="fa fa-edit" style="font-size:20px"></i>
+                            </a>
+                            &nbsp;
+                            <a title="Delete Fee" class="DelFee" href="#">
+                                <i class="fa fa-trash" style="font-size:20px;color:red"></i>
+                            </a>
+                        </td>
+                    }
+
+                </tr>
+
+                TotalFee = TotalFee + i.FeeAmt;
+            }
+            <h3>Total Fee  = @TotalFee/Rs. </h3>
+        </table>
+
+    </div>
+}
+
+@if (TempData["Fee"] != null)
+{
+    double TotalFee = 0;
+    <div hidden id="Print">
+        <div class="panel-heading clearfix">
+            @if (Session["InsName"] != null)
+            {
+                <p class="panel-title">
+                    <img src="@Session["InsImage"]" width="65" height="65" style="float:left;" />
+                    <h2 style="text-align: center;">@Session["InsName"]</h2>
+                    <h3 style="text-align: center;"> Student Fee Report [@TempData["Month"]-@TempData["Year"]]</h3>
+                </p>
+            }
+
+            @if (@ViewBag.ReportNo != null)
+            {
+                if (@ViewBag.ReportNo == 1)
+                {
+                    <p style="text-align: center;">Session: @TempData["Session"], '@TempData["Status"]' Students </p>
+                }
+                if (@ViewBag.ReportNo == 2)
+                {
+                    <p style="text-align: center;">Session: @TempData["Session"], Class: @TempData["ClassName"], '@TempData["Status"]' Students </p>
+                }
+                if (@ViewBag.ReportNo == 3)
+                {
+                    <p style="text-align: center;">Session: @TempData["Session"], Class: @TempData["ClassName"],  Section: @TempData["Section"], '@TempData["Status"]' Students </p>
+                }
+                if (@ViewBag.ReportNo == 4)
+                {
+                    <p style="text-align: center;">Session: @TempData["Session"], Class: @TempData["ClassName"], Section: @TempData["Section"], Fee Type: @TempData["FeeType"], '@TempData["Status"]' Students  </p>
+                }
+                if (@ViewBag.ReportNo == 5)
+                {
+                    <p style="text-align: center;">From Date: @TempData["fDate"], To Date: @TempData["tDate"],</p>
+                    <p style="text-align: center;">Session: @TempData["Session"], Class: @TempData["ClassName"], Section: @TempData["Section"], Fee Type: @TempData["FeeType"], '@TempData["Status"]' Students  </p>
+                }
+            }
+
+        </div>
+
+        <table class="table table-bordered">
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Roll No
+                </th>
+                <th>
+                    Session
+                </th>
+                <th>
+                    Section
+                </th>
+                <th>
+                    Class
+                </th>
+                <th>
+                    Fee
+                </th>
+                <th>
+                    Amount(Rs.)
+                </th>
+                <th>
+                    Pending(Rs.)
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Date
+                </th>
+            </tr>
+
+            @foreach (var i in (List<SMS.Models.StdFeeDetail>)TempData["Fee"])
+            {
+                <tr>
+                    <td>@i.Stdname</td>
+                    <td>@i.RollNo</td>
+                    <td>@i.Ses</td>
+                    <td>@i.Sec</td>
+                    <td>@i.Class</td>
+                    <td>@i.Fee</td>
+                    <td>@i.FeeAmt</td>
+                    @if (i.FeePaidStatus == "Partial")
+                    {
+                        <td>@i.PandingAmt</td>
+                    }
+                    else
+                    {
+                        <td>0</td>
+                    }
+                    <td>@i.FeePaidStatus</td>
+
+                    <td>@i.FeeDate.ToString("dd MMM yyyy")</td>
+
+                </tr>
+
+                TotalFee = TotalFee + i.FeeAmt;
+            }
+            <h3>Total Fee  = @TotalFee/Rs. </h3>
+        </table>
+
+    </div>
+}
+
+<script src="../../assets/plugins/jquery/jquery-3.1.0.min.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+
+        $(".table").on('click', '.DelFee', function () {
+            var r = confirm("Are you sure you want to delete this?");
+            if (r == false) {
+                return false;
+            }
+            else {
+
+            var FeeId = $(this).closest('tr').find('td').eq(0).text();
+            if (FeeId !== "") {
+                $.post("@Url.Action("DelDirectFee", "Student")?val=" + FeeId, function (res) {
+                    if (res.Success === "true") {
+                        alert("Student Fee Deleted successfully");
+                        var status = $("#Status").val();
+            var secId = $("#secId").val();
+            var sesId = $("#sesId").val();
+            var classId = $("#classId").val();
+            var month = $("#mon").val();
+                        var year = $("#yea").val();
+            var Fee = $("#feeTypeId").val();
+            if (Fee != "" || Fee != null) {
+                $.ajax({
+                    url: "@Url.Action("_GetFeeStatus", "Student")",
+                    data: { SesId: sesId, SecId: secId, ClassId: classId, fType: Fee, Status: status, Month: month, Year: year },
+                    type: "Get",
+                    dataType: "html",
+                    success: function (data) {
+                        //Whatever result you have got from your controller with html partial view replace with a specific html.
+                        // HTML DOM replace
+                        $("#FeeDetail").html(data);
+                    }
+                });
+            }
+
+
+
+                    }
+                    else {
+                        alert("Student Fee Not Deleted!");
+                    }
+                });
+            }
+        }
+        });
+    });
+
+</script>

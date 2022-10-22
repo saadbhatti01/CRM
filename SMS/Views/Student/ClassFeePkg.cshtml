@@ -1,0 +1,184 @@
+﻿
+@{
+    ViewBag.Title = "ClassFeePkg";
+}
+
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">
+            Make Class Fee Package
+            <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-sm" style="float: right;">Read Me</a>
+        </h3>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">  Usefull Info</h4>
+                    </div>
+                    <div class="modal-body">
+                        You can make class fee package.
+                        If you want to give discount upto any percentage then mention that digit, maximum discount means student can get discount upto decided percentage.
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+        </div>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["SuccessMessage"].
+            </div>
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-body">
+                        <div id="rootwizard">
+                            <div class="row m-b-lg">
+                                <div class="col-md-12">
+                                    <form action="~/Student/ClassFeePkg" method="post" name="ClassForm" id="ClassForm">
+                                        <div class="row">
+                                            <div class="form-group col-md-3">
+                                                <label for="exampleInputName">Session</label>
+                                                @Html.DropDownList("sesId", (SelectList)ViewData["Session"], "--Select Session--", new { @class = "form-control", required = "required" })
+                                            </div>
+                                            <div class="form-group  col-md-3">
+                                                <label for="exampleInputName2">Class</label>
+                                                @Html.DropDownList("classId", (SelectList)ViewData["Class"], "--Select Class--", new { @class = "form-control", required = "required" })
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="exampleInputEmail">Section</label>
+                                                @Html.DropDownList("secId", (SelectList)ViewData["Section"], "--Select Section--", new { @class = "form-control", required = "required", @id = "secId" })
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="ageRangeField">Fee Type</label>
+                                                @Html.DropDownList("feeTypeId", (SelectList)ViewData["FeeType"], "--Select Fee Type--", new { required = "required", @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-3">
+                                                <label for="ageRangeField">Fee Amount</label>
+                                                <input type="number" placeholder="" min="0" name="cfpAmt" class="form-control" id="nameField" required>
+                                            </div>
+
+                                            <div class="form-group col-md-3">
+                                                <label for="ageRangeField">Max Discount(%)</label>
+                                                <input type="number" placeholder="" min="0" name="cfpDis" class="form-control" id="MaxDic" required>
+                                            </div>
+
+                                            <div class="form-group col-md-1">
+                                                <label for="ageRangeField">.</label>
+                                                <input class="btn btn-primary" type="submit" value="Submit">
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-12">
+                            <div id="FeeDetail">
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div><!-- Row -->
+    </div><!-- Main Wrapper -->
+
+</div>
+
+<script src="../../assets/plugins/jquery/jquery-3.1.0.min.js"></script>
+
+<script>
+    function validateForm() {
+        var x = document.forms["ClassForm"]["MaxDic"].value;
+
+        if (x > 100) {
+            alert("Discount overloaded Muximum is 100.");
+            return false;
+        }
+        else {
+            return true;
+        }
+
+    }
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#secId").change(function (event) {
+            var secId = $(this).val();
+            var sesId = $("#sesId").val();
+            var classId = $("#classId").val();
+            if (secId != "" || secId != null) {
+                $.ajax({
+                    url: "@Url.Action("_ClassFeeDetail", "Student")",
+                    data: { SesId: sesId, SecId: secId, ClassId: classId },
+                    type: "Get",
+                    dataType: "html",
+                    success: function (data) {
+                        //Whatever result you have got from your controller with html partial view replace with a specific html.
+                        // HTML DOM replace
+                        $("#FeeDetail").html(data);
+                    }
+                });
+            } else {
+
+            }
+
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+            var secId = $("#secId").val();
+            var sesId = $("#sesId").val();
+            var classId = $("#classId").val();
+            if (secId != "" || secId != null) {
+                $.ajax({
+                    url: "@Url.Action("_ClassFeeDetail", "Student")",
+                    data: { SesId: sesId, SecId: secId, ClassId: classId },
+                    type: "Get",
+                    dataType: "html",
+                    success: function (data) {
+                        //Whatever result you have got from your controller with html partial view replace with a specific html.
+                        // HTML DOM replace
+                        $("#FeeDetail").html(data);
+                    }
+                });
+            } else {
+
+            }
+    });
+</script>

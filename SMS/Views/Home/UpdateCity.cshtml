@@ -1,0 +1,47 @@
+﻿@model SMS.Models.City
+
+@{
+    ViewBag.Title = "UpdateCity";
+}
+
+@using (Html.BeginForm("UpdateCity", "Home"))
+{
+    <div class="page-inner">
+        <div class="panel-title">
+            <h3 class="breadcrumb-header"> Update City</h3>
+        </div>
+        <div id="main-wrapper">
+            <div class="row">
+
+                <div class="col-md-12">
+
+
+                    <div class="panel panel-white">
+                        <div class="panel-body">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(model => model.CityId)
+                            
+                            
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>City Name</label>
+                                    @Html.EditorFor(model => model.CityName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.CityName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <br>
+                            <div class="col-md-3">
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

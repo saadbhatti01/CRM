@@ -1,0 +1,188 @@
+﻿@model SMS.Models.AccountHeader
+@{
+    ViewBag.Title = "AddAccountHeader";
+}
+
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">
+            Add Account Header
+            <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-sm" style="float: right;">Read Me</a>
+        </h3>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">  Usefull Info</h4>
+                    </div>
+                    <div class="modal-body">
+                        You can add All types of expense Headers
+                        Like: (Expenses ------> Bills, salaries -------> type name of bill, name of salaries.)
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+        </div>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["Success"].
+            </div>
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-body">
+                        <div id="rootwizard">
+                            <div class="row m-b-lg">
+                                <div class="col-md-12">
+                                    <form action="~/ExpenceAccount/AddAccountHeader" method="post">
+                                        <div class="row">
+                                            <div class="form-group col-md-4">
+                                                <label for="ageRangeField">Select Header</label>
+                                                @Html.DropDownList("subSubHeader", (SelectList)ViewData["Header"], "--Select Header--", new { required = "required", @class = "form-control", @onchange = "javascript:GetSubHeader(this.value);" })
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="ageRangeField">Sub Header</label>
+                                                <select id="subHeader" name="subHeader" class="form-control"></select>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="ageRangeField">Header Name</label>
+                                                <input type="text" name="headerName" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <input class="btn btn-primary" type="submit" id="show" value="Save">
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <hr />
+                                </div>
+                                <div class="col-md-12">
+
+                                    @if (TempData["No"] != null)
+                                    {
+                                        <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            Info! @TempData["No"].
+                                        </div>
+                                    }
+
+                                    @if (TempData["Header"] != null)
+                                    {
+                                        <br />
+                                        <div id="table-wrapper">
+                                            <div id="table-scroll">
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered">
+                                                        <tr>
+                                                            <th>
+                                                                Header Name
+                                                            </th>
+                                                            <th>
+                                                                Sub Header Name
+                                                            </th>
+                                                            <th>
+                                                                Sub Sub Header Name
+                                                            </th>
+                                                            <th>
+                                                                Code
+                                                            </th>
+                                                            <th>
+                                                                Visible
+                                                            </th>
+                                                            <th>
+                                                                Action
+                                                            </th>
+                                                        </tr>
+
+                                                        @foreach (var i in (List<SMS.Models.ExpenseVM>)TempData["Header"])
+                                                        {
+                                                        <tr>
+                                                            <td>@i.SubSUbHeader</td>
+                                                            <td>@i.SubHeader</td>
+                                                            <td>@i.Header</td>
+                                                            <td>@i.Code</td>
+                                                            <td>@i.Visible</td>
+                                                            <td>
+
+                                                                <a title="Update Entry" class="counter" href="@Url.Action("EditAccountHeader", new {  id = i.ahId  })">
+                                                                    <i class="fa fa-edit" style="font-size:20px"></i>
+                                                                </a>
+
+                                                                <a title="Delete Entry" class="counter" href="@Url.Action("DelAccountHeader", new { id = i.ahId })">
+                                                                    <i class="fa fa-trash" style="font-size:20px;color:red"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                        }
+                                                    </table>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div><!-- Row -->
+    </div><!-- Main Wrapper -->
+
+</div>
+
+<script src="../../assets/plugins/jquery/jquery-3.1.0.min.js"></script>
+
+<script language="javascript" type="text/javascript">
+
+    function GetSubHeader(_headerId) {
+        var procemessage = "<option value='0'> Please wait...</option>";
+        $("#subHeader").html(procemessage).show();
+        var url = "/ExpenceAccount/PopulatSubHeaderForHeader/";
+
+        $.ajax({
+            url: url,
+            data: { HeaderId: _headerId },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                var markup = "<option value='0'>Select Sub Header</option>";
+                for (var x = 0; x < data.length; x++) {
+                    markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                }
+                $("#subHeader").html(markup).show();
+            },
+            error: function (reponse) {
+                alert("Whooaaa! Something went wrong..");
+            }
+        });
+
+    }
+</script>

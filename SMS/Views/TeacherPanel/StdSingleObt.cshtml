@@ -1,0 +1,238 @@
+﻿
+@{
+    ViewBag.Title = "StdSingleObt";
+}
+
+
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">Student Obtain Marks</h3>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["SuccessMessage"].
+            </div>
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-body">
+                        <div id="rootwizard">
+                            <div class="row m-b-lg">
+                                <div class="col-md-6">
+                                    <form action="~/TeacherPanel/StdSingleObt" method="post">
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label for="exampleInputName2">Enter Roll Number</label>
+                                                <input type="text" placeholder="Enter Roll Number" class="form-control" name="StdRoll" id="nameField" required>
+                                            </div>
+
+                                            <div class="form-group col-md-12">
+
+                                                <input class="btn btn-primary" name="submitButton" type="submit" value="Show">
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <hr />
+                                    <form action="" method="post">
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label for="ageRangeField">Roll Number</label>
+                                                <input type="text" placeholder="" name="RollNo" class="form-control" value="@ViewBag.StdRoll" id="RollNo" required readonly>
+                                            </div>
+
+                                            <div class="form-group col-md-6">
+                                                <label for="ageRangeField">Student Name</label>
+                                                <input type="text" placeholder="" name="cfpAmt" class="form-control" value="@ViewBag.StdName" id="nameField" required readonly>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label for="ageRangeField">Session</label>
+                                                <input type="text" placeholder="" name="sesId" class="form-control" value="@ViewBag.StdSes" id="nameField" required readonly>
+                                            </div>
+
+                                            <div class="form-group col-md-6">
+                                                <label for="ageRangeField">Class</label>
+                                                <input type="text" placeholder="" class="form-control" name="classId" value="@ViewBag.StdClass" id="nameField" required readonly>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label for="ageRangeField">Section</label>
+                                                <input type="text" placeholder="" name="secId" class="form-control" value="@ViewBag.StdSec" id="nameField" required readonly>
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label for="ageRangeField">Exam Type</label>
+                                                @Html.DropDownList("etId", (SelectList)ViewData["ExamType"], "--Select Exam Type--", new { required = "required", @class = "form-control" })
+                                            </div>
+
+                                            <div class="form-group col-md-6">
+                                                <label for="ageRangeField">Subject</label>
+                                                @Html.DropDownList("subId", (SelectList)ViewData["SubJect"], "--Select Subject--", new { required = "required", @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-9">
+                                                @if (TempData["SUbName"] != null)
+                                                {
+
+                                                    foreach (var item in (IEnumerable<SMS.Models.StdObtDetail>)TempData["SUbName"])
+                                                    {
+                                                        <div class="col-sm-3">
+                                                            <label for="nameField">@item.sm1 </label>
+                                                        </div>
+
+                                                    }
+                                                }
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label for="nameField">Out of</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-sm-3">
+                                                <input type="number" placeholder="0" style="width: 6em" min="0" name="smt1" id="smt1" value="" class="form-control" required>
+                                            </div>
+                                            <div class="form-group  col-sm-3">
+                                                <input type="number" placeholder="0" style="width: 6em" min="0" name="smt2" id="smt2" value="" class="form-control" required>
+                                            </div>
+                                            <div class="form-group  col-sm-3">
+                                                <input type="number" placeholder="0" style="width: 6em" min="0" name="smt3" id="smt3" value="" class="form-control" required>
+                                            </div>
+                                            <div class="form-group col-sm-3">
+                                                <input type="number" placeholder="0" style="width: 6em" min="0" name="subTotalMarks" id="total" value="" class="form-control" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <input type="submit" value="Submit" class="btn btn-primary" />
+                                            </div>
+                                        </div>
+
+                                    </form>
+
+                                </div>
+                                <div class="col-md-6">
+                                    @if (TempData["StdMarks"] != null)
+                                    {
+                                        <div class="panel-heading clearfix">
+                                            <h2 class="panel-title">
+                                                <b>Student Marks Detail</b>
+                                                <a title="Print Student Report" class="counter" href="@Url.Action("PrintStdMarkSheet", new { stId = @ViewBag.StdId, ssId = @ViewBag.Ses, scId = @ViewBag.Sec, clId = @ViewBag.Class })">
+                                                    <i class="fa fa-print" style="font-size:25px; float:right"></i>
+                                                </a>
+                                            </h2>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Subject</th>
+                                                        <th>Exam</th>
+                                                        <th>Oral</th>
+                                                        <th>Obj</th>
+                                                        <th>Sub</th>
+                                                        <th>Obtain</th>
+                                                        <th>Total</th>
+                                                    </tr>
+                                                </thead>
+                                                @foreach (var i in (List<SMS.Models.StdObtainMarks>)TempData["StdMarks"])
+                                                {
+                                                    <tbody>
+
+                                                        <tr>
+                                                            <td>@i.sb.subName-@i.sb.subCode</td>
+                                                            <td>@i.et.etname</td>
+                                                            <td>@i.smt1</td>
+                                                            <td>@i.smt2</td>
+                                                            <td>@i.smt3</td>
+                                                            <td>@i.totalObtainMarks</td>
+                                                            <td>@i.subTotalMarks</td>
+                                                        </tr>
+                                                    </tbody>
+                                                }
+
+                                            </table>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- Row -->
+    </div><!-- Main Wrapper -->
+
+</div>
+
+<script src="../../assets/plugins/jquery/jquery-3.1.0.min.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+
+        $("#subId").change(function () {
+
+            var t = $(this).val();
+            var tss = $("#etId").val();
+            var ts = $("#RollNo").val();
+
+            if (t !== "") {
+                $.post("@Url.Action("SubMarks", "Examination")?t=" + t + "&tss=" + tss +  "&ts=" + ts, function (res) {
+                    if (res.Success === "true") {
+
+                        //enable the text boxes and set the value
+
+                        $("#smt1").prop('disabled', false).val(res.Data.s1);
+                        $("#smt2").prop('disabled', false).val(res.Data.s2);
+                        $("#smt3").prop('disabled', false).val(res.Data.s3);
+                        $("#total").prop('disabled', false).val(res.Data.Total);
+
+                    }
+                    else {
+
+                        $("#smt1").prop('disabled', false).val(res.Data.ss);
+                        $("#smt2").prop('disabled', false).val(res.Data.ss);
+                        $("#smt3").prop('disabled', false).val(res.Data.ss);
+                        $("#total").prop('disabled', false).val(res.Data.ss);
+                    }
+                });
+            } else {
+
+
+            }
+
+        });
+    });
+
+</script>
+
+

@@ -1,0 +1,89 @@
+﻿@model SMS.Models.short_course_Registration
+@{
+    ViewBag.Title = "UpdateShortCourseReceivedFee";
+}
+@{ 
+    var tfee = TempData["TotalFee"];
+    var recFee = Html.DisplayFor(model => model.scReceivedFee);
+    string fe = recFee.ToString();
+    int rFee = Convert.ToInt32(fe);
+    int totalfee = Convert.ToInt32(tfee);
+}
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">Update Short Course Received Fee</h3>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["Success"].
+            </div>
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-body">
+                        <div id="rootwizard">
+                            <div class="row m-b-lg">
+                                <div class="col-md-6">
+
+                                    @using (Html.BeginForm())
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                        @Html.HiddenFor(model => model.scrId)
+                                        <div class="row">
+                                            <div class="form-group col-md-4">
+                                                <input type="hidden" name="RollNo" value="@TempData["RollNo"]">
+                                                <label for="ageRangeField">Short Course</label>
+                                                @Html.DropDownList("scsId", (SelectList)ViewData["Course"], "--Short Course--", new { @disable = "disable", required = "required", @class = "form-control" })
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="ageRangeField">Received Fee</label>
+                                                @Html.EditorFor(model => model.scReceivedFee, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.scReceivedFee, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        if (totalfee != rFee)
+                                        {
+                                            <div class="row">
+                                                <div class="form-group col-md-4">
+                                                    <label for="ageRangeField">Discount</label>
+                                                    @Html.EditorFor(model => model.scDiscount, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.scDiscount, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        }
+                                        <div class="form-group col-md-12">
+                                            <input class="btn btn-primary" name="submitButton" type="submit" value="Update">
+                                        </div>
+
+                                    }
+
+                                    <hr />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- Row -->
+    </div><!-- Main Wrapper -->
+</div>
+

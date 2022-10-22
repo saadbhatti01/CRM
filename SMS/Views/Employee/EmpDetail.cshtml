@@ -1,0 +1,136 @@
+﻿@model SMS.Models.Person
+@{
+    ViewBag.Title = "EmpDetail";
+}
+
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">@Html.DisplayFor(model => model.perName)'s Info </h3>
+
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-body" id="Print">
+                        <div id="rootwizard">
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="exampleInputName"><b>Person Name:</b></label>
+                                    <label for="exampleInputName">&nbsp;&nbsp; @Html.DisplayFor(model => model.perName)</label>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="exampleInputName"><b>Father/Gaurdian Name:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.perGarName)
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="exampleInputName"><b>Person Code:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.perCode)
+                                </div>
+                            </div>
+
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="exampleInputName"><b>Email:</b> </label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.perEmail)
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="exampleInputName"><b>CNIC:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.perCNIC)
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="exampleInputName"><b>DOB:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.perDOB)
+                                </div>
+                            </div>
+
+                            <hr />
+                            <div class="row">
+
+                                <div class="col-md-3">
+                                    <label for="exampleInputName"><b>Blood Group:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.perBloodGrp)
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="exampleInputName"><b>Contact One:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.perContactOne)
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="exampleInputName"><b>Contact Two:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.perContactTwo)
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="exampleInputName"><b>Person Role:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.role.name)
+                                </div>
+                            </div>
+                            <hr />
+
+                            <div class="row">
+
+                                <div class="col-md-4">
+                                    <label for="exampleInputName"><b>City:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.city.CityName)
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="exampleInputName"><b>Area:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.area.AreaName)
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="exampleInputName"><b>Person Image:</b></label>
+                                    <img src="~/Images/@Model.perImage" alt="Image" height="35" width="35" />
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="exampleInputName"><b>Current Address:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.perCurrentAdrs)
+                                </div>
+
+                                <div class="col-lg-offset-6">
+                                    <label for="exampleInputName"><b>Permanent Address:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.perPermanantAdrs)
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <hr />
+                    <p>
+                        @Html.ActionLink("Edit", "EmpUpdate", new { id = Model.perId }) |
+                        @Html.ActionLink("Back to List", "ShowEmpData")
+                    </p>
+                </div>
+
+            </div>
+
+        </div><!-- Row -->
+    </div><!-- Main Wrapper -->
+
+</div>
+

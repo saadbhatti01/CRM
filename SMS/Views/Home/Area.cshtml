@@ -1,0 +1,108 @@
+﻿@model IEnumerable<SMS.Models.Area>
+
+@{
+    ViewBag.Title = "Area";
+}
+
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">Add Area</h3>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["SuccessMessage"].
+            </div>
+
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+
+
+                    <div class="panel-body">
+                        <form action="~/Home/Area" method="post">
+
+                            <div class="col-sm-3 form-group">
+
+                                <label for="ageRangeField">City</label><br>
+                                @Html.DropDownList("CityId", (SelectList)ViewData["City"], "--Select a City--", new { required = "required", @class = "form-control" })
+                            </div>
+                            <div class="col-sm-3 form-group">
+                                <label for="dateField">Area Name</label><br>
+                                <input type="text" id="nameField" class="form-control" name="AreaName" placeholder="">
+                               
+
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-white">
+
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+
+                                        <th>City Name</th>
+                                        <th>Area Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                @if (TempData["Area"] != null)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tbody>
+                                            <tr>
+                                                <td>@item.city.CityName</td>
+                                                <td>@item.AreaName</td>
+                                                <td>
+                                                    <a title="Update Area Name" class="counter" href="@Url.Action("UpdateArea", new { id = item.AreaId })">
+                                                        <i class="fa fa-edit" style="font-size:20px"></i>
+                                                    </a>
+                                                    <a title="Delete Area Name" class="counter" href="@Url.Action("DelArea", new { id = item.AreaId })">
+                                                        <i class="fa fa-trash" style="font-size:20px;color:red"></i>
+                                                    </a>
+                                                </td>
+                                             
+
+
+                                            </tr>
+                                        </tbody>
+                                    }
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>

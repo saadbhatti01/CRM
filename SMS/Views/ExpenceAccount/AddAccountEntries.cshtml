@@ -1,0 +1,164 @@
+﻿
+@{
+    ViewBag.Title = "AddAccountEntries";
+}
+
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">
+            Add Expense Entries
+            <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-sm" style="float: right;">Read Me</a>
+        </h3>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">  Usefull Info</h4>
+                    </div>
+                    <div class="modal-body">
+                        You can add Salaries, Bills or any type of expenses details of your institute. 
+                    <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+        </div>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["Success"].
+            </div>
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-body">
+                        <div id="rootwizard">
+                            <div class="row m-b-lg">
+                                <div class="col-md-12">
+                                    <form action="~/ExpenceAccount/AddAccountEntries" method="post">
+                                        <div class="row">
+                                            <div class="form-group col-md-3">
+                                                <label for="ageRangeField">Select Expense</label>
+                                                @Html.DropDownList("ahId", (SelectList)ViewData["Header"], "--Select Header--", new { required = "required", @class = "form-control", @onchange = "javascript:GetSubHeader(this.value);" })
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="ageRangeField">Amount</label>
+                                                <input type="number" name="amount" class = "form-control" required />
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="ageRangeField">Date</label>
+                                                <input type="text" name="postedDate" class = "form-control date-picker" required />
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="ageRangeField">Description</label>
+                                                <input type="text" name="description" class = "form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <input class="btn btn-primary" type="submit" id="show" value="Save">
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <hr />
+                                </div>
+                                <div class="col-md-12">
+
+                                    @if (TempData["No"] != null)
+                                    {
+                                        <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            Info! @TempData["No"].
+                                        </div>
+                                    }
+
+                                    @if (TempData["AccEntries"] != null)
+                                    {
+                                        <br />
+                                        <div id="table-wrapper">
+                                            <div id="table-scroll">
+                                                <div class="table-responsive">
+                                                    <div id="table-wrapper">
+                                                        <div id="table-scroll">
+                                                            <table class="table table-bordered">
+                                                                <tr>
+                                                                    <th>
+                                                                        Expense Name
+                                                                    </th>
+                                                                    <th>
+                                                                        Amount
+                                                                    </th>
+                                                                    <th>
+                                                                        Date
+                                                                    </th>
+                                                                    <th>
+                                                                        Description
+                                                                    </th>
+                                                                    <th>
+                                                                        Action
+                                                                    </th>
+                                                                </tr>
+
+                                                                @foreach (var i in (List<SMS.Models.AccountEntries>)TempData["AccEntries"])
+                                                                {
+                                                                    <tr>
+                                                                        <td>@i.ah.headerName</td>
+                                                                        <td>@i.amount</td>
+                                                                        <td>@i.postedDate.ToString("dd-MMM-yy")</td>
+                                                                        <td>@i.description</td>
+                                                                        <td>
+
+                                                                            <a title="Update Entry" class="counter" href="@Url.Action("EditAccountEntries", new {  id = i.aeId  })">
+                                                                                <i class="fa fa-edit" style="font-size:12px"></i>
+                                                                            </a>
+                                                                            &nbsp;
+                                                                            <a title="Delete Entry" class="counter" href="@Url.Action("DelAccountEntries", new { id = i.aeId })">
+                                                                                <i class="fa fa-trash" style="font-size:12px;color:red"></i>
+                                                                            </a>
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+                                                            </table>
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div><!-- Row -->
+    </div><!-- Main Wrapper -->
+
+</div>
+

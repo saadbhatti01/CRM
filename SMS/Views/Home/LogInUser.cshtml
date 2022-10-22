@@ -1,0 +1,123 @@
+﻿@model SMS.Models.Login
+@{
+    ViewBag.Title = "LogInUser";
+    Layout = null;
+}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from steelcoders.com/space/demo/theme/templates/admin1/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 12 Feb 2018 21:25:30 GMT -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Student Management System is a very user-friendly online web based software for your institute  management.">
+    <meta name="keywords" content="SMS, Student Management System, Student Management System">
+    <meta name="author" content="Universal Solz">
+    <!-- The above 6 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <!-- Title -->
+    <title>SMS</title>
+    <link rel="shortcut icon" href="~/img/logo.png" type="image/x-icon">
+    <!-- Styles -->
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <link href="../../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../../assets/plugins/icomoon/style.css" rel="stylesheet">
+    <link href="../../assets/plugins/uniform/css/default.css" rel="stylesheet" />
+    <link href="../../assets/plugins/switchery/switchery.min.css" rel="stylesheet" />
+
+    <!-- Theme Styles -->
+    <link href="../../assets/css/space.min.css" rel="stylesheet">
+    <link href="../../assets/css/custom.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+    <!-- Page Container -->
+    <div class="page-container">
+        <!-- Page Inner -->
+        <div class="page-inner login-page">
+            <div id="main-wrapper" class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 login-box">
+                        @if (TempData["Error"] != null)
+                        {
+                            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                Oh snap! @TempData["Error"].
+                            </div>
+                        }
+                        @if (TempData["SuccessMessage"] != null)
+                        {
+                            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                Oh snap! @TempData["SuccessMessage"].
+                            </div>
+
+                        }
+                        @if (TempData["Success"] != null)
+                        {
+                            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                Success! @TempData["Success"].
+                            </div>
+
+                        }
+                        @if (TempData["Info"] != null)
+                        {
+                            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                Oh snap! @TempData["Info"].
+                            </div>
+                        }
+                        <h6 class="login-title">Sign in to your account</h6>
+                        <form action="~/Home/LogInUser" method="post">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Email address</label>
+                                <input type="text" name="usrLogin" class="form-control" id="exampleInputEmail1">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Password</label>
+                                <input type="password" class="form-control" name="usrPassword" id="exampleInputPassword1">
+                            </div>
+                            <input type="submit" value="Login" class="btn btn-primary">
+
+                            @*<a href="index.html" class="btn btn-primary">Login</a>
+            <a href="register.html" class="btn btn-default">Register</a><br>
+            <a href="index.html" class="forgot-link">Forgot password?</a>*@
+                        </form>
+                        <br />
+                        <form action="~/Home/Download" method="post"> 
+                            <button class="btn btn-default" type="submit" name="submitButton" value="Web" title="Download Web User Manual"><i class="fa fa-download"> Web User Manual</i></button>
+                            @*<br />
+                            <button class="btn btn-default" type="submit" name="submitButton" value="Desktop"><i class="fa fa-download"> Desktop User Manual</i></button>
+                            <br />
+                            <button class="btn btn-default" type="submit"><i class="fa fa-download"> Desktop version</i></button>*@
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-footer col-sm-3">
+                <p align="center">Powered by <a href="http://universalsolz.com/" target="_blank">Universal Solz</a></p>
+            </div>
+        </div><!-- /Page Content -->
+    </div><!-- /Page Container -->
+    <!-- Javascripts -->
+    <script src="../../assets/plugins/jquery/jquery-3.1.0.min.js"></script>
+    <script src="../../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="../../assets/plugins/uniform/js/jquery.uniform.standalone.js"></script>
+    <script src="../../assets/plugins/switchery/switchery.min.js"></script>
+    <script src="../../assets/js/space.min.js"></script>
+</body>
+<!-- Mirrored from steelcoders.com/space/demo/theme/templates/admin1/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 12 Feb 2018 21:25:30 GMT -->
+</html>

@@ -1,0 +1,514 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<div class="page-inner">
+
+    <div id="main-wrapper">
+        @if (Convert.ToInt32(Session["RoleId"]) == 10)
+        {
+
+            <div class="page-title">
+                <h3 class="breadcrumb-header">Dashboard</h3>
+                @if (TempData["Error"] != null)
+                {
+                    <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        Oh snap! @TempData["Error"].
+                    </div>
+                }
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        Oh snap! @TempData["SuccessMessage"].
+                    </div>
+
+                }
+                @if (TempData["Info"] != null)
+                {
+                    <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        Oh snap! @TempData["Info"].
+                    </div>
+                }
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-4 col-md-8">
+                    <div class="panel panel-white stats-widget">
+                        <div class="panel-body">
+                            <div class="pull-left">
+                                <span class="stats-number">@ViewBag.Std</span>
+                                <a href="~/Student/ShowStd"><p class="stats-info">Total Students</p></a>
+                            </div>
+                            <div class="pull-right">
+                                <i class="fa fa-graduation-cap stats-icon" style="color:lightblue;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-8">
+                    <div class="panel panel-white stats-widget">
+                        <div class="panel-body">
+                            <div class="pull-left">
+                                <span class="stats-number">@ViewBag.Class</span>
+                                <a href="~/Home/Classes"><p class="stats-info">Classes</p></a>
+                               
+                            </div>
+                            <div class="pull-right">
+                                <i class="fa fa-university stats-icon" style="color:blueviolet;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-8">
+                    <div class="panel panel-white stats-widget">
+                        <div class="panel-body">
+                            <div class="pull-left">
+                                <span class="stats-number">@ViewBag.Section</span>
+                                <a href="~/Home/Sections"><p class="stats-info">Sections</p></a>
+                            </div>
+                            <div class="pull-right">
+                                <i class="icon-section stats-icon" style="color:indianred;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- Row -->
+            <div class="row">
+                <div class="col-lg-4 col-md-8">
+                    <div class="panel panel-white stats-widget">
+                        <div class="panel-body">
+                            <div class="pull-left">
+                                
+                                <span class="stats-number">@Convert.ToDecimal(@ViewBag.Fee).ToString("#,##0.00") /Rs.</span>
+                                <a href="~/AppReports/RptSessionWise"><p class="stats-info">Received Fee (@ViewBag.Month/@ViewBag.Year)</p></a>   
+                            </div>
+                            <div class="pull-right">
+                                <i class="fa fa-usd stats-icon" style="color:lightgreen;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-8">
+                    <div class="panel panel-white stats-widget">
+                        <div class="panel-body">
+                            <div class="pull-left">
+                                <span class="stats-number">@Convert.ToDecimal(@ViewBag.Pending).ToString("#,##0.00") /Rs.</span>
+                                <p class="stats-info">Pending Fee (@ViewBag.Month/@ViewBag.Year)</p>
+                            </div>
+                            <div class="pull-right">
+                                <i class="fa fa-usd stats-icon" style="color:coral;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-8">
+                    <div class="panel panel-white stats-widget">
+                        <div class="panel-body">
+                            <div class="pull-left">
+                                <span class="stats-number">@Convert.ToDecimal(@ViewBag.Performance).ToString("#,##0.00")%</span>
+                                <p class="stats-info">Performance (@ViewBag.Session)</p>
+                            </div>
+                            <div class="pull-right">
+                                <i class="fa fa-list-alt stats-icon" style="color:lightseagreen;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        }
+        else if (Convert.ToInt32(Session["RoleId"]) == 1)
+        {
+            <div class="page-title">
+                <h3 class="breadcrumb-header">Dashboard</h3>
+                @if (TempData["Error"] != null)
+                {
+                    <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        Oh snap! @TempData["Error"].
+                    </div>
+                }
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        Oh snap! @TempData["SuccessMessage"].
+                    </div>
+
+                }
+                @if (TempData["Info"] != null)
+                {
+                    <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        Oh snap! @TempData["Info"].
+                    </div>
+                }
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-4 col-md-8">
+                    <div class="panel panel-white stats-widget">
+                        <div class="panel-body">
+                            <div class="pull-left">
+                                <span class="stats-number">@ViewBag.Std</span>
+                                <a href="~/Student/ShowStd"><p class="stats-info">Total Students</p></a>
+                            </div>
+                            <div class="pull-right">
+                                <i class="fa fa-graduation-cap stats-icon" style="color:lightblue;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-8">
+                    <div class="panel panel-white stats-widget">
+                        <div class="panel-body">
+                            <div class="pull-left">
+                                <span class="stats-number">@ViewBag.Class</span>
+                                <a href="~/Home/Classes"><p class="stats-info">Classes</p></a>
+                            </div>
+                            <div class="pull-right">
+                                <i class="fa fa-university stats-icon" style="color:blueviolet;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-8">
+                    <div class="panel panel-white stats-widget">
+                        <div class="panel-body">
+                            <div class="pull-left">
+                                <span class="stats-number">@ViewBag.Section</span>
+                                <a href="~/Home/Sections"><p class="stats-info">Sections</p></a>
+                            </div>
+                            <div class="pull-right">
+                                <i class="icon-section stats-icon" style="color:indianred;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- Row -->
+            <div class="row">
+                <div class="col-lg-4 col-md-8">
+                    <div class="panel panel-white stats-widget">
+                        <div class="panel-body">
+                            <div class="pull-left">
+                                <span class="stats-number">@Convert.ToDecimal(@ViewBag.Fee).ToString("#,##0.00") /Rs.</span>
+                                <a href="~/AppReports/RptSessionWise"><p class="stats-info">Received Fee (@ViewBag.Month/@ViewBag.Year)</p></a>
+                            </div>
+                            <div class="pull-right">
+                                <i class="fa fa-usd stats-icon" style="color:lightgreen;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-8">
+                    <div class="panel panel-white stats-widget">
+                        <div class="panel-body">
+                            <div class="pull-left">
+                                <span class="stats-number">@Convert.ToDecimal(@ViewBag.Pending).ToString("#,##0.00") /Rs.</span>
+                                <p class="stats-info">Pending Fee (@ViewBag.Month/@ViewBag.Year)</p>
+                            </div>
+                            <div class="pull-right">
+                                <i class="fa fa-usd stats-icon" style="color:coral;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-8">
+                    <div class="panel panel-white stats-widget">
+                        <div class="panel-body">
+                            <div class="pull-left">
+                                <span class="stats-number">@Convert.ToDecimal(@ViewBag.Performance).ToString("#,##0.00")%</span>
+                                <p class="stats-info">Performance (@ViewBag.Session)</p>
+                            </div>
+                            <div class="pull-right">
+                                <i class="fa fa-list-alt stats-icon" style="color:lightseagreen;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        }
+
+        else if (Convert.ToInt32(Session["RoleId"]) == 2)
+        {
+            <div class="page-title">
+                <h3 class="breadcrumb-header">Operator Panel</h3>
+                @if (TempData["Error"] != null)
+                {
+                    <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        Oh snap! @TempData["Error"].
+                    </div>
+                }
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        Oh snap! @TempData["SuccessMessage"].
+                    </div>
+
+                }
+                @if (TempData["Info"] != null)
+                {
+                    <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        Oh snap! @TempData["Info"].
+                    </div>
+                }
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-4 col-md-8">
+                    <div class="panel panel-white stats-widget">
+                        <div class="panel-body">
+                            <div class="pull-left">
+                                <span class="stats-number">@ViewBag.Std</span>
+                                <a href="~/Student/ShowStd"><p class="stats-info">Total Students</p></a>
+                            </div>
+                            <div class="pull-right">
+                                <i class="fa fa-graduation-cap stats-icon" style="color:lightblue;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-8">
+                    <div class="panel panel-white stats-widget">
+                        <div class="panel-body">
+                            <div class="pull-left">
+                                <span class="stats-number">@ViewBag.Class</span>
+                                <a href="~/Home/Classes"><p class="stats-info">Classes</p></a>
+                            </div>
+                            <div class="pull-right">
+                                <i class="fa fa-university stats-icon" style="color:blueviolet;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-8">
+                    <div class="panel panel-white stats-widget">
+                        <div class="panel-body">
+                            <div class="pull-left">
+                                <span class="stats-number">@ViewBag.Section</span>
+                                <a href="~/Home/Sections"><p class="stats-info">Sections</p></a>
+                            </div>
+                            <div class="pull-right">
+                                <i class="icon-section stats-icon" style="color:indianred;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- Row -->
+            <div class="row">
+                <div class="col-lg-4 col-md-8">
+                    <div class="panel panel-white stats-widget">
+                        <div class="panel-body">
+                            <div class="pull-left">
+                                <span class="stats-number">@Convert.ToDecimal(@ViewBag.Fee).ToString("#,##0.00") /Rs.</span>
+                                <a href="~/AppReports/RptSessionWise"><p class="stats-info">Received Fee (@ViewBag.Month/@ViewBag.Year)</p></a>
+                            </div>
+                            <div class="pull-right">
+                                <i class="fa fa-usd stats-icon" style="color:lightgreen;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-8">
+                    <div class="panel panel-white stats-widget">
+                        <div class="panel-body">
+                            <div class="pull-left">
+                                <span class="stats-number">@Convert.ToDecimal(@ViewBag.Pending).ToString("#,##0.00") /Rs.</span>
+                                <p class="stats-info">Pending Fee (@ViewBag.Month/@ViewBag.Year)</p>
+                            </div>
+                            <div class="pull-right">
+                                <i class="fa fa-usd stats-icon" style="color:coral;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-8">
+                    <div class="panel panel-white stats-widget">
+                        <div class="panel-body">
+                            <div class="pull-left">
+                                <span class="stats-number">@Convert.ToDecimal(@ViewBag.Performance).ToString("#,##0.00")%</span>
+                                <p class="stats-info">Performance (@ViewBag.Session)</p>
+                            </div>
+                            <div class="pull-right">
+                                <i class="fa fa-list-alt stats-icon" style="color:lightseagreen;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        }
+        else if (Convert.ToInt32(Session["RoleId"]) == 3)
+        {
+            <div class="page-title">
+                <h3 class="breadcrumb-header">Student Panel</h3>
+            </div>
+            <div class="row">
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="panel panel-white stats-widget">
+                        <div class="panel-body">
+                            <div class="pull-left">
+                                <span class="stats-number">@Convert.ToDecimal(@TempData["Fee"]).ToString("#,##0.00") /Rs.</span>
+                                <p class="stats-info">Paid Fee</p>
+                            </div>
+                            <div class="pull-right">
+                                <i class="fa fa-usd stats-icon" style="color:lightgreen;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="panel panel-white stats-widget">
+                        <div class="panel-body">
+                            <div class="pull-left">
+                                <span class="stats-number">@Convert.ToDecimal(@TempData["PendingFee"]).ToString("#,##0.00") /Rs.</span>
+                                <p class="stats-info">Pending Fee</p>
+                            </div>
+                            <div class="pull-right">
+                                <i class="fa fa-usd stats-icon" style="color:coral"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="panel panel-white stats-widget">
+                        <div class="panel-body">
+                            <div class="pull-left">
+                                <span class="stats-number">@Convert.ToDecimal(@TempData["UpcomingFee"]).ToString("#,##0.00") /Rs.</span>
+                                <p class="stats-info">Upcoming Fee</p>
+                            </div>
+                            <div class="pull-right">
+                                <i class="fa fa-usd stats-icon" style="color:lightcoral;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- Row -->
+
+        }
+        else if (Convert.ToInt32(Session["RoleId"]) == 4)
+        {
+            <div class="page-title">
+                <h3 class="breadcrumb-header">Parent Panel</h3>
+            </div>
+            <div class="row">
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="panel panel-white stats-widget">
+                        <div class="panel-body">
+                            <div class="pull-left">
+                                <span class="stats-number">@Convert.ToDecimal(@TempData["Fee"]).ToString("#,##0.00") /Rs.</span>
+                                <p class="stats-info">Paid Fee</p>
+                            </div>
+                            <div class="pull-right">
+                                <i class="fa fa-usd stats-icon" style="color:lightblue"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="panel panel-white stats-widget">
+                        <div class="panel-body">
+                            <div class="pull-left">
+                                <span class="stats-number">@Convert.ToDecimal(@TempData["PendingFee"]).ToString("#,##0.00") /Rs.</span>
+                                <p class="stats-info">Pending Fee</p>
+                            </div>
+                            <div class="pull-right">
+                                <i class="fa fa-usd stats-icon" style="color:coral"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="panel panel-white stats-widget">
+                        <div class="panel-body">
+                            <div class="pull-left">
+                                <span class="stats-number">@Convert.ToDecimal(@TempData["UpcomingFee"]).ToString("#,##0.00") /Rs.</span>
+                                <p class="stats-info">Upcoming Fee</p>
+                            </div>
+                            <div class="pull-right">
+                                <i class="fa fa-usd stats-icon" style="color:lightcoral"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- Row -->
+
+        }
+        else if (Convert.ToInt32(Session["RoleId"]) == 5)
+        {
+            <div class="page-title">
+                <h3 class="breadcrumb-header">Teacher Panel</h3>
+            </div>
+            <div class="row">
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="panel panel-white stats-widget">
+                        <div class="panel-body">
+                            <div class="pull-left">
+                                <span class="stats-number">@TempData["TotalStudents"]</span>
+                                <p class="stats-info">Total Students</p>
+                            </div>
+                            <div class="pull-right">
+                                <i class="fa fa-user stats-icon" style="color:lightblue"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="panel panel-white stats-widget">
+                        <div class="panel-body">
+                            <div class="pull-left">
+                                <span class="stats-number">@TempData["TotalClasses"]</span>
+                                <p class="stats-info">Total Classes</p>
+                            </div>
+                            <div class="pull-right">
+                                <i class="fa fa-laptop stats-icon" style="color:lightblue"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="panel panel-white stats-widget">
+                        <div class="panel-body">
+                            <div class="pull-left">
+                                <span class="stats-number">@TempData["TotalSections"]</span>
+                                <p class="stats-info">Total Sections</p>
+                            </div>
+                            <div class="pull-right">
+                                <i class="fa fa-book stats-icon" style="color:lightblue"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        }
+    </div><!-- Main Wrapper -->
+    <div class="page-footer col-sm-offset-5">
+        <p align="center">Powered by <a href="http://universalsolz.com/" target="_blank">Universal Solz</a></p>
+    </div>
+</div>

@@ -1,0 +1,108 @@
+﻿@model SMS.Models.SMSModuleName
+@{
+    ViewBag.Title = "ModuleName";
+}
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">Add Module Name</h3>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["Success"].
+            </div>
+
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+
+
+                    <div class="panel-body">
+                        <form action="~/SMS/ModuleName" method="post">
+
+                            <div class="col-sm-3 form-group">
+
+                                <label for="ageRangeField">Module Name</label><br>
+                                <input type="text" id="nameField" class="form-control" name="mName" placeholder="">
+                            </div>
+                            <div class="col-sm-3 form-group">
+                                <label for="dateField">Is Visible</label>
+                                <select name="mnStatus" class="form-control">
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-white">
+
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                   
+
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Module Name</th>
+                                        <th>Module Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    
+                                </thead>
+                                @if (TempData["Name"] != null)
+                                {
+                                    foreach (var i in (List<SMS.Models.SMSModuleName>)TempData["Name"])
+                                    {
+                                        <tbody>
+                                            
+                                            <tr>
+                                                <td>@i.mnId</td>
+                                                <td>@i.mName</td>
+                                                <td>@i.mnStatus</td>
+                                                <td>
+                                                    <a title="Update Module Name" class="counter" href="@Url.Action("EditModuleName", new { id = i.mnId })">
+                                                        <i class="fa fa-edit" style="font-size:20px"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    }
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,108 @@
+﻿
+@{
+    Layout = null;
+}
+
+@{
+    var s = TempData["Data"] as SMS.Models.short_course_Registration;
+   
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <meta name="viewport" content="width=device-width" />
+    <title>Download Short Course Fee Receipt</title>
+</head>
+<body>
+    @if (s != null)
+    {
+        <div>
+            <input type="button" class="btn btn-success" value="Print Report" onclick="print1()" />
+        </div>
+        <div id="Print">
+            <div class="card-title">
+                @if (Session["InsName"] != null)
+                {
+                    <p>
+                        <img src="@Session["InsImage"]" width="65" height="65" />
+                        <h2 style="text-align: center;">@Session["InsName"]</h2>
+                        <h3 style="text-align: center;"> Short Course Fee Receipt</h3>
+                    </p>
+                }
+            </div>
+            <table>
+                <caption></caption>
+                <thead>
+                    <tr>
+                        <th colspan="5">Fee Date: @s.scfPaidDate.ToString("dd-MMM-yyyy")</th>
+                        <th>Voucher Print Date: @DateTime.Now.ToString("dd-MMM-yyyy")</th>
+                    </tr>
+                    <tr>
+                        <td colspan="5">Student Name: <br><strong> @s.std.pr.perName</strong> <br> Roll Numnber<br> <strong>@s.std.stdRollNo</strong> </td>
+                        <td colspan="5"> Session: <strong>@s.std.ses.sesName</strong><br> Class: <strong> @s.cls.classname </strong><br> Short Course: @s.scSub.scsName<br>  </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>Fee</th>
+                        <th>Status</th>
+                        <th>Total Fee(/Rs.)</th>
+                        <th>Discount(/Rs.)</th>
+                        <th>Pending Fee(/Rs.)</th>
+                        <th>Paid Fee(/Rs.)</th>
+
+                        @*<th>Qty.</th> <th></th>*@
+                    </tr>
+                    <tr>
+                        <td>@s.scSub.scsName</td>
+                        <td>@s.scStatus</td>
+                        <td>@Convert.ToDecimal(@s.scSub.scsFee).ToString("#,##0.00")</td>
+                        <td>@Convert.ToDecimal(@s.scDiscount).ToString("#,##0.00")</td>
+                        <td>@Convert.ToDecimal(@s.scPendingFee).ToString("#,##0.00")</td>
+                        <td>@Convert.ToDecimal(@s.scReceivedFee).ToString("#,##0.00")</td>
+
+                        @*<td>0.01</td> <td>10.00</td>*@
+                    </tr>
+                    @*<tr>
+                        <td>Staples (box)</td> <td>100</td> <td>1.00</td>
+                        <td>100.00</td> </tr>*@
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="5">Total Paid Amount</th>
+                        <td>@Convert.ToDecimal(@s.scReceivedFee).ToString("#,##0.00") /Rs.</td>
+                    </tr> @*<tr> <th colspan="2">Tax</th> <td> 8% </td>
+                        <td>8.80</td> </tr> <tr> <th colspan="3">Grand Total</th> <td>$ 118.80</td> </tr>*@
+                </tfoot>
+            </table>
+        </div>
+    }
+
+    <script type="text/javascript">
+       function print1() {
+           var prtContent = document.getElementById('Print');
+           var mywindow = window.open('', '', 'height=700,width=900');
+           mywindow.document.write('<html><head>');
+           mywindow.document.write('<link href = "/Content/bootstrap.min.css" rel = "stylesheet" />')
+           mywindow.document.write('<link href = "/Content/Print.css" rel = "stylesheet" />')
+           mywindow.document.write('</head><body>');
+           mywindow.document.write(prtContent.innerHTML);
+           mywindow.document.write('</body></html>');
+           mywindow.document.close();
+           setTimeout(function () {
+               mywindow.print();
+               mywindow.close();
+           }, 500)
+
+       }
+    </script>
+    <script>
+        window.onload = print1();
+        //function load() {
+        //    print1();
+        //}
+    </script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+﻿@model SMS.Models.PassingMarks
+
+@{
+    ViewBag.Title = "AddPassingMarks";
+}
+
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">
+            Add Passing Marks
+            <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-sm" style="float: right;">Read Me</a>
+        </h3>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">  Usefull Info</h4>
+                    </div>
+                    <div class="modal-body">
+                        Here you can add passing percentage of each class. <br />
+                        Student below the passing percentage marks will not be promoted.
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+        </div>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["SuccessMessage"].
+            </div>
+
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="panel panel-white">
+
+
+                    <div class="panel-body">
+                        <form action="~/Home/AddPassingMarks" method="post" name="ClassForm" onsubmit="return validateForm()">
+                            <label for="ageRangeField" class="page-title">(Please seslect 'All' if you to create all classes percentage at once)</label>
+    
+                            <div class="row">
+
+                                    <div class="col-md-3 form-group">
+                                        @Html.DropDownList("classId", (SelectList)ViewData["Class"], "All", new { @class="form-control" })
+                                    </div>
+                                </div>
+                                <div class="row">
+                                   
+                                    <div class="col-md-3 form-group">
+                                        <label for="ageRangeField">Passing Percentage(%)</label>
+                                        <input type="number" name="Marks" placeholder="Enter Passing Percentage(%)" required class="form-control"/>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 form-group">
+                                        <input class="btn btn-primary" type="submit" name="submitButton" value="Add">
+                                    </div>
+                                </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-white">
+
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+
+                                        <th>Class</th>
+                                        <th>Passing Percentage</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+
+                                @foreach (var i in (List<SMS.Models.PassingMarks>)TempData["Marks"])
+                                {
+                                    <tbody>
+                                        <tr>
+
+                                            <td>@i.cl.classname</td>
+                                            <td>@i.Marks</td>
+                                            <td>
+                                                <a title="Update Section" class="counter" href="@Url.Action("EditPassingMarks", new { id = i.PassingId })">
+                                                    <i class="fa fa-edit" style="font-size:20px"></i>
+                                                </a>
+                                                @*
+                                                    <a title="Delete Section" class="counter" href="@Url.Action("DelCampus", new { id = item.camId })">
+                                                        <i class="fa fa-trash" style="font-size:35px;color:red"></i>
+                                                    </a>*@
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                }
+
+                            </table>
+                            
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

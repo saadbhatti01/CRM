@@ -1,0 +1,116 @@
+﻿@model IEnumerable<SMS.Models.FeeType>
+
+@{
+    ViewBag.Title = "FeeType";
+}
+
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">Fee Type</h3>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["SuccessMessage"].
+            </div>
+
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+
+
+                    <div class="panel-body">
+                        <div class="col-md-6">
+                            <form action="~/Home/FeeType" method="post">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="ageRangeField">Fee Name</label>
+                                        <input type="text" name="feeTypeName" placeholder="" id="nameField" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="ageRangeField">Fee Status</label>
+                                        <select id="ageRangeField" name="feeTypeStatus" class="form-control">
+                                            <option value="Open">Open</option>
+                                            <option value="Closed">Closed</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input class="btn btn-primary" type="submit" value="save">
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+
+                                            <th>Fee Name</th>
+                                            <th>Fee Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    @if (TempData["FeeType"] != null)
+                                    {
+                                        foreach (var item in Model)
+                                        {
+                                            <tbody>
+                                                <tr>
+                                                    <td>@item.feeTypeName</td>
+                                                    <td>@item.feeTypeStatus</td>
+                                                    <td>
+                                                        <a title="Update Section" class="counter" href="@Url.Action("UpdateFeeType", new { id = item.feeTypeId })">
+                                                            <i class="fa fa-edit" style="font-size:20px"></i>
+                                                        </a>
+                                                        <a title="Delete Section" class="counter" href="@Url.Action("DelFeeType", new { id = item.feeTypeId })">
+                                                            <i class="fa fa-trash" style="font-size:20px;color:red"></i>
+                                                        </a>
+                                                    </td>
+
+
+
+                                                </tr>
+                                            </tbody>
+                                        }
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+
+</div>

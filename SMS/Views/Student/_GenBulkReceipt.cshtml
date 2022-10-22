@@ -1,0 +1,195 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <meta name="viewport" content="width=device-width" />
+    <title>Download Fee Receipt</title>
+</head>
+<body>
+    @if (TempData["StdList"] != null)
+
+    {
+        <div>
+            <input type="button" class="btn btn-success" value="Print Report" onclick="print1()" />
+        </div>
+        <div id="Print">
+            @foreach (var s in (List<SMS.Models.StdFeeDetail>
+                )TempData["StdList"])
+            {
+
+
+                double Total = 0;
+                double TotalDis = 0;
+                double TotalPending = 0;
+                double TotalFee = 0;
+                double Total1 = 0;
+                double TotalDis1 = 0;
+                double TotalFee1 = 0;
+                double TotalPending1 = 0;
+
+
+                <div class="card-title">
+                    @if (Session["InsName"] != null)
+                    {
+                        <p>
+                            <img src="@Session["InsImage"]" width="65" height="65" style="float:left" />
+                            <h2 style="text-align: center;">@Session["InsName"]</h2>
+                            <h3 style="text-align: center;"> Student Fee Receipt</h3>
+                        </p>
+                    }
+                </div>
+
+                if (TempData["BulkReceipt"] != null)
+                {
+                    <table>
+                        <caption>Student Copy</caption>
+                        <thead>
+                            <tr>
+                                <th colspan="3">Fee Month: @TempData["FeeMonth"]</th>
+                                <th colspan="3">Receipt Print Date: @DateTime.Now.ToString("dd-MMM-yyyy") </th>
+                                @*<th>Voucher Due Date: <br /> @TempData["Due"]</th>*@
+                            </tr>
+                            <tr>
+                                <td colspan="3">Student Name: <strong> @s.Stdname</strong> <br> Roll Number:&nbsp;&nbsp;&nbsp; <strong> @s.RollNo</strong> </td>
+                                <td colspan="2"> Father Name: <strong>@s.FatherName</strong><br> Contact #:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <strong> @s.Contact </strong></td>
+                                <td> Session: <strong>@s.Ses</strong><br> Class:&nbsp;&nbsp;&nbsp; <strong> @s.Class </strong><br> Section:  <strong> @s.Sec</strong> </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>Fee</th>
+                                <th>Status</th>
+                                <th>Fee Amount/Rs. </th>
+                                <th>Discount /Rs. </th>
+                                <th>Pending /Rs. </th>
+                                <th>Paid Fee /Rs. </th>
+                            </tr>
+                            @foreach (var i in (List<SMS.Models.StdFeeDetail>)TempData["BulkReceipt"])
+                            {
+                                if (i.stdId == s.stdId)
+                                {
+                            <tr>
+                                <td>@i.Fee</td>
+                                <td>@i.FeeStatus</td>
+                                <td>@Convert.ToDecimal(i.TotalFee).ToString("#,##0.00")  </td>
+                                <td>@Convert.ToDecimal(i.Dis).ToString("#,##0.00") </td>
+                                <td>@Convert.ToDecimal(i.PandingAmt).ToString("#,##0.00") </td>
+                                <td>@Convert.ToDecimal(i.FeeAmt).ToString("#,##0.00")  </td>
+
+                            </tr>
+                                    TotalFee = TotalFee + i.FeeAmt;
+                                    TotalDis = TotalDis + i.Dis;
+                                    Total = Total + i.TotalFee;
+                                    TotalPending = i.PandingAmt;
+                                }
+
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="2">Total /Rs.</th>
+                                <td>@Convert.ToDecimal(@Total).ToString("#,##0.00") </td>
+                                <td>@Convert.ToDecimal(@TotalDis).ToString("#,##0.00") </td>
+                                <td>@Convert.ToDecimal(TotalPending).ToString("#,##0.00") </td>
+                                <td>@Convert.ToDecimal(@TotalFee).ToString("#,##0.00") </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <hr style="border-top: dotted 1px;" />
+
+                    <table>
+                        <caption>Institute Copy</caption>
+                        <thead>
+                            <tr>
+                                <th colspan="3">Fee Month: @TempData["FeeMonth"]</th>
+                                <th colspan="3">Receipt Print Date: @DateTime.Now.ToString("dd-MMM-yyyy") </th>
+                                @*<th>Voucher Due Date: <br /> @TempData["Due"]</th>*@
+                            </tr>
+                            <tr>
+                                <td colspan="3">Student Name: <strong> @s.Stdname</strong> <br> Roll Number:&nbsp;&nbsp;&nbsp; <strong> @s.RollNo</strong> </td>
+                                <td colspan="2"> Father Name: <strong>@s.FatherName</strong><br> Contact #:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <strong> @s.Contact </strong></td>
+                                <td> Session: <strong>@s.Ses</strong><br> Class:&nbsp;&nbsp;&nbsp; <strong> @s.Class </strong><br> Section:  <strong> @s.Sec</strong> </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>Fee</th>
+                                <th>Status</th>
+                                <th>Fee Amount/Rs. </th>
+                                <th>Discount /Rs. </th>
+                                <th>Pending /Rs. </th>
+                                <th>Paid Fee /Rs. </th>
+                            </tr>
+                            @foreach (var i in (List<SMS.Models.StdFeeDetail>)TempData["BulkReceipt"])
+                            {
+                                if (i.stdId == s.stdId)
+                                {
+                                    <tr>
+                                        <td>@i.Fee</td>
+                                        <td>@i.FeeStatus</td>
+                                        <td>@Convert.ToDecimal(i.TotalFee).ToString("#,##0.00")  </td>
+                                        <td>@Convert.ToDecimal(i.Dis).ToString("#,##0.00") </td>
+                                        <td>@Convert.ToDecimal(i.PandingAmt).ToString("#,##0.00") </td>
+                                        <td>@Convert.ToDecimal(i.FeeAmt).ToString("#,##0.00")  </td>
+
+                                    </tr>
+                                    TotalFee1 = TotalFee1 + i.FeeAmt;
+                                    TotalDis1 = TotalDis1 + i.Dis;
+                                    Total1 = Total1 + i.TotalFee;
+                                    TotalPending1 = i.PandingAmt;
+                                }
+
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="2">Total /Rs.</th>
+                                <td>@Convert.ToDecimal(@Total1).ToString("#,##0.00") </td>
+                                <td>@Convert.ToDecimal(@TotalDis1).ToString("#,##0.00") </td>
+                                <td>@Convert.ToDecimal(TotalPending1).ToString("#,##0.00") </td>
+                                <td>@Convert.ToDecimal(@TotalFee1).ToString("#,##0.00") </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                }
+
+                <p style="page-break-after: always"></p>
+
+
+            }
+        </div>
+    }
+    <script type="text/javascript">
+        function print1() {
+            var prtContent = document.getElementById('Print');
+            var mywindow = window.open('', '', 'height=700,width=900');
+            mywindow.document.write('<html><head>');
+            mywindow.document.write('<link href = "/Content/bootstrap.min.css" rel = "stylesheet" />')
+            mywindow.document.write('<link href = "/Content/Print.css" rel = "stylesheet" />')
+            mywindow.document.write('</head><body>');
+            mywindow.document.write(prtContent.innerHTML);
+            mywindow.document.write('</body></html>');
+            mywindow.document.close();
+            setTimeout(function () {
+                mywindow.print();
+                mywindow.close();
+            }, 500)
+
+        }
+    </script>
+
+    <script>
+        window.onload = print1();
+    </script>
+
+
+</body>
+</html>
+
+

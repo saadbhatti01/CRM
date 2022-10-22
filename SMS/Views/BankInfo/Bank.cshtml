@@ -1,0 +1,123 @@
+﻿@model SMS.Models.Bank
+@{
+    ViewBag.Title = "Bank";
+}
+
+
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">Bank</h3>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["Success"].
+            </div>
+
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+
+
+                    <div class="panel-body">
+                        <div class="col-md-6">
+                            <form action="~/BankInfo/Bank" method="post" enctype="multipart/form-data">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="ageRangeField">Bank Name</label>
+                                        <input type="text" name="BankName" placeholder="" id="nameField" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="ageRangeField">Is Visible</label>
+                                        <select id="ageRangeField" name="IsVisible" class="form-control">
+                                            <option value="true">Yes</option>
+                                            <option value="false">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="ageRangeField">Bank Logo</label>
+                                        <input type="file" name="file" placeholder=""  id="nameField" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input class="btn btn-primary" type="submit" value="save">
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+
+                                            <th>Bank Name</th>
+                                            <th>Visible</th>
+                                            <th>Logo</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    @if (TempData["Bank"] != null)
+                                    {
+                                        foreach (var item in (List<SMS.Models.Bank>)TempData["Bank"])
+                                        {
+                                            <tbody>
+                                                <tr>
+                                                    <td>@item.BankName</td>
+                                                    <td>@item.IsVisible</td>
+                                                    <td><img src="~/Images/BankLogo/@item.BankLogo" width="45" height="45" /></td>
+                                                    <td>
+                                                        <a title="Update Bank" class="counter" href="@Url.Action("EditBank", new { id = item.BankId })">
+                                                            <i class="fa fa-edit" style="font-size:20px"></i>
+                                                        </a>
+                                                        <a title="Delete Bank" class="counter" href="@Url.Action("DeleteBank", new { id = item.BankId })">
+                                                            <i class="fa fa-trash" style="font-size:20px;color:red"></i>
+                                                        </a>
+                                                    </td>
+
+
+
+                                                </tr>
+                                            </tbody>
+                                        }
+                                    }
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>

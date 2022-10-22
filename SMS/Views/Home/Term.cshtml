@@ -1,0 +1,104 @@
+﻿@model IEnumerable<SMS.Models.Term>
+
+@{
+    ViewBag.Title = "Term";
+}
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">Add Term</h3>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["SuccessMessage"].
+            </div>
+
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="panel panel-white">
+
+
+                    <div class="panel-body">
+                        <form action="~/Home/Term" method="post">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="dateField">Name</label><br>
+                                    <input type="text" name="termName" placeholder="" id="nameField" class="form-control">
+                                   
+                                </div>
+                            </div>
+                            <br>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-white">
+
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+
+                                        <th>Term Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                @if (TempData["Term"] != null)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tbody>
+                                            <tr>
+                                                <td>@item.termName</td>
+                                                <td>
+                                                    <a title="Update Section" class="counter" href="@Url.Action("UpdateTerm", new { id = item.termId})">
+                                                        <i class="fa fa-edit" style="font-size:20px"></i>
+                                                    </a>
+                                                    <a title="Delete Section" class="counter" href="@Url.Action("DelTerm", new { id = item.termId })">
+                                                        <i class="fa fa-trash" style="font-size:20px;color:red"></i>
+                                                    </a>
+                                                </td>
+
+
+
+                                            </tr>
+                                        </tbody>
+                                    }
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

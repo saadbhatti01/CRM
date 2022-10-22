@@ -1,0 +1,122 @@
+﻿@model IEnumerable<SMS.Models.Subject>
+
+@{
+    ViewBag.Title = "Subject";
+}
+
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">Subject</h3>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["SuccessMessage"].
+            </div>
+
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="panel panel-white">
+
+
+                    <div class="panel-body">
+                        <form action="~/Home/Subject" method="post">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="dateField"> Subject Name</label>
+                                    <input type="text" name="subName" placeholder="" id="nameField" required class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="dateField"> Subject Code</label>
+                                    <input type="text" name="subCode" maxlength="15" placeholder="" id="SCode" required class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="ageRangeField">Is Visible</label>
+                                    <select id="ageRangeField" name="isVisible" class="form-control">
+                                        <option value="true">Yes</option>
+                                        <option value="false">No</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <input class="btn btn-primary" type="submit" value="save">
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="panel panel-white">
+
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+
+                                        <th>Subject Name</th>
+                                        <th>Subject Code</th>
+                                        <th>Visible</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                @if (TempData["Subject"] != null)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tbody>
+                                            <tr>
+                                                <td>@item.subName</td>
+                                                <td>@item.subCode</td>
+                                                <td>@item.isVisible</td>
+                                                <td>
+                                                    <a title="Update Section" class="counter" href="@Url.Action("UpdateSubject", new { id = item.subId })">
+                                                        <i class="fa fa-edit" style="font-size:20px"></i>
+                                                    </a>
+                                                    <a title="Delete Section" class="counter" href="@Url.Action("DelSubject", new { id = item.subId })">
+                                                        <i class="fa fa-trash" style="font-size:20px;color:red"></i>
+                                                    </a>
+                                                </td>
+                                                
+
+
+                                            </tr>
+                                        </tbody>
+                                    }
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

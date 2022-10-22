@@ -1,0 +1,143 @@
+﻿@if (TempData["No"] != null)
+{
+    if (TempData["Session"] != null)
+    {
+        <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            Info! @TempData["No"] in @TempData["Session"] Session.
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            Info! @TempData["No"].
+        </div>
+    }
+}
+
+@if (TempData["Attendance"] != null)
+{
+    int Sr = 1;
+    <div class="page-title">
+        @if (TempData["Session"] != null)
+        {
+            <h3 class="breadcrumb-header">
+                Student Complete Attendance Info of @TempData["Session"] Session
+                <input type="button" class="btn btn-success" value="Print info" onclick="PrintAttendance()" style="float:right" />
+            </h3>
+
+        }
+        else
+        {
+            <h3 class="breadcrumb-header">
+                Student Complete Attendance Info of All Session
+                <input type="button" class="btn btn-success" value="Print info" onclick="PrintAttendance()" style="float:right" />
+            </h3>
+        }
+    </div>
+    <div id="table-wrapper">
+        <div id="table-scroll">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Sr.</th>
+                            <th>IN Time</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+
+                    @foreach (var item in (List<SMS.Models.Attendance>)TempData["Attendance"])
+                    {
+                        <tbody>
+
+                            <tr>
+                                <td>@Sr</td>
+                                <td>@item.attenTime</td>
+                                <td>@item.attenDate.ToString("dd-MMM-yyyy")</td>
+                            </tr>
+
+                        </tbody>
+                        Sr = Sr + 1;
+                    }
+                </table>
+
+            </div>
+        </div>
+    </div>
+}
+@if (TempData["Attendance"] != null)
+{
+    int Sr = 1;
+    <div hidden id="PrintAttendance">
+        <div class="panel-heading clearfix">
+            @if (Session["InsName"] != null)
+            {
+                <p>
+                    <img src="@Session["InsImage"]" width="65" height="65" style="float:left;" />
+                    <h2 style="text-align: center;">@Session["InsName"]</h2>
+                    @if (TempData["Session"] != null)
+                    {
+                        <h3 style="text-align: center;">Student Complete Attendance Info of  @TempData["Session"] Session</h3>
+                    }
+                    else
+                    {
+                        <h3 style="text-align: center;">Student Complete Attendance Info of All Session</h3>
+                    }
+
+                </p>
+            }
+        </div>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Sr.</th>
+                    <th>IN Time</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+
+            @foreach (var item in (List<SMS.Models.Attendance>)TempData["Attendance"])
+            {
+                <tbody>
+
+                    <tr>
+                        <td>@Sr</td>
+                        <td>@item.attenTime</td>
+                        <td>@item.attenDate.ToString("dd-MMM-yyyy")</td>
+                    </tr>
+
+                </tbody>
+                Sr = Sr + 1;
+            }
+        </table>
+
+
+    </div>
+}
+
+
+
+<script type="text/javascript">
+    function PrintAttendance() {
+        var prtContent = document.getElementById('PrintAttendance');
+        var mywindow = window.open('', '', 'height=700,width=900');
+        mywindow.document.write('<html><head>');
+        mywindow.document.write('<link href = "/Content/bootstrap.min.css" rel = "stylesheet" />')
+        mywindow.document.write('<link href = "/Content/Print.css" rel = "stylesheet" />')
+        mywindow.document.write('</head><body>');
+        mywindow.document.write(prtContent.innerHTML);
+        mywindow.document.write('</body></html>');
+        mywindow.document.close();
+        setTimeout(function () {
+            mywindow.print();
+            mywindow.close();
+        }, 500)
+
+    }
+</script>
+
+
+

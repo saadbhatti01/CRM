@@ -1,0 +1,373 @@
+﻿
+@{
+    Layout = null;
+}
+@{
+    var std = TempData["Std"] as SMS.Models.Student;
+}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+    <TITLE></TITLE>
+    <META NAME="GENERATOR" CONTENT="LibreOffice 4.1.6.2 (Linux)">
+    <META NAME="AUTHOR" CONTENT="Muhammad Tayyab Qureshi">
+    <META NAME="CREATED" CONTENT="20190705;111300000000000">
+    <META NAME="CHANGEDBY" CONTENT="Muhammad Tayyab Qureshi">
+    <META NAME="CHANGED" CONTENT="20190705;112600000000000">
+    <META NAME="AppVersion" CONTENT="16.0000">
+    <META NAME="DocSecurity" CONTENT="0">
+    <META NAME="HyperlinksChanged" CONTENT="false">
+    <META NAME="LinksUpToDate" CONTENT="false">
+    <META NAME="ScaleCrop" CONTENT="false">
+    <META NAME="ShareDoc" CONTENT="false">
+    <STYLE TYPE="text/css">
+        <!--
+        page {
+            size: 8.5in 11in;
+            margin: 0.5in
+        }
+
+        P {
+            margin-bottom: 0.08in;
+            direction: ltr;
+            widows: 2;
+            orphans: 2
+        }
+        -->
+    </STYLE>
+    <script>
+        window.onload = load();
+        function load() {
+            window.print();
+        }
+    </script>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+    <P ALIGN=CENTER STYLE="margin-bottom: 0.11in">
+        <TABLE DIR="LTR" ALIGN=RIGHT WIDTH=102 HSPACE=4 CELLPADDING=7 CELLSPACING=0>
+            <COL WIDTH=86>
+            <TR>
+                <TD WIDTH=86 HEIGHT=88 VALIGN="middle" STYLE="border: 1px solid #00000a; padding: 0in 0.08in">
+    <P ALIGN=CENTER>
+        <img src="~/Images/@std.pr.perImage" style="width:100px; height: 90px;" /> <BR>
+    </P>
+    </TD>
+    </TR>
+    </TABLE><FONT FACE="Times New Roman, serif">
+        <FONT SIZE=4>
+            <B>
+                Mark
+                Sheet
+            </B>
+        </FONT>
+    </FONT>
+    </P>
+    <P ALIGN=CENTER STYLE="margin-bottom: 0.11in">
+        <BR><BR>
+    </P>
+    <P ALIGN=CENTER STYLE="margin-bottom: 0.11in">
+        <TABLE DIR="LTR" ALIGN=LEFT WIDTH=600 HSPACE=4 CELLPADDING=7 CELLSPACING=0>
+            <COL WIDTH=160>
+            <COL WIDTH=124>
+            <COL WIDTH=142>
+            <COL WIDTH=118>
+            <TR VALIGN=TOP>
+                <TD WIDTH=450 STYLE="border: none; padding: 0in">
+    <P>
+        <FONT FACE="Times New Roman, serif">
+            <FONT SIZE=4 STYLE="font-size: 16pt">
+                <B>
+                    Student
+                    Name: @std.pr.perName
+                </B>
+            </FONT>
+        </FONT>
+    </P>
+    </TD>
+    <TD WIDTH=60 STYLE="border: none; padding: 0in">
+        <P ALIGN=CENTER>
+            <BR>
+        </P>
+    </TD>
+    <TD WIDTH=400 STYLE="border: none; padding: 0in">
+        <P>
+            <FONT FACE="Times New Roman, serif">
+                <FONT SIZE=4 STYLE="font-size: 16pt">
+                    <B>
+                        Father
+                        Name: @std.pr.perGarName
+                    </B>
+                </FONT>
+            </FONT>
+        </P>
+    </TD>
+    <TD WIDTH=100 STYLE="border: none; padding: 0in">
+        <P ALIGN=CENTER>
+            <BR>
+        </P>
+    </TD>
+    </TR>
+    <TR VALIGN=TOP>
+        <TD WIDTH=180 STYLE="border: none; padding: 0in">
+            <P>
+                <FONT FACE="Times New Roman, serif">
+                    <FONT SIZE=4 STYLE="font-size: 16pt">
+                        <B>
+                            Roll
+                            No: @std.stdRollNo
+                        </B>
+                    </FONT>
+                </FONT>
+            </P>
+        </TD>
+        <TD WIDTH=100 STYLE="border: none; padding: 0in">
+            <P ALIGN=CENTER>
+                <BR>
+            </P>
+        </TD>
+        <TD WIDTH=142 STYLE="border: none; padding: 0in">
+            <P><FONT FACE="Times New Roman, serif"><FONT SIZE=4 STYLE="font-size: 16pt"><B>Session: @std.ses.sesName</B></FONT></FONT></P>
+        </TD>
+        <TD WIDTH=118 STYLE="border: none; padding: 0in">
+            <P ALIGN=CENTER>
+                <BR>
+            </P>
+        </TD>
+    </TR>
+    <TR VALIGN=TOP>
+        <TD WIDTH=160 STYLE="border: none; padding: 0in">
+            <P><FONT FACE="Times New Roman, serif"><FONT SIZE=4 STYLE="font-size: 16pt"><B>Class: @std.cls.classname</B></FONT></FONT></P>
+        </TD>
+        <TD WIDTH=124 STYLE="border: none; padding: 0in">
+            <P ALIGN=CENTER>
+                <BR>
+            </P>
+        </TD>
+        <TD WIDTH=142 STYLE="border: none; padding: 0in">
+            <P><FONT FACE="Times New Roman, serif"><FONT SIZE=4 STYLE="font-size: 16pt"><B>Section: @std.sec.secName</B></FONT></FONT></P>
+        </TD>
+        <TD WIDTH=118 STYLE="border: none; padding: 0in">
+            <P ALIGN=CENTER>
+                <BR>
+            </P>
+        </TD>
+    </TR>
+    <TR VALIGN=TOP>
+        <TD WIDTH=160 STYLE="border: none; padding: 0in">
+            <P><FONT FACE="Times New Roman, serif"><FONT SIZE=4 STYLE="font-size: 16pt"><B>Campus: @std.cam.campusname</B></FONT></FONT></P>
+        </TD>
+        <TD WIDTH=124 STYLE="border: none; padding: 0in">
+            <P ALIGN=CENTER>
+                <BR>
+            </P>
+        </TD>
+        <TD WIDTH=142 STYLE="border: none; padding: 0in">
+            <P>
+                <BR>
+            </P>
+        </TD>
+        <TD WIDTH=118 STYLE="border: none; padding: 0in">
+            <P ALIGN=CENTER>
+                <BR>
+            </P>
+        </TD>
+    </TR>
+    </TABLE><BR><BR>
+    </P>
+    <TABLE WIDTH=719 CELLPADDING=7 CELLSPACING=0>
+        <COL WIDTH=703>
+        <TR>
+            <TD WIDTH=703 VALIGN=TOP STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+                <P>
+                    <A NAME="_GoBack"></A><FONT FACE="Times New Roman, serif">
+                        <FONT SIZE=3>
+                            <B>
+                                Exam
+                                Type Name:     @TempData["Exam"]
+                            </B>
+                        </FONT>
+                    </FONT>
+                </P>
+            </TD>
+        </TR>
+    </TABLE>
+    <br />
+    @*<P STYLE="margin-bottom: 0.11in">
+            <BR><BR>
+        </P>
+        <P STYLE="margin-bottom: 0.11in">
+            <BR><BR>
+        </P>*@
+    <TABLE WIDTH=719 CELLPADDING=7 CELLSPACING=0>
+        <COL WIDTH=88>
+        <COL WIDTH=89>
+        <COL WIDTH=89>
+        <COL WIDTH=89>
+        <COL WIDTH=89>
+        <COL WIDTH=89>
+        <COL WIDTH=88>
+        <TR VALIGN=TOP>
+            <TD WIDTH=88 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+                <P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=3><B>Subject</B></FONT></FONT></P>
+            </TD>
+            <TD WIDTH=89 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+                <P ALIGN=CENTER>
+                    <FONT FACE="Times New Roman, serif">
+                        <FONT SIZE=3>
+                            <B>
+                                Total
+                                Marks
+                            </B>
+                        </FONT>
+                    </FONT>
+                </P>
+            </TD>
+            <TD COLSPAN=3 WIDTH=294 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+                <P ALIGN=CENTER>
+                    <FONT FACE="Times New Roman, serif">
+                        <FONT SIZE=3>
+                            <B>
+                                Obtained
+                                Marks
+                            </B>
+                        </FONT>
+                    </FONT>
+                </P>
+            </TD>
+            <TD WIDTH=89 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+                <P ALIGN=CENTER>
+                    <FONT FACE="Times New Roman, serif">
+                        <FONT SIZE=3>
+                            <B>
+                                Total
+                                Obtained Marks
+                            </B>
+                        </FONT>
+                    </FONT>
+                </P>
+            </TD>
+            <TD WIDTH=88 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+                <P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=3><B>Percentage</B></FONT></FONT></P>
+            </TD>
+        </TR>
+        <TR VALIGN=TOP>
+            <TD WIDTH=88 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+                <P ALIGN=CENTER>
+                    <BR>
+                </P>
+            </TD>
+            <TD WIDTH=89 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+                <P ALIGN=CENTER>
+                    <BR>
+                    @ViewBag.Total
+                </P>
+            </TD>
+            <TD WIDTH=89 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+                <P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=3><B>Oral</B></FONT></FONT></P>
+            </TD>
+            <TD WIDTH=89 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+                <P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=3><B>Objective</B></FONT></FONT></P>
+            </TD>
+            <TD WIDTH=89 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+                <P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=3><B>Subjective</B></FONT></FONT></P>
+            </TD>
+            <TD WIDTH=89 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+                <P ALIGN=CENTER>
+                    <BR>
+                    <b> @ViewBag.ObtTotal</b>
+                </P>
+            </TD>
+            <TD WIDTH=88 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+                <P ALIGN=CENTER>
+                    <BR>
+                    <b>@(ViewBag.ObtTotal * 100 / ViewBag.Total)</b>% <BR>
+                </P>
+            </TD>
+        </TR>
+    </TABLE>
+    <br />
+    @*<P STYLE="margin-bottom: 0.11in">
+            <BR><BR>
+        </P>*@
+    @if (TempData["StdMarks"] != null)
+    {
+        foreach (var i in (List<SMS.Models.StdObtainMarks>)TempData["StdMarks"])
+        {
+
+
+            <TABLE WIDTH=719 CELLPADDING=7 CELLSPACING=0>
+                <COL WIDTH=88>
+                <COL WIDTH=89>
+                <COL WIDTH=89>
+                <COL WIDTH=89>
+                <COL WIDTH=89>
+                <COL WIDTH=89>
+                <COL WIDTH=88>
+                <TR VALIGN=TOP>
+                    <TD WIDTH=88 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+                        <P>
+                            @i.sb.subName  <BR>
+                        </P>
+                    </TD>
+                    <TD WIDTH=89 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+                        <P>
+                            @i.subTotalMarks  <BR>
+                        </P>
+                    </TD>
+                    <TD WIDTH=89 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+                        <P>
+                            @i.smt1 <BR>
+                        </P>
+                    </TD>
+                    <TD WIDTH=89 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+                        <P>
+                            @i.smt2 <BR>
+                        </P>
+                    </TD>
+                    <TD WIDTH=89 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+                        <P>
+                            @i.smt3 <BR>
+                        </P>
+                    </TD>
+                    <TD WIDTH=89 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+                        <P>
+                            <b>@i.totalObtainMarks</b>  <BR>
+                        </P>
+                    </TD>
+                    <TD WIDTH=88 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+                        <P>
+                            <b>@(i.totalObtainMarks * 100 / i.subTotalMarks)</b>% <BR>
+                        </P>
+                    </TD>
+                </TR>
+            </TABLE>
+        }
+    }
+    <P STYLE="margin-bottom: 0.11in">
+        <BR><BR>
+    </P>
+    <P STYLE="margin-bottom: 0.11in"><FONT FACE="Times New Roman, serif"><FONT SIZE=3><B>Instruction: </B></FONT></FONT></P>
+    <P STYLE="margin-bottom: 0.11in"><FONT FACE="Times New Roman, serif"><FONT SIZE=3><B>1. Shows respect for teachers and peers.</B></FONT></FONT></P>
+    <P STYLE="margin-bottom: 0.11in"><FONT FACE="Times New Roman, serif"><FONT SIZE=3><B>2. Seeks responsibilities and follows through.</B></FONT></FONT></P>
+    <P STYLE="margin-bottom: 0.11in"><FONT FACE="Times New Roman, serif"><FONT SIZE=3><B>3. Listens to the comments and ideas of others without interrupting.</B></FONT></FONT></P>
+    <P STYLE="margin-bottom: 0.11in">
+        <TABLE DIR="LTR" ALIGN=RIGHT WIDTH=160 HSPACE=4 CELLPADDING=7 CELLSPACING=0>
+            <COL WIDTH=146>
+            <TR>
+                <TD WIDTH=146 HEIGHT=63 VALIGN=TOP STYLE="border: none; padding: 0in">
+    <P STYLE="margin-bottom: 0in">
+        <BR>
+    </P>
+    <P STYLE="margin-bottom: 0in"><FONT FACE="Times New Roman, serif"><FONT SIZE=3><B>_______________</B></FONT></FONT></P>
+    <P><FONT FACE="Times New Roman, serif"><FONT SIZE=3><B>Signature</B></FONT></FONT></P>
+    </TD>
+    </TR>
+    </TABLE><BR><BR>
+    </P>
+    <P STYLE="margin-bottom: 0.11in">
+        <BR><BR>
+    </P>
+</BODY>
+</HTML>
+

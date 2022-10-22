@@ -1,0 +1,203 @@
+﻿@model SMS.Models.TeacherClass
+@{
+    ViewBag.Title = "AssignTeacherToClass";
+}
+
+@{
+    var person = TempData["Person"] as SMS.Models.Person;
+}
+
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">
+            Assign Class to a Teacher
+            <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-sm" style="float: right;">Read Me</a>
+        </h3>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">  Usefull Info</h4>
+                    </div>
+                    <div class="modal-body">
+                        You can assign a teacher to multiple classes.Just type teacher code in textbox and press Show button<br />
+                        Here you can see teacher detail and assigning class if there any class already given to the teacher<br />
+                        Select Session -----> Select Class -------> Select Section -------> Select Subject -------> Click "SAVE" button, by clicking this button teacher assign to the selected class.
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+        </div>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["Success"].
+            </div>
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-body">
+                        <div id="rootwizard">
+                            <div class="row m-b-lg">
+                                <div class="col-md-6">
+                                    <form action="~/TeacherPanel/AssignTeacherToClass" method="post">
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label for="ageRangeField" id="code">Enter Code</label>
+                                                <input type="text" placeholder="" name="Code" id="nameField" class="form-control" required>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <input class="btn btn-primary" name="submitButton" type="submit" value="Show">
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <hr />
+                                    @if (person != null)
+                                    {
+                                        <form action="~/TeacherPanel/AssignTeacherToClass" method="post">
+                                            <div class="row">
+                                                <div class="form-group col-md-4">
+                                                    <input type="hidden" name="perId" value="@person.perId" />
+                                                    <input type="hidden" name="Code" value="@person.perCode" />
+                                                    <label for="ageRangeField">Session</label>
+                                                    @Html.DropDownList("sesId", (SelectList)ViewData["Session"], "Select Session", new { required = "required", @class = "form-control" })
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label for="ageRangeField">Class</label>
+                                                    @Html.DropDownList("classId", (SelectList)ViewData["Class"], "Select Class", new { required = "required", @class = "form-control" })
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label for="ageRangeField">Section</label>
+                                                    @Html.DropDownList("secId", (SelectList)ViewData["Section"], "Select Section", new { required = "required", @class = "form-control" })
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label for="ageRangeField">Subject</label>
+                                                    @Html.DropDownList("subId", (SelectList)ViewData["SubJect"], "Select Subject", new { required = "required", @class = "form-control" })
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group col-md-12">
+                                                    <input class="btn btn-primary" name="submitButton" type="submit" value="Save">
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <hr />
+                                    }
+                                </div>
+                                <div class="col-md-6">
+                                    @if (TempData["Person"] != null)
+                                    {
+                                        <div class="panel-heading clearfix">
+                                            <h2 class="panel-title">
+                                                <b>Teacher Detail</b>
+
+                                            </h2>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Code</th>
+                                                        <th>Contact Number</th>
+                                                        <th>Image</th>
+                                                    </tr>
+                                                </thead>
+                                                <tr>
+                                                    <td>@person.perName</td>
+                                                    <td>@person.perCode</td>
+                                                    <td>@person.perContactOne</td>
+                                                    <td>
+                                                        <img src="~/Images/@person.perImage" alt="Image" height="40" width="40" />
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    }
+
+                                    @if (TempData["TeachersData"] != null)
+                                    {
+                                        <div class="panel-heading clearfix">
+                                            <h2 class="panel-title">
+                                                <b>Assign Classes Detail</b>
+
+                                            </h2>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Session</th>
+                                                        <th>Class</th>
+                                                        <th>Section</th>
+                                                        <th>Subject</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                @foreach (var i in (List<SMS.Models.TeacherClass>)TempData["TeachersData"])
+                                                {
+                                                <tr>
+                                                    <td>@i.ses.sesName</td>
+                                                    <td>@i.cls.classname</td>
+                                                    <td>@i.sec.secName</td>
+                                                    <td>@i.subject.subName</td>
+                                                    <td>
+                                                        <a title="Update Data" class="counter" href="@Url.Action("EditAssignTeacherToClass", new { id = i.TeachClassId })">
+                                                            <i class="fa fa-edit" style="font-size:20px"></i>
+                                                        </a>
+                                                        &nbsp;
+                                                        <a title="Delete Data" class="counter" href="@Url.Action("DelAssignTeacherToClass", new { id = i.TeachClassId })">
+                                                            <i class="fa fa-trash" style="font-size:20px;color:red"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                }
+
+                                            </table>
+                                        </div>
+                                    }
+                                </div>
+                                
+
+                                
+
+
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div><!-- Row -->
+    </div><!-- Main Wrapper -->
+
+</div>

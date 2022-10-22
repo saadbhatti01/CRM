@@ -1,0 +1,243 @@
+﻿@if (TempData["No"] != null)
+{
+    <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        Info! @TempData["No"].
+    </div>
+}
+
+@if (TempData["Examination"] != null)
+{
+    <div>
+        <input type="button" class="btn btn-success" value="Print Report" onclick="print1()" />
+    </div>
+    double overallPerformance = 0;
+    <div class="col-md-10">
+        <div class="panel-heading clearfix">
+            <h1 class="panel-title" style="text-align:center;">
+                <b>Comparing @TempData["ExamName"]</b>
+            </h1>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Subject</th>
+                        <th>Obtain</th>
+                        <th>Total</th>
+                        <th>Percentage</th>
+                        <th>Obtain</th>
+                        <th>Total</th>
+                        <th>Percentage</th>
+                    </tr>
+                </thead>
+                @foreach (var i in (List<SMS.Models.PerformanceVM>)TempData["PErformance"])
+                {
+                    <tbody>
+                        <tr>
+                            <td>@i.subName1</td>
+                            <td><b>@i.Obt1</b></td>
+                            <td>@i.Total1</td>
+                            <td><b>@i.per1</b>%</td>
+                            <td><b>@i.Obt2</b></td>
+                            <td>@i.Total2</td>
+                            <td><b>@i.per2</b>%</td>
+                        </tr>
+                    </tbody>
+                }
+
+            </table>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="panel-heading clearfix">
+            <h2 class="panel-title">
+                <b>Performance</b>
+            </h2>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Performance</th>
+                    </tr>
+                </thead>
+                @foreach (var i in (List<SMS.Models.PerformanceVM>)TempData["PErformance"])
+                {
+                    <tbody>
+                        <tr>
+                            @if (i.performance > 0)
+                            {
+                                <td><b>@i.performance% &nbsp; <i class="icon-arrow-up2" style="color:lightgreen;"></i></b></td>
+                            }
+                            else if (i.performance == 0)
+                            {
+                                <td><b>@i.performance% &nbsp;&nbsp;&nbsp;<i class="icon-arrow_forward" s style="color:cornflowerblue;"></i></b></td>
+                            }
+                            else
+                            {
+                                <td><b>@i.performance% <i class="icon-arrow-down2" style="color:red;"></i></b></td>
+                            }
+
+                        </tr>
+                    </tbody>
+                    overallPerformance = overallPerformance + i.performance;
+                }
+            </table>
+        </div>
+    </div>
+    <div class="panel-heading clearfix">
+        <h1 class="panel-title" style="text-align:center;">
+            @if (overallPerformance > 0)
+            {
+                <b>Overall Performance Result:  @overallPerformance% <i class="icon-arrow-up" style="color:lightgreen;"></i></b>
+            }
+            else if (overallPerformance == 0)
+            {
+                <b>Overall Performance Result:  @overallPerformance% <i class="icon-arrow_forward" style="color:cornflowerblue;"></i></b>
+            }
+            else
+            {
+                <b>Overall Performance Result:  @overallPerformance% <i class="icon-arrow-down" style="color:red;"></i></b>
+            }
+
+        </h1>
+    </div>
+}
+
+
+
+@if (TempData["Examination"] != null)
+{
+    double overallPerformance = 0;
+
+    <div hidden id="Print" class="col-md-12">
+        <div class="panel-heading clearfix">
+            @if (Session["InsName"] != null)
+            {
+                <p>
+                    <img src="@Session["InsImage"]" width="65" height="65" style="float:left;" />
+                    <h2 style="text-align: center;">@Session["InsName"]</h2>
+                    <h3 style="text-align: center;"> Student Performance Report</h3>
+                    <h3 style="text-align: center;"> @TempData["StdInfo"]</h3>
+                    <h4 style="text-align: center;"> @TempData["StdEduInfo"]</h4>
+                </p>
+            }
+        </div>
+        <div class="row">
+        <div class="col-md-10" style="float:left">
+            <div class="panel-heading clearfix">
+                <h1 class="panel-title" style="text-align:center;">
+                    <b>Comparing @TempData["ExamName"]</b>
+                </h1>
+            </div>
+           
+                <table class="table table-bordered" style="width:100%!important;">
+                    <thead>
+                        <tr>
+                            <th>Subject</th>
+                            <th>Obtain</th>
+                            <th>Total</th>
+                            <th>Percentage</th>
+                            <th>Obtain</th>
+                            <th>Total</th>
+                            <th>Percentage</th>
+                        </tr>
+                    </thead>
+                    @foreach (var i in (List<SMS.Models.PerformanceVM>)TempData["PErformance"])
+                    {
+                        <tbody>
+                            <tr>
+                                <td>@i.subName1</td>
+                                <td><b>@i.Obt1</b></td>
+                                <td>@i.Total1</td>
+                                <td><b>@i.per1</b>%</td>
+                                <td><b>@i.Obt2</b></td>
+                                <td>@i.Total2</td>
+                                <td><b>@i.per2</b>%</td>
+                            </tr>
+                        </tbody>
+                    }
+
+                </table>
+            
+        </div>
+        <div class="col-md-2" style="float:left">
+            <div class="panel-heading clearfix">
+                <h2 class="panel-title">
+                    <b>Performance</b>
+                </h2>
+            </div>
+
+            <table class="table table-bordered" style="width:auto !important;">
+                <thead>
+                    <tr>
+                        <th>Performance</th>
+                    </tr>
+                </thead>
+                @foreach (var i in (List<SMS.Models.PerformanceVM>)TempData["PErformance"])
+                {
+                    <tbody>
+                        <tr>
+                            @if (i.performance > 0)
+                            {
+                                <td><b>@i.performance% &nbsp; <i class="icon-arrow-up2" style="color:lightgreen;"></i></b></td>
+                            }
+                            else if (i.performance == 0)
+                            {
+                                <td><b>@i.performance% &nbsp;&nbsp;&nbsp;<i class="icon-arrow_forward" s style="color:cornflowerblue;"></i></b></td>
+                            }
+                            else
+                            {
+                                <td><b>@i.performance% <i class="icon-arrow-down2" style="color:red;"></i></b></td>
+                            }
+
+                        </tr>
+                    </tbody>
+                    overallPerformance = overallPerformance + i.performance;
+                }
+            </table>
+        </div>
+        </div>
+        <div class="panel-heading clearfix">
+            <h1 class="panel-title" style="text-align:center;">
+                @if (overallPerformance > 0)
+                {
+                    <b>Overall Performance Result:  @overallPerformance% <i class="icon-arrow-up" style="color:lightgreen;"></i></b>
+                }
+                else if (overallPerformance == 0)
+                {
+                    <b>Overall Performance Result:  @overallPerformance% <i class="icon-arrow_forward" style="color:cornflowerblue;"></i></b>
+                }
+                else
+                {
+                    <b>Overall Performance Result:  @overallPerformance% <i class="icon-arrow-down" style="color:red;"></i></b>
+                }
+
+            </h1>
+        </div>
+
+</div>
+}
+    
+
+
+
+<script type="text/javascript">
+    function print1() {
+        var prtContent = document.getElementById('Print');
+        var mywindow = window.open('', '', 'height=700,width=900');
+        mywindow.document.write('<html><head>');
+        mywindow.document.write('<link href = "/Content/bootstrap.min.css" rel = "stylesheet" />')
+        mywindow.document.write('<link href = "/Content/Print.css" rel = "stylesheet" />')
+        mywindow.document.write('<link href = "/assets/plugins/icomoon/style.css" rel = "stylesheet" />')
+        mywindow.document.write('</head><body>');
+        mywindow.document.write(prtContent.innerHTML);
+        mywindow.document.write('</body></html>');
+        mywindow.document.close();
+        setTimeout(function () {
+            mywindow.print();
+            mywindow.close();
+        }, 500)
+    }
+</script>

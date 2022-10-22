@@ -1,0 +1,73 @@
+﻿@model SMS.Models.InstituteInfo
+
+@{
+    ViewBag.Title = "UpdateInsituteInfo";
+}
+
+@using (Html.BeginForm("UpdateInsituteInfo", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="page-inner">
+        <div class="panel-title">
+            <h3 class="breadcrumb-header"> Update Info</h3>
+        </div>
+        <div id="main-wrapper">
+            <div class="row">
+
+                <div class="col-md-12">
+
+
+                    <div class="panel panel-white">
+                        <div class="panel-body">
+                            
+
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(model => model.intId)
+                            <div class="col-md-3">
+
+                                <div class="form-group">
+                                    <label>Name</label>
+                                    @Html.EditorFor(model => model.intName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.intName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+
+                                <div class="form-group">
+                                    <label>Address</label>
+                                    @Html.EditorFor(model => model.intAddress, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.intAddress, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+
+                                <div class="form-group">
+                                    <label>Phone</label>
+                                    @Html.EditorFor(model => model.intPhone, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.intPhone, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+
+                                <div class="form-group">
+                                    @{
+                                        var base64 = Convert.ToBase64String(Model.intLogo);
+                                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                    }
+                                    <img height="40" width="40" src="@imgSrc" alt="Model.intName">
+                                    <label for="nameField">Update Logo</label>
+                                    <input type="file" placeholder="" name="logo" id="logo">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+
+                                <div class="form-group">
+                                    <input type="submit" value="Save" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                                    }

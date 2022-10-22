@@ -1,0 +1,81 @@
+﻿@model SMS.Models.BankInfo
+
+@{
+    ViewBag.Title = "EditBankInfo";
+}
+
+@using (Html.BeginForm())
+{
+    <div class="page-inner">
+        <div class="panel-title">
+            <h3 class="breadcrumb-header"> Update Bank Info</h3>
+        </div>
+        <div id="main-wrapper">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="panel panel-white">
+                        <div class="panel-body">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(model => model.BankInfoId)
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Bank Name</label>
+                                    @Html.DropDownList("BankId", (SelectList)ViewData["Bank"], "Select Bank", new { required = "required", @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Account Title</label>
+                                    @Html.EditorFor(model => model.AcTitle, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.AcTitle, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div> <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Acount Number</label>
+                                    @Html.EditorFor(model => model.AcNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.AcNumber, "", new { @class = "text-danger" })
+                                </div>
+                            </div> <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Branch Contact Number</label>
+                                    @Html.EditorFor(model => model.BranchContact, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.BranchContact, "", new { @class = "text-danger" })
+                                </div>
+                            </div> <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Branch Address</label>
+                                    @Html.EditorFor(model => model.BranchAddress, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.BranchAddress, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Is Visible</label>
+                                    <div class="checkbox">
+                                        @Html.EditorFor(model => model.IsVisible)
+                                        @Html.ValidationMessageFor(model => model.IsVisible, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div>
+                            @Html.ActionLink("Back to List", "BankInfo")
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

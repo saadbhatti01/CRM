@@ -1,0 +1,124 @@
+﻿
+@{
+    ViewBag.Title = "AccountEntryLocked";
+}
+
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">
+            Expense Entry Locked Down('Checked' to locked 'UnChecked' to unlock')
+            <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-sm" style="float: right;">Read Me</a>
+        </h3>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">  Usefull Info</h4>
+                    </div>
+                    <div class="modal-body">
+                        If you want that data entry operator can never delete or edit any entry then locked it down.
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+        </div>
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-body">
+                        @if (TempData["AccountEntryLocked"] != null)
+                        {
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th>
+                                            Expense Name
+                                        </th>
+                                        <th>
+                                            Amount
+                                        </th>
+                                        <th>
+                                            Date
+                                        </th>
+                                        <th>
+                                            Description
+                                        </th>
+                                        <th>
+                                            Locked
+                                        </th>
+                                    </tr>
+
+                                    @foreach (var i in (List<SMS.Models.AccountEntries>)TempData["AccountEntryLocked"])
+                                    {
+                                        <tr>
+                                            <td hidden>@i.aeId</td>
+                                            <td>@i.ah.headerName</td>
+                                            <td>@i.amount</td>
+                                            <td>@i.postedDate.ToString("dd-MMM-yy")</td>
+                                            <td>@i.description</td>
+                                            <td><input type="checkbox" class="checkthis" /></td>
+
+                                        </tr>
+                                    }
+                                </table>
+                            </div>
+
+                        }
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="../../assets/plugins/jquery/jquery-3.1.0.min.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $(".table").on('change', '.checkthis', function () {
+            if ($(this).prop('checked')) {
+
+                var aeId = $(this).closest('tr').find('td').eq(0).text();
+                if (aeId !== "") {
+                    $.post("@Url.Action("AccountEntryLockedDown", "ExpenceAccount")?val=" + aeId, function(res) {
+                     if (res.Success === "true")
+                     {
+
+                     }
+                     else
+                     {
+                         alert("Error Locked Down Entry!");
+                     }
+                 });
+                }
+            }
+            else {
+
+                var aeId = $(this).closest('tr').find('td').eq(0).text();
+                if (aeId !== "") {
+                    $.post("@Url.Action("AccountEntryLockedDown", "ExpenceAccount")?unChecked=" + aeId, function(res) {
+                     if (res.Success === "true")
+                     {
+
+                     }
+                     else
+                     {
+                         alert("Error Locked Down Entry!");
+                     }
+                 });
+                }
+            }
+
+        });
+    });
+
+</script>

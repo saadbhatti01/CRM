@@ -1,0 +1,135 @@
+﻿
+@{
+    Layout = null;
+}
+@{ 
+    var s = TempData["Std"] as SMS.Models.Student;
+}
+<!Doctype html>
+<html>
+<head>
+    <title>Profile Print</title>
+    <link href="~/Content/PrintStudentDetail.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="row container">
+        <div class="col-12"><h1>@Session["InsName"]</h1></div>
+        <div class="col-12"><h2>@s.pr.perName's  Profile</h2></div>
+
+    </div>
+    <div class="row container border">
+        <div class="col-5">
+            <div class="row border">
+                <div class="col-12">
+                    <h4>Roll Number:</h4>
+                    <p>@s.stdRollNo</p>
+                </div>
+            </div>
+            <div class="row border">
+                <div class="col-12">
+                    <h4>Contact One:</h4>
+                    <p>@s.pr.perContactOne</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <h4>Email:</h4>
+                    <p>@s.pr.perEmail</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-5">
+            <div class="row border">
+                <div class="col-12">
+                    <h4>Father/Gardian Name:</h4>
+                    <p>@s.pr.perGarName</p>
+                </div>
+            </div>
+            <div class="row border">
+                <div class="col-12">
+                    <h4>Contact Two:</h4>
+                    <p>@s.pr.perContactTwo</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <h4>CNIC:</h4>
+                    <p>@s.pr.perCNIC</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-1">
+            <img src="~/Images/@s.pr.perImage" alt="Profile Image" class="profile-img" style="width: 60px; height:60px;">
+        </div>
+    </div>
+    <div class="row container border">
+        <div class="col-3">
+            <h4>Blood Group:</h4>
+            <p>@s.pr.perBloodGrp</p>
+        </div>
+        <div class="col-3">
+            <h4>DOB:</h4>
+            <p>@s.pr.perDOB</p>
+        </div>
+        <div class="col-3">
+            <h4>Cast:</h4>
+            <p>@s.pr.perCast</p>
+        </div>
+        <div class="col-3">
+            <h4>Religion:</h4>
+            <p>@s.pr.perReligion</p>
+        </div>
+
+    </div>
+   
+    <div class="row container border">
+        <div class="col-3">
+            <h4>Campus:</h4>
+            <p>@s.cam.campusname</p>
+        </div>
+        <div class="col-3">
+            <h4>Session:</h4>
+            <p>@s.ses.sesName</p>
+        </div>
+        <div class="col-3 ">
+            <h4>Section:</h4>
+            <p>@s.sec.secName</p>
+        </div>
+        <div class="col-3 ">
+            <h4>Class:</h4>
+            <p>@s.cls.classname</p>
+        </div>
+
+    </div>
+    <div class="row container border">
+        <div class="col-4">
+            <h4>City:</h4>
+            <p>@s.pr.city.CityName</p>
+        </div>
+        <div class="col-4">
+            <h4>Area:</h4>
+            <p>@s.pr.area.AreaName</p>
+        </div>
+        <div class="col-3">
+            <h4>Student Status:</h4>
+            <p>@s.stdStatus</p>
+        </div>
+    </div>
+    <div class="row container border">
+        <div class="col-6">
+            <h4>Current Address:</h4>
+            <p>@s.pr.perCurrentAdrs</p>
+        </div>
+        <div class="col-6">
+            <h4>Permanent Address:</h4>
+            <p>@s.pr.perPermanantAdrs</p>
+        </div>
+
+
+    </div>
+
+
+</body>
+</html>

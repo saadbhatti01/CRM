@@ -1,0 +1,58 @@
+﻿@if (TempData["No"] != null)
+{
+    <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        Info! @TempData["No"].
+    </div>
+}
+
+@if (TempData["Data"] != null)
+{
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Father Name</th>
+                    <th>Code</th>
+                    <th>Contact Number</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Image</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            @foreach (var item in (List<SMS.Models.Person>)TempData["Data"])
+            {
+                <tbody>
+                    <tr>
+
+                        <td>@item.perName</td>
+                        <td>@item.perGarName</td>
+                        <td>@item.perCode</td>
+                        <td>@item.perContactOne</td>
+                        <td>@item.perEmail</td>
+                        <td>@item.role.name</td>
+                        <td>
+                            <img src="~/Images/@item.perImage" alt="Image" height="40" width="40" />
+                        </td>
+                        <td>
+                            <a title="Detail Employee" class="counter" href="@Url.Action("EmpDetail", new { id = item.perId })">
+                                <i class="fa fa-info" style="font-size:20px"></i>
+                            </a>
+
+                            <a title="Update Employee" class="counter" href="@Url.Action("EmpUpdate", new { id = item.perId })">
+                                <i class="fa fa-edit" style="font-size:20px"></i>
+                            </a>
+
+                            <a title="Delete Employee" class="counter" href="@Url.Action("DelEmp", new { id = item.perId })">
+                                <i class="fa fa-trash" style="font-size:20px;color:red"></i>
+                            </a>
+                        </td>
+
+                    </tr>
+                </tbody>
+            }
+        </table>
+    </div>
+}

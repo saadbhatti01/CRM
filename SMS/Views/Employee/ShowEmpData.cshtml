@@ -1,0 +1,169 @@
+﻿
+@{
+    ViewBag.Title = "ShowEmpData";
+}
+
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">
+            Person List <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-sm" style="float: right;">Read Me</a>
+
+        </h3>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">  Person List Info</h4>
+                    </div>
+                    <div class="modal-body">
+                        Here you can check details of the any Person registered in this Portal <br />
+                        If you want to find some specific role person then select the role from dropdown list.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["Success"].
+            </div>
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-body">
+                        <div id="rootwizard">
+                            <div class="row m-b-lg">
+                                <div class="col-md-12">
+                                    @if (TempData["Emp"] != null)
+                                    {
+                                        <div class="row">
+                                            <div class="form-group col-md-3">
+                                                <label for="ageRangeField">Select Role</label>
+                                                @Html.DropDownList("roleId", (SelectList)ViewData["Role"], "--Select Role--", new { required = "required", @class = "form-control" })
+                                            </div><br />
+                                            <div class="form-group col-md-3">
+                                                <button type="button" id="show" class="btn btn-primary">Show</button>
+                                            </div>
+
+                                        </div>
+
+                                        <div id="AllData">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Name</th>
+                                                            <th>Father Name</th>
+                                                            <th>Code</th>
+                                                            <th>Contact Number</th>
+                                                            <th>Email</th>
+                                                            <th>Role</th>
+                                                            <th>Image</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    @foreach (var item in (List<SMS.Models.Person>)TempData["Emp"])
+                                                    {
+                                                        <tbody>
+                                                            <tr>
+
+                                                                <td>@item.perName</td>
+                                                                <td>@item.perGarName</td>
+                                                                <td>@item.perCode</td>
+                                                                <td>@item.perContactOne</td>
+                                                                <td>@item.perEmail</td>
+                                                                <td>@item.role.name</td>
+                                                                <td>
+                                                                    <img src="~/Images/@item.perImage" alt="Image" height="40" width="40" />
+                                                                </td>
+                                                                <td>
+                                                                    <a title="Detail Employee" class="counter" href="@Url.Action("EmpDetail", new { id = item.perId })">
+                                                                        <i class="fa fa-info" style="font-size:20px"></i>
+                                                                    </a>
+
+                                                                    <a title="Update Employee" class="counter" href="@Url.Action("EmpUpdate", new { id = item.perId })">
+                                                                        <i class="fa fa-edit" style="font-size:20px"></i>
+                                                                    </a>
+
+                                                                    <a title="Delete Employee" class="counter" href="@Url.Action("DelEmp", new { id = item.perId })">
+                                                                        <i class="fa fa-trash" style="font-size:20px;color:red"></i>
+                                                                    </a>
+                                                                </td>
+
+                                                            </tr>
+                                                        </tbody>
+                                                    }
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                    }
+
+                                    <div id="PersonData">
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div><!-- Row -->
+    </div><!-- Main Wrapper -->
+
+</div>
+
+<script src="../../assets/plugins/jquery/jquery-3.1.0.min.js"></script>
+
+
+<script type="text/javascript">
+    $(function () {
+        $("#show").click(function (event) {
+            var Role = $("#roleId").val();
+            if (Role != "" || Role != null) {
+                $.ajax({
+                    url: "@Url.Action("_PopulatePerson", "Employee")",
+                    data: { roleId: Role },
+                    type: "Get",
+                    dataType: "html",
+                    success: function (data) {
+                        //Whatever result you have got from your controller with html partial view replace with a specific html.
+                        // HTML DOM replace
+                        $("#AllData").hide();
+
+                        $("#PersonData").html(data);
+                    }
+                });
+            } else {
+
+            }
+
+        });
+    });
+</script>

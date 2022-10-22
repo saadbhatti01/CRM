@@ -1,0 +1,93 @@
+﻿<br />
+@if (TempData["Partial"] != null)
+{
+    <div class="panel-heading clearfix">
+        <h2 class="panel-title"><b>Previous Partial Fees Details</b></h2>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Fee</th>
+                    <th>Paid Amount(Rs.)</th>
+                    <th>Pending(Rs.)</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Action</th>
+
+                </tr>
+            </thead>
+            @foreach (var i in (IEnumerable<SMS.Models.StudentFee>)TempData["Partial"])
+            {
+                <tbody>
+                    <tr>
+                        <td>@i.ft.feeTypeName</td>
+                        <td>@i.feeAmount</td>
+                        <td>@i.PandingAmount</td>
+                        <td>@i.feeStatus</td>
+                        <td>@i.paidDate.ToString("dd-MMM-yyyy")</td>
+                        <td>
+                            <input type="text" class="form-control" id="fee"
+                                   style="width: 6em; display:inline-block" maxlength="6" />
+                            &nbsp;
+                            <input type="button" style="width:6em" value="Pay Now" id="Click" class="form-control btn btn-default" />
+                        </td>
+
+                        <td hidden>
+                            <input type="hidden" value="@i.feeId" id="feeId" />
+                        </td>
+                    </tr>
+                </tbody>
+            }
+
+        </table>
+    </div>
+}
+
+
+
+<script src="../../assets/plugins/jquery/jquery-3.1.0.min.js"></script>
+
+
+<script type="text/javascript">
+    $(function () {
+        $(".table").on('click', '#Click', function () {
+            var Fee = $(this).closest('tr').find("input[type='text']").val();
+
+            if (Fee != "" && Fee != null) {
+                var FeeId = $(this).closest('tr').find("input[type='hidden']").val();
+
+                if (FeeId !== "") {
+                    $.post("@Url.Action("PaidPartialFee", "Student")?feeId=" + FeeId + "&fee=" + Fee, function(res) {
+                     if (res.Success === "true")
+                     {
+                         alert(res.Data.data);
+                                var RollNo = $("#RollNo").val();
+
+                                if (RollNo != "" || RollNo != null) {
+                                $.ajax({
+                                url: "@Url.Action("FindPartialFee", "Student")",
+                                data: { RollNo: RollNo },
+                                type: "Get",
+                                dataType: "html",
+                                success: function (data) {
+                                    //Whatever result you have got from your controller with html partial view replace with a specific html.
+                                    // HTML DOM replace
+                                    $("#PendingFee").html(data);
+                                }
+                                });
+                            }
+                        }
+                     else
+                     {
+                         alert("there is some error!");
+                     }
+                 });
+                }
+            } else {
+                alert("Please Enter full Partial Amount");
+            }
+        });
+    });
+
+</script>

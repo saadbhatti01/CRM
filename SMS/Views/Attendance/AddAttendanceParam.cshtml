@@ -1,0 +1,165 @@
+﻿@model SMS.Models.AttenParameter
+@{
+    ViewBag.Title = "AddAttendanceParam";
+}
+
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">
+            Add Attendance Parameters
+            <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-sm" style="float: right;">Read Me</a>
+        </h3>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">  Usefull Info</h4>
+                    </div>
+                    <div class="modal-body">
+                        Here you can set IN and OUT time for each user.(Like: Teacher,Student,Data Entry Operator). <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+        </div>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["Success"].
+            </div>
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-body">
+                        <div id="rootwizard">
+                            <div class="row m-b-lg">
+                                @if (Convert.ToInt32(Session["RoleId"]) == 10)
+                                {
+                                    <div class="col-md-6">
+                                        <form action="~/Attendance/AddAttendanceParam" method="post">
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label for="ageRangeField">Select Role<span style="color:red">*</span></label>
+                                                    @Html.DropDownList("roleId", (SelectList)ViewData["Role"], "--Select Role--", new { required = "required", @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label for="ageRangeField">In Minimimum Time</label>
+                                                    <input type="text" placeholder="08:00 AM" name="InMinTime" value="" class="form-control" id="nameField" required>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for="ageRangeField">In Maximum Time</label>
+                                                    <input type="text" placeholder="10:00 AM" name="InMaxTime" value="" class="form-control" id="nameField" required>
+                                                </div>
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label for="ageRangeField">Out Minimimum Time</label>
+                                                    <input type="text" placeholder="03:00 PM" name="OutMinTime" value="" class="form-control" id="nameField" required>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for="ageRangeField">Out Maximum Time</label>
+                                                    <input type="text" placeholder="07:00: PM" name="OutMaxTime" value="" class="form-control" id="nameField" required>
+                                                </div>
+                                                <div class="form-group col-md-12">
+                                                    <input class="btn btn-primary" name="submitButton" type="submit" value="Save">
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <hr />
+                                    </div>
+                                }
+
+                                <div class="col-md-6">
+                                    @if (TempData["Parameter"] != null)
+                                    {<div class="panel-heading clearfix">
+                                            <h2 class="panel-title">
+                                                <b>Attendance Parameter</b>
+
+                                            </h2>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Type Name</th>
+                                                        <th>IN Min Time</th>
+                                                        <th>IN Max Time</th>
+                                                        <th>OUT Min Time</th>
+                                                        <th>OUT Max Time</th>
+                                                        @if (Convert.ToInt32(Session["RoleId"]) == 10)
+                                                        {
+                                                            <th>Action</th>
+                                                        }
+                                                    </tr>
+                                                </thead>
+                                                @foreach (var i in (List<SMS.Models.AttenParameter>)TempData["Parameter"])
+                                                {
+                                                    <tr>
+                                                        <td>@i.role.name</td>
+                                                        <td>@i.InMinTime</td>
+                                                        <td>@i.InMaxTime</td>
+                                                        <td>@i.OutMinTime</td>
+                                                        <td>@i.OutMaxTime</td>
+                                                        @if (Convert.ToInt32(Session["RoleId"]) == 10)
+                                                        {
+                                                            <td>
+
+                                                                <a title="Update Parameter" class="counter" href="@Url.Action("EditAttenParam", new {  id = i.apId  })">
+                                                                    <i class="fa fa-edit" style="font-size:20px"></i>
+                                                                </a>
+
+                                                                <a title="Delete Parameter" class="counter" href="@Url.Action("DelAttenParam", new { id = i.apId })">
+                                                                    <i class="fa fa-trash" style="font-size:20px;color:red"></i>
+                                                                </a>
+                                                            </td>
+                                                        }
+
+                                                    </tr>
+                                                }
+                                            </table>
+                                        </div>
+                                    }
+                                </div>
+
+
+
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div><!-- Row -->
+    </div><!-- Main Wrapper -->
+
+</div>
+

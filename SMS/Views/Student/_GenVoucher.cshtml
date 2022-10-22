@@ -1,0 +1,367 @@
+﻿<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/Print.css" rel="stylesheet" />
+@{
+    var std = TempData["Std"] as SMS.Models.Student;
+    var bank = TempData["BankInfo"] as SMS.Models.BankInfo;
+}
+
+@if (std != null && bank != null)
+{
+    double Total = 0;
+    double TotalDis = 0;
+    double TotalFee = 0;
+    double Total1 = 0;
+    double TotalDis1 = 0;
+    double TotalFee1 = 0;
+    double Total2 = 0;
+    double TotalDis2 = 0;
+    double TotalFee2 = 0;
+    <div id="Print">
+        <div class="card-title">
+            @if (Session["InsName"] != null)
+            {
+                <p>
+                    <img src="@Session["InsImage"]" width="65" height="65" style="float:left;" />
+                    <h2 style="text-align: center;">@Session["InsName"]</h2>
+                    <h3 style="text-align: center;"> Student Fee Voucher</h3>
+                </p>
+            }
+        </div>
+
+        @if (TempData["Voucher"] != null)
+        {
+        <table>
+            <caption>Student Copy</caption>
+            <thead>
+                <tr>
+                    <th colspan="3"> <img src="~/Images/BankLogo/@bank.bank.BankLogo" width="25" height="20" style="float:left;" /> &nbsp;  @bank.bank.BankName </th>
+                    <th>Title: @bank.AcTitle </th>
+                    <th>Account# : @bank.AcNumber</th>
+                </tr>
+                <tr>
+                    <th colspan="3">Fee Month: @TempData["FeeMonth"]</th>
+                    <th>Print Date: @DateTime.Now.ToString("dd-MMM-yyyy") </th>
+                    <th>Due Date: @TempData["Due"]</th>
+                </tr>
+                <tr>
+                    <td colspan="3">Student Name: <strong> @std.pr.perName</strong> <br> Roll Number:&nbsp;&nbsp;&nbsp; <strong> @std.stdRollNo</strong> </td>
+                    <td> Father Name: <strong>@std.pr.perGarName</strong><br> Contact #:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <strong> @std.pr.perContactOne </strong></td>
+                    <td> Session: <strong>@std.ses.sesName</strong><br> Class:&nbsp;&nbsp;&nbsp; <strong> @std.cls.classname </strong><br> Section:  <strong> @std.sec.secName</strong> </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th colspan="2">Fee</th>
+
+                    <th>Total Fee</th>
+                    <th>Discount</th>
+                    <th>Payable Fee</th>
+                </tr>
+                @foreach (var i in (List<SMS.Models.StdFeeDetail>)TempData["Voucher"])
+                {
+                    <tr>
+                        <td colspan="2">@i.Fee</td>
+
+                        <td>@i.TotalFee/-</td>
+                        <td>@i.Dis/-</td>
+                        <td>@i.FeeAmt/- </td>
+
+                    </tr>
+                    TotalFee = TotalFee + i.FeeAmt;
+                    TotalDis = TotalDis + i.Dis;
+                    Total = Total + i.TotalFee;
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="2">Total</th>
+                    <td>@Total/-</td>
+                    <td>@TotalDis/-</td>
+                    <td><strong>@TotalFee/-</strong> </td>
+                </tr>
+            </tfoot>
+        </table>
+            <hr style="border-top: dotted 1px;" />
+
+            <table>
+                <caption>Institute Copy</caption>
+                <thead>
+                    <tr>
+                        <th colspan="3"> <img src="~/Images/BankLogo/@bank.bank.BankLogo" width="25" height="20" style="float:left;" /> &nbsp;  @bank.bank.BankName </th>
+                        <th>Title: @bank.AcTitle </th>
+                        <th>Account# : @bank.AcNumber</th>
+                    </tr>
+                    <tr>
+                        <th colspan="3">Fee Month: @TempData["FeeMonth"]</th>
+                        <th>Print Date: @DateTime.Now.ToString("dd-MMM-yyyy") </th>
+                        <th>Due Date: @TempData["Due"]</th>
+                    </tr>
+                    <tr>
+                        <td colspan="3">Student Name: <strong> @std.pr.perName</strong> <br> Roll Number:&nbsp;&nbsp;&nbsp; <strong> @std.stdRollNo</strong> </td>
+                        <td> Father Name: <strong>@std.pr.perGarName</strong><br> Contact #:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <strong> @std.pr.perContactOne </strong></td>
+                        <td> Session: <strong>@std.ses.sesName</strong><br> Class:&nbsp;&nbsp;&nbsp; <strong> @std.cls.classname </strong><br> Section:  <strong> @std.sec.secName</strong> </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th colspan="2">Fee</th>
+
+                        <th>Total Fee</th>
+                        <th>Discount</th>
+                        <th>Payable Fee</th>
+                    </tr>
+                    @foreach (var i in (List<SMS.Models.StdFeeDetail>)TempData["Voucher"])
+                    {
+                        <tr>
+                            <td colspan="2">@i.Fee</td>
+
+                            <td>@i.TotalFee/-</td>
+                            <td>@i.Dis/-</td>
+                            <td>@i.FeeAmt/- </td>
+
+                        </tr>
+                        TotalFee1 = TotalFee1 + i.FeeAmt;
+                        TotalDis1 = TotalDis1 + i.Dis;
+                        Total1 = Total1 + i.TotalFee;
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="2">Total</th>
+                        <td>@Total1/-</td>
+                        <td>@TotalDis1/-</td>
+                        <td><strong>@TotalFee1/-</strong> </td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <hr style="border-top: dotted 1px;" />
+
+            <table>
+                <caption>Bank Copy</caption>
+                <thead>
+                    <tr>
+                        <th colspan="3"> <img src="~/Images/BankLogo/@bank.bank.BankLogo" width="25" height="20" style="float:left;" /> &nbsp;  @bank.bank.BankName </th>
+                        <th>Title: @bank.AcTitle </th>
+                        <th>Account# : @bank.AcNumber</th>
+                    </tr>
+                    <tr>
+                        <th colspan="3">Fee Month: @TempData["FeeMonth"]</th>
+                        <th>Print Date: @DateTime.Now.ToString("dd-MMM-yyyy") </th>
+                        <th>Due Date: @TempData["Due"]</th>
+                    </tr>
+                    <tr>
+                        <td colspan="3">Student Name: <strong> @std.pr.perName</strong> <br> Roll Number:&nbsp;&nbsp;&nbsp; <strong> @std.stdRollNo</strong> </td>
+                        <td> Father Name: <strong>@std.pr.perGarName</strong><br> Contact #:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <strong> @std.pr.perContactOne </strong></td>
+                        <td> Session: <strong>@std.ses.sesName</strong><br> Class:&nbsp;&nbsp;&nbsp; <strong> @std.cls.classname </strong><br> Section:  <strong> @std.sec.secName</strong> </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th colspan="2">Fee</th>
+
+                        <th>Total Fee</th>
+                        <th>Discount</th>
+                        <th>Payable Fee</th>
+                    </tr>
+                    @foreach (var i in (List<SMS.Models.StdFeeDetail>)TempData["Voucher"])
+                    {
+                        <tr>
+                            <td colspan="2">@i.Fee</td>
+
+                            <td>@i.TotalFee/-</td>
+                            <td>@i.Dis/-</td>
+                            <td>@i.FeeAmt/- </td>
+
+                        </tr>
+                        TotalFee2 = TotalFee2 + i.FeeAmt;
+                        TotalDis2 = TotalDis2 + i.Dis;
+                        Total2 = Total2 + i.TotalFee;
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="2">Total</th>
+                        <td>@Total2/-</td>
+                        <td>@TotalDis2/-</td>
+                        <td><strong>@TotalFee2/-</strong> </td>
+                    </tr>
+                </tfoot>
+            </table>
+        }
+
+    </div>
+
+    <script type="text/javascript">
+        function print1() {
+            var prtContent = document.getElementById('Print');
+            var mywindow = window.open('', '', 'height=700,width=900');
+            mywindow.document.write('<html><head>');
+            mywindow.document.write('<link href = "/Content/bootstrap.min.css" rel = "stylesheet" />')
+            mywindow.document.write('<link href = "/Content/Print.css" rel = "stylesheet" />')
+            mywindow.document.write('</head><body>');
+            mywindow.document.write(prtContent.innerHTML);
+            mywindow.document.write('</body></html>');
+            mywindow.document.close();
+            setTimeout(function () {
+                mywindow.print();
+                mywindow.close();
+            }, 500)
+
+        }
+        print1();
+
+    </script>
+
+
+}
+
+
+@if (std != null && bank == null)
+{
+    double Total = 0;
+    double TotalDis = 0;
+    double TotalFee = 0;
+    double Total1 = 0;
+    double TotalDis1 = 0;
+    double TotalFee1 = 0;
+    <div id="Print">
+        <div class="card-title">
+            @if (Session["InsName"] != null)
+            {
+                <p>
+                    <img src="@Session["InsImage"]" width="65" height="65" style="float:left;" />
+                    <h2 style="text-align: center;">@Session["InsName"]</h2>
+                    <h3 style="text-align: center;"> Student Fee Voucher</h3>
+                </p>
+            }
+        </div>
+
+        @if (TempData["Voucher"] != null)
+        {
+        <table>
+            <caption>Student Copy</caption>
+            <thead>
+                <tr>
+                    <th colspan="3">Fee Month: @TempData["FeeMonth"]</th>
+                    <th>Print Date: @DateTime.Now.ToString("dd-MMM-yyyy") </th>
+                    <th>Due Date: @TempData["Due"]</th>
+                </tr>
+                <tr>
+                    <td colspan="3">Student Name: <strong> @std.pr.perName</strong> <br> Roll Number:&nbsp;&nbsp;&nbsp; <strong> @std.stdRollNo</strong> </td>
+                    <td> Father Name: <strong>@std.pr.perGarName</strong><br> Contact #:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <strong> @std.pr.perContactOne </strong></td>
+                    <td> Session: <strong>@std.ses.sesName</strong><br> Class:&nbsp;&nbsp;&nbsp; <strong> @std.cls.classname </strong><br> Section:  <strong> @std.sec.secName</strong> </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th colspan="2">Fee</th>
+
+                    <th>Total Fee</th>
+                    <th>Discount</th>
+                    <th>Payable Fee</th>
+                </tr>
+                @foreach (var i in (List<SMS.Models.StdFeeDetail>)TempData["Voucher"])
+                {
+                    <tr>
+                        <td colspan="2">@i.Fee</td>
+
+                        <td>@i.TotalFee/-</td>
+                        <td>@i.Dis/-</td>
+                        <td>@i.FeeAmt/- </td>
+
+                    </tr>
+                    TotalFee = TotalFee + i.FeeAmt;
+                    TotalDis = TotalDis + i.Dis;
+                    Total = Total + i.TotalFee;
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="2">Total</th>
+                    <td>@Total/-</td>
+                    <td>@TotalDis/-</td>
+                    <td><strong>@TotalFee/-</strong> </td>
+                </tr>
+            </tfoot>
+        </table>
+            <hr style="border-top: dotted 1px;" />
+
+            <table>
+                <caption>Institute Copy</caption>
+                <thead>
+                    <tr>
+                        <th colspan="3">Fee Month: @TempData["FeeMonth"]</th>
+                        <th>Print Date: @DateTime.Now.ToString("dd-MMM-yyyy") </th>
+                        <th>Due Date: @TempData["Due"]</th>
+                    </tr>
+                    <tr>
+                        <td colspan="3">Student Name: <strong> @std.pr.perName</strong> <br> Roll Number:&nbsp;&nbsp;&nbsp; <strong> @std.stdRollNo</strong> </td>
+                        <td> Father Name: <strong>@std.pr.perGarName</strong><br> Contact #:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <strong> @std.pr.perContactOne </strong></td>
+                        <td> Session: <strong>@std.ses.sesName</strong><br> Class:&nbsp;&nbsp;&nbsp; <strong> @std.cls.classname </strong><br> Section:  <strong> @std.sec.secName</strong> </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th colspan="2">Fee</th>
+
+                        <th>Total Fee</th>
+                        <th>Discount</th>
+                        <th>Payable Fee</th>
+                    </tr>
+                    @foreach (var i in (List<SMS.Models.StdFeeDetail>)TempData["Voucher"])
+                    {
+                        <tr>
+                            <td colspan="2">@i.Fee</td>
+
+                            <td>@i.TotalFee/-</td>
+                            <td>@i.Dis/-</td>
+                            <td>@i.FeeAmt/- </td>
+
+                        </tr>
+                        TotalFee1 = TotalFee1 + i.FeeAmt;
+                        TotalDis1 = TotalDis1 + i.Dis;
+                        Total1 = Total1 + i.TotalFee;
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="2">Total</th>
+                        <td>@Total1/-</td>
+                        <td>@TotalDis1/-</td>
+                        <td><strong>@TotalFee1/-</strong> </td>
+                    </tr>
+                </tfoot>
+            </table>
+         }
+
+    </div>
+
+    <script type="text/javascript">
+        function print1() {
+            var prtContent = document.getElementById('Print');
+            var mywindow = window.open('', '', 'height=700,width=900');
+            mywindow.document.write('<html><head>');
+            mywindow.document.write('<link href = "/Content/bootstrap.min.css" rel = "stylesheet" />')
+            mywindow.document.write('<link href = "/Content/Print.css" rel = "stylesheet" />')
+            mywindow.document.write('</head><body>');
+            mywindow.document.write(prtContent.innerHTML);
+            mywindow.document.write('</body></html>');
+            mywindow.document.close();
+            setTimeout(function () {
+                mywindow.print();
+                mywindow.close();
+            }, 500)
+
+        }
+        print1();
+
+    </script>
+
+
+}
+
+
+
+
+

@@ -1,0 +1,74 @@
+﻿
+
+@*<link href="../../assets/plugins/datatables/css/jquery.datatables.min.css" rel="stylesheet" type="text/css" />
+<link href="../../assets/plugins/datatables/css/jquery.datatables_themeroller.css" rel="stylesheet" type="text/css" />
+
+
+<script src="../../assets/plugins/jquery/jquery-3.1.0.min.js"></script>
+<script src="../../assets/plugins/datatables/js/jquery.datatables.min.js"></script>
+<script src="../../assets/js/pages/table-data.js"></script>*@
+
+
+@if (TempData["No"] != null)
+{
+<div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    Info!  @TempData["No"].
+</div>
+}
+
+@if (TempData["List"] != null)
+{
+
+    <div class="table-responsive">
+        <table id="example" class="display table dataTable" style="width: 100%; cellspacing: 0;">
+            <thead>
+                <tr>
+
+                    <th>Name</th>
+                    <th>Father Name</th>
+                    <th>Roll Number</th>
+                    <th>Contact Number</th>
+                    <th>Image</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            @foreach (var item in (List<SMS.Models.Student>)TempData["List"])
+            {
+                <tbody>
+                    <tr>
+
+                        <td>@item.pr.perName</td>
+                        <td>@item.pr.perGarName</td>
+                        <td>@item.stdRollNo</td>
+                        <td>@item.pr.perContactOne</td>
+                        <td>
+                            <img src="~/Images/@item.pr.perImage" alt="Image" height="40" width="40" />
+                        </td>
+                        <td>
+                            <a title="Detail Student" class="counter" href="@Url.Action("DetailStd", new { id = item.perId })">
+                                <i class="fa fa-info" style="font-size:20px"></i>
+                            </a>
+                            &nbsp;
+                            <a title="Update Student" class="counter" href="@Url.Action("EditStd", new { id = item.perId })">
+                                <i class="fa fa-edit" style="font-size:20px"></i>
+                            </a>
+                            <a title="Delete Student" class="counter" href="@Url.Action("DelStudent", new { id = item.perId })">
+                                <i class="fa fa-trash" style="font-size:20px;color:red"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+
+            }
+
+        </table>
+    </div>
+}
+
+
+
+
+
+

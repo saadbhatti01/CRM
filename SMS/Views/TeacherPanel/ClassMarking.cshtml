@@ -1,0 +1,254 @@
+﻿
+@{
+    ViewBag.Title = "ClassMarking";
+}
+
+
+@{ 
+    var teacher = TempData["Data"] as SMS.Models.TeacherClass;
+}
+
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">Class Obtain Mark Sheet</h3>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["SuccessMessage"]
+            </div>
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"]
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-body">
+                        <div id="rootwizard">
+                            <div class="row m-b-lg">
+                                <div class="col-md-12">
+                                    <form action="~/TeacherPanel/ClassMarking" method="post" id="ClassForm">
+                                        <div class="row">
+                                            @if (teacher != null)
+                                            {
+                                                <div class="form-group col-md-3">
+                                                    <label for="ageRangeField">Session</label>
+                                                    <input type="text" name="" value="@teacher.ses.sesName" readonly class="form-control" />
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label for="ageRangeField">Class</label>
+                                                    <input type="text" name="" value="@teacher.cls.classname" readonly class="form-control" />
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label for="ageRangeField">Section</label>
+                                                    <input type="text" name="" value="@teacher.sec.secName" readonly class="form-control" />
+                                                </div>
+                                            }
+
+                                                <div class="col-md-3">
+                                                    <label for="ageRangeField">Subject</label>
+                                                    @if (teacher != null)
+                                                    {
+                                                        <input type="hidden" name="sesId" id="sesId" value="@teacher.sesId" />
+                                                        <input type="hidden" name="classId" id="classId" value="@teacher.classId" />
+                                                        <input type="hidden" name="secId"  id="secId" value="@teacher.secId" />
+                                                        <input type="hidden" name="id" value="@teacher.TeachClassId" />
+                                                    }
+
+                                                    @Html.DropDownList("subId", (SelectList)ViewData["SubJect"], "--Select Subject--", new { required = "required", @class = "form-control" })
+                                                </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="form-group col-md-3">
+                                                <label for="ageRangeField">Exam Type</label>
+                                                @Html.DropDownList("etId", (SelectList)ViewData["ExamType"], "--Select Exam Type--", new { required = "required", @class = "form-control" })
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="ageRangeField">Marks out of</label>
+                                                <input type="number" placeholder="" min="0" name="subTotalMarks" value="@TempData["Outof"]" id="TotalMarks" class="form-control" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="form-group col-md-3">
+                                                <input class="btn btn-primary" type="submit" value="Marking" name="submitButton">
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+
+                            </div>
+                            <hr />
+                            <div class="col-md-12">
+                                @if (TempData["StdObtMark"] != null)
+                                {
+                                    <div class="panel-heading clearfix">
+                                        <h2 class="panel-title"><b>Enter Student Marks Detail</b></h2>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Roll No</th>
+                                                    <th>Student Name</th>
+
+                                                    @if (TempData["SUbName"] != null)
+                                                    {
+                                                        foreach (var item in (IEnumerable<SMS.Models.StdObtDetail>)TempData["SUbName"])
+                                                        {
+                                                            <th>@item.sm1</th>
+                                                        }
+
+                                                    }
+                                                </tr>
+                                            </thead>
+                                            @foreach (var item in (IEnumerable<SMS.Models.StdObtDetail>)TempData["StdObtMark"])
+                                            {
+                                                <tbody>
+
+                                                    <tr class="StdData">
+
+                                                        <td>
+                                                            @item.stdRollNo
+                                                            <input type="hidden" id="StdId" value="@item.stdId" />
+                                                        </td>
+                                                        <td>
+                                                            @item.stdName
+                                                            <input type="hidden" id="name" value="@item.stdName" />
+                                                        </td>
+                                                        <td>
+                                                            <input type='number' name="" id="Oral" value="" class="form-control"
+                                                                   style="width: 6em" maxlength="6" min="0" oninput="validity.valid||(value='');" />
+                                                        </td>
+                                                        <td>
+                                                            <input type='number' name="" id="Obj" value="" class="form-control"
+                                                                   style="width: 6em" maxlength="6" min="0" oninput="validity.valid||(value='');" />
+                                                        </td>
+                                                        <td>
+                                                            <input type='number' name="" id="Sub" value="" class="form-control"
+                                                                   style="width: 6em" maxlength="6" min="0" oninput="validity.valid||(value='');" />
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            }
+
+                                        </table>
+                                    </div>
+                                    <input class="btn btn-primary" type="submit" id="AjaxClick" value="Save" />
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div><!-- Row -->
+        </div><!-- Main Wrapper -->
+
+    </div>
+</div>
+
+<script src="../../assets/plugins/jquery/jquery-3.1.0.min.js"></script>
+<script>
+    function validateForm() {
+        var x = document.forms["ClassForm"]["MaxDic"].value;
+
+        if (x > 100) {
+            alert("Discount overloaded Muximum is 100.");
+            return false;
+        }
+        else {
+            return true;
+        }
+
+    }
+</script>
+
+<script type="text/javascript">
+
+    function getAllDetails() {
+        var OutOf = $("#TotalMarks").val();
+        var data = [];
+
+        $('tr.StdData').each(function () {
+            var Id = $(this).find("#StdId").val();
+            var Name = $(this).find("#name").val();
+            var sm1 = $(this).find("#Oral").val();
+            var sm2 = $(this).find("#Obj").val();
+            var sm3 = $(this).find("#Sub").val();
+            var alldata = {
+                'stdId': Id,
+                'stdName': Name,
+                'smt1': sm1,
+                'smt2': sm2,
+                'smt3': sm3,
+                }
+            data.push(alldata);
+
+        });
+        return data;
+    }
+    $("#AjaxClick").click(function (e) {
+
+        var OutOf = $("#TotalMarks").val();
+        if (OutOf != null && OutOf != "") {
+            var ses = $("#sesId").val();
+            var sec = $("#secId").val();
+            var Class = $("#classId").val();
+            var sub = $("#subId").val();
+            var exam = $("#etId").val();
+            var OutofMarks = $("#TotalMarks").val();
+                var data = JSON.stringify(getAllDetails());
+                var dataObject = JSON.stringify({
+                    sesId: ses,
+                    secId: sec,
+                    classId: Class,
+                    subId: sub,
+                    etId: exam,
+                    subTotalMarks: OutofMarks
+                });
+
+                   $.ajax({
+                        url: "@Url.Action("AddStdMarks", "Examination")",
+                        type: "Post",
+                        datatype: 'json',
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify({ 'Data': dataObject, 'AccDetails': data }),
+
+                        success: function (response) {
+                            {
+                                alert(response.responseText);
+                                location.reload(true);
+                            }
+                        },
+                        error: function (e) {
+                            alert("Error " + e + "");
+
+                        }
+                    });
+
+        } else {
+            alert("Please Enter Total Marks");
+        }
+
+    });
+</script>
+

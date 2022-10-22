@@ -1,0 +1,85 @@
+﻿@model SMS.Models.Login
+
+@{
+    ViewBag.Title = "UpdateUser";
+}
+
+@using (Html.BeginForm())
+{
+    <div class="page-inner">
+        <div class="panel-title">
+            <h3 class="breadcrumb-header"> Update User</h3>
+        </div>
+        <div id="main-wrapper">
+            <div class="row">
+
+                <div class="col-md-12">
+
+
+                    <div class="panel panel-white">
+                        <div class="panel-body">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(model => model.id)
+                            <div class="col-md-3">
+
+                                <div class="form-group">
+                                    <label>User Name</label>
+                                    @Html.EditorFor(model => model.usrName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.usrName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+
+                                <div class="form-group">
+                                    <label>User Login</label>
+
+                                    @Html.EditorFor(model => model.usrLogin, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.usrLogin, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+
+                                <div class="form-group">
+                                    <label>User Password</label>
+
+                                    @Html.EditorFor(model => model.usrPassword, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.usrPassword, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+
+                                <div class="form-group">
+                                    <label for="ageRangeField">Role</label>
+                                    @Html.DropDownList("roleId", (SelectList)ViewData["name"], "--Select a Role--", new { required = "required", @class="form-control" })
+
+
+                                </div>
+                                </div>
+                            <div class="col-md-3">
+
+                                <div class="form-group">
+                                    <label for="ageRangeField">User Status</label>
+                                    <select id="ageRangeField" name="usrStatus" class="form-control">
+                                        <option value="Active">Active</option>
+                                        <option value="Deactive">Deactive</option>
+
+                                    </select>
+                                </div>
+                            </div>
+
+
+                                <div class=" form-group">
+                                    <div class="col-md-12">
+                                        <input type="submit" value="Save" class="btn btn-primary" />
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+

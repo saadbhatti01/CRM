@@ -1,0 +1,218 @@
+﻿
+
+@if (TempData["No"] != null)
+{
+    if (TempData["Session"] != null)
+    {
+        <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            Info! @TempData["No"] in @TempData["Session"] Session.
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            Info! @TempData["No"].
+        </div>
+    }
+}
+
+@if (TempData["Fee"] != null)
+{
+    double TotalFee = 0;
+    <div class="page-title">
+        @if (TempData["Session"] != null)
+        {
+            <h3 class="breadcrumb-header">
+                Student Complete Account Info of @TempData["Session"] Session
+                <input type="button" class="btn btn-success" value="Print info" onclick="PrintAccounts()" style="float:right" />
+            </h3>
+
+        }
+        else
+        {
+            <h3 class="breadcrumb-header">
+                Student Complete Account Info of All Session
+                <input type="button" class="btn btn-success" value="Print info" onclick="PrintAccounts()" style="float:right" />
+            </h3>
+        }
+    </div>
+
+    <div id="table-wrapper">
+        <div id="table-scroll">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Roll No
+                        </th>
+                        <th>
+                            Session
+                        </th>
+                        <th>
+                            Section
+                        </th>
+                        <th>
+                            Class
+                        </th>
+                        <th>
+                            Fee
+                        </th>
+                        <th>
+                            Amount(Rs.)
+                        </th>
+                        <th>
+                            Pending(Rs.)
+                        </th>
+                        <th>
+                            Status
+                        </th>
+                        <th>
+                            Date
+                        </th>
+                    </tr>
+
+                    @foreach (var i in (List<SMS.Models.StdFeeDetail>)TempData["Fee"])
+                    {
+                        <tr>
+                            <td>@i.Stdname</td>
+                            <td>@i.RollNo</td>
+                            <td>@i.Ses</td>
+                            <td>@i.Sec</td>
+                            <td>@i.Class</td>
+                            <td>@i.Fee</td>
+                            <td>@i.FeeAmt</td>
+                            @if (i.FeePaidStatus == "Partial")
+                            {
+                                <td>@i.PandingAmt</td>
+                            }
+                            else
+                            {
+                                <td>0</td>
+                            }
+                            <td>@i.FeePaidStatus</td>
+
+                            <td>@i.FeeDate.ToString("dd MMM yyyy")</td>
+
+                        </tr>
+
+                        TotalFee = TotalFee + i.FeeAmt;
+                    }
+                    <h3>Total Fee  = @TotalFee/Rs. </h3>
+                </table>
+
+            </div>
+        </div>
+    </div>
+}
+
+@if (TempData["Fee"] != null)
+{
+    double TotalFee = 0;
+    <div hidden id="PrintAccount">
+        <div class="panel-heading clearfix">
+            @if (Session["InsName"] != null)
+            {
+            <p class="panel-title">
+                <img src="@Session["InsImage"]" width="65" height="65" style="float:left;" />
+                <h2 style="text-align: center;">@Session["InsName"]</h2>
+                @if (TempData["Session"] != null)
+                {
+                    <h3 style="text-align: center;">Student Complete Account Info of  @TempData["Session"] Session</h3>
+                }
+                else
+                {
+                    <h3 style="text-align: center;">Student Complete Account Info of All Session</h3>
+                }
+            </p>
+            }
+        </div>
+
+        <table class="table table-bordered">
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Roll No
+                </th>
+                <th>
+                    Session
+                </th>
+                <th>
+                    Section
+                </th>
+                <th>
+                    Class
+                </th>
+                <th>
+                    Fee
+                </th>
+                <th>
+                    Amount(Rs.)
+                </th>
+                <th>
+                    Pending(Rs.)
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Date
+                </th>
+            </tr>
+
+            @foreach (var i in (List<SMS.Models.StdFeeDetail>)TempData["Fee"])
+            {
+                <tr>
+                    <td>@i.Stdname</td>
+                    <td>@i.RollNo</td>
+                    <td>@i.Ses</td>
+                    <td>@i.Sec</td>
+                    <td>@i.Class</td>
+                    <td>@i.Fee</td>
+                    <td>@i.FeeAmt</td>
+                    @if (i.FeePaidStatus == "Partial")
+                    {
+                        <td>@i.PandingAmt</td>
+                    }
+                    else
+                    {
+                        <td>0</td>
+                    }
+                    <td>@i.FeePaidStatus</td>
+
+                    <td>@i.FeeDate.ToString("dd MMM yyyy")</td>
+
+                </tr>
+
+                TotalFee = TotalFee + i.FeeAmt;
+            }
+            <h3>Total Fee  = @TotalFee/Rs. </h3>
+        </table>
+
+    </div>
+}
+
+<script type="text/javascript">
+    function PrintAccounts() {
+        var prtContent = document.getElementById('PrintAccount');
+        var mywindow = window.open('', '', 'height=1000,width=1400');
+        mywindow.document.write('<html><head>');
+        mywindow.document.write('<link href = "/Content/bootstrap.min.css" rel = "stylesheet" />')
+        mywindow.document.write('<link href = "/Content/Print.css" rel = "stylesheet" />')
+        mywindow.document.write('</head><body>');
+        mywindow.document.write(prtContent.innerHTML);
+        mywindow.document.write('</body></html>');
+        mywindow.document.close();
+        setTimeout(function () {
+            mywindow.print();
+            mywindow.close();
+        }, 500)
+
+    }
+</script>

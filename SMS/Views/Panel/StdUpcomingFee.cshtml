@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "StdUpcomingFee";
+}
+
+<div class="page-inner">
+
+    <div id="main-wrapper">
+        <div class="page-title">
+            <h3 class="breadcrumb-header">Upcomming Fee</h3>
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    Oh snap! @TempData["Error"].
+                </div>
+            }
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    Oh snap! @TempData["SuccessMessage"].
+                </div>
+
+            }
+            @if (TempData["Info"] != null)
+            {
+                <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    Oh snap! @TempData["Info"].
+                </div>
+            }
+
+        </div>
+
+        <!-- Row -->
+        <div class="row">
+            <div class="col-lg-4 col-md-8">
+                <div class="panel panel-white stats-widget">
+                    <div class="panel-body">
+                        <div class="pull-left">
+                            <span class="stats-number">@Convert.ToDecimal(0).ToString("#,##0.00") /Rs.</span>
+                            <p class="stats-info">No Record found</p>
+                        </div>
+                        <div class="pull-right">
+                            <i class="fa fa-usd stats-icon" style="color:cornflowerblue;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- Main Wrapper -->
+</div>
+

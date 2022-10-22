@@ -1,0 +1,192 @@
+﻿@model SMS.Models.RegViewModel
+@{
+    ViewBag.Title = "CustomSMS";
+}
+
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">
+            Custom Message Sending Module
+        </h3>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["Success"].
+            </div>
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form action="~/SMS/SendCustomMsg" method="post" name="ClassForm" enctype="multipart/form-data">
+                                    <div class="row">
+
+                                        <div class="col-md-4 form-group">
+                                            <label>Text:</label>
+                                            @if (TempData["Msg"] != null)
+                                            {
+                                                <textarea maxlength="150" id="ModuleText" placeholder="Max character Length is 150" rows="5" class="form-control">@TempData["Msg"]</textarea>
+                                            }
+                                            else
+                                            {
+                                                <textarea maxlength="150" id="ModuleText" placeholder="Max character Length is 150" rows="5" class="form-control"></textarea>
+                                            }
+                                        </div>
+                                           
+                                            <div class="col-md-12 form-group">
+                                                <input class="btn btn-primary" type="button" id="SaveText" name="submitButton" value="Save Text">
+                                            </div>
+                                    </div>
+                                    <br />
+                                    <div class="col-md-12">
+                                        <input type="checkbox" id="Method1" class="form-control" />
+                                        <label>Method 1: Send Custom Message to Whole Class</label>
+
+                                        <div hidden class="Method1">
+                                            <div class="row">
+
+                                                <div class="form-group  col-md-3">
+                                                    <label for="exampleInputName">Campus<span style="color:red"> *</span></label>
+                                                    @Html.DropDownList("camId", (SelectList)ViewData["Campus"], "--Select Campus--", new {  @class = "form-control" })
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label for="exampleInputName">Session<span style="color:red"> *</span></label>
+                                                    @Html.DropDownList("sesId", (SelectList)ViewData["Session"], "--Select Session--", new {  @class = "form-control" })
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label for="exampleInputName">Class<span style="color:red"> *</span></label>
+                                                    @Html.DropDownList("classId", (SelectList)ViewData["Class"],"All", new {  @class = "form-control" })
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label for="exampleInputName">Section<span style="color:red"> *</span></label>
+                                                    @Html.DropDownList("secId", (SelectList)ViewData["Section"], "All", new {  @class = "form-control" })
+
+                                                </div>
+                                            </div>
+                                            <div class="row col-md-12 form-group">
+                                                <input class="btn btn-primary" type="submit" name="ClassMsg" value="Send Message">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <br />
+                                    <div class="col-md-12">
+                                        <input type="checkbox" id="Method2" class="form-control" />
+                                        <label>Method 2: Send Custom Message to a specific Student</label>
+                                        <div hidden class="Method2">
+                                            <div class="row">
+                                                <div class="form-group  col-md-3">
+                                                    <label for="exampleInputName">Enter Roll Number<span style="color:red"> *</span></label>
+                                                    <input type="text" class="form-control" name="stdRollNo" />
+                                                </div>
+                                            </div>
+                                            <div class="row col-md-12 form-group">
+                                                <input class="btn btn-primary" type="submit" name="StdMsg" value="Send Message">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div hidden class="col-md-12">
+                                        <input type="radio" id="Method3" class="form-control" />
+                                        <label>Method 3: Send Custom Message to Excel sheet</label>
+                                    </div>
+
+
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../../assets/plugins/jquery/jquery-3.1.0.min.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $('#Method1').click(function () {
+            $(".Method1").show();
+            var m1 = $("#Method2").val();
+            var m2 = $("#Method1").val();
+            if ($("#Method2").prop('checked'))
+            {
+
+            }
+            if (m1 == "on") {
+                $('Method2').prop('checked', false);
+            }
+            //$("#Method2").prop('checked', false);
+            $(".Method2").hide();
+            $("#Method3").prop('checked', false);
+            $(".Method3").hide();
+        });
+        $('#Method2').click(function () {
+            $(".Method2").show();
+            $('#Method1').prop('checked', false);
+            $(".Method1").hide();
+            $("#Method3").prop('checked', false);
+            $(".Method3").hide();
+            
+        });
+        $('input[id=Method3]').click(function () {
+            $(".Method3").show();
+            $('#Method1').prop('checked', false);
+            $(".Method1").hide();
+            $('#Method2').prop('checked', false);
+            $(".Method2").hide();
+
+        });
+    });
+</script>
+
+<script>
+    $(function () {
+        $("#SaveText").click(function () {
+            var text = $("#ModuleText").val();
+            if (text != "" && text != null) {
+                $.post("@Url.Action("AddMsgText", "SMS")?MsgText=" + text, function (res) {
+                    if (res.Success === "true") {
+
+                        $("#ModuleText").val(res.Data.MsgText);
+                        var Msg = res.Data.AlertMsg
+                        if (Msg == true) {
+                            alert("Message Text Save successfully");
+                        } else {
+                            alert("Message Text Save successfully. Please Contact to soft support to Approve your Text to send Custom Message.");
+                        }
+                        
+                    } else {
+                        alert("Message Text not saved please try again");
+                    }
+
+                });
+            } else {
+                alert("Please Enter some Text in Message");
+            }
+        });
+    });
+</script>
+
+

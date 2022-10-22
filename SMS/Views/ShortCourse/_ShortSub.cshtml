@@ -1,0 +1,27 @@
+﻿@if (TempData["Course"] != null)
+{
+    var sub = TempData["Course"] as SMS.Models.short_course_Subject;
+
+    <div class="panel-heading clearfix">
+        <h2 class="panel-title">
+            <b>Course Detail</b>
+
+        </h2>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <tr>
+                <th>Subject name</th>
+                <th>Fees</th>
+                <th>Duration</th>
+            </tr>
+
+            <tr>
+                <td>@sub.scsName</td>
+                <td>@sub.scsFee (Rs.)</td>
+                <td>@sub.scsDuration Days</td>
+            </tr>
+        </table>
+
+    </div>
+}

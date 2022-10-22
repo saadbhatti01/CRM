@@ -1,0 +1,158 @@
+﻿body {
+    width: 100%;
+    margin: 0px;
+}
+
+.table-1 img {
+    width: 100%;
+    height: auto;
+}
+
+.table-1 .image {
+    width: 100px;
+    height: 80px;
+}
+
+.table-1 .img {
+    width: 100px;
+    height: 80px;
+}
+
+.container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 50px 0px;
+}
+
+.col-sm-6 {
+    width: 49%;
+    float: left;
+    padding: 10px 5px;
+}
+
+.table-1 {
+    text-align: center;
+    width: 500px;
+}
+
+.table-instruction {
+    width: 500px;
+    text-align: center;
+}
+
+    .table-instruction .instructions {
+        height: 200px;
+    }
+
+    .table-instruction .barcode {
+        height: 55px;
+    }
+
+.table-2 {
+    width: 500px;
+    text-align: center;
+}
+
+    .table-2 img {
+        width: 100%;
+    }
+
+    .table-2 .image2 {
+        width: 125px;
+        height: 80px;
+    }
+
+    .table-2 .img {
+        width: 100px;
+        height: 80px;
+    }
+
+    .table-2 .th1 {
+        height: 80px;
+    }
+
+    .table-2 .barcode {
+        height: 60px;
+    }
+
+@media print {
+    .col-sm-6 {
+        width: 48%;
+        float: left;
+    }
+
+    .table-1 {
+        width: 300px;
+        font-size: 8px;
+        text-align: center;
+        height: 80px;
+    }
+
+        .table-1 .image {
+            width: 40px;
+            height: 20px;
+        }
+
+        .table-1 .logo-img {
+            width: 100px;
+            height: 40px;
+        }
+
+        .table-1 img {
+            width: 100%;
+            height: auto;
+        }
+
+        .table-1 .img {
+            width: 50px;
+            height: 50px;
+        }
+
+    .table-instruction {
+        width: 300px;
+        text-align: center;
+    }
+
+        .table-instruction .instructions {
+            height: 104px;
+            font-size: 8px;
+        }
+
+        .table-instruction .barcode {
+            height: 30px;
+            font-size: 10px;
+        }
+
+    .table-2 {
+        width: 300px;
+        text-align: center;
+        font-size: 8px;
+    }
+
+        .table-2 img {
+            width: 100%;
+            height: auto;
+        }
+
+        .table-2 .image2 {
+            width: 70px;
+            height: 20px;
+        }
+
+        .table-2 .img {
+            width: 70px;
+            height: 50px;
+        }
+
+        .table-2 .barcode {
+            height: 30px;
+        }
+
+        .table-2 .th1 {
+            height: 30px;
+        }
+
+        .table-2 td {
+            padding: 5px 0px
+        }
+}

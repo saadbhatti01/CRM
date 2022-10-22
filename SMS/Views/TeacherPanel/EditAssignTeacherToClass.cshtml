@@ -1,0 +1,77 @@
+﻿@model SMS.Models.TeacherClass
+@{
+    ViewBag.Title = "EditAssignTeacherToClass";
+}
+
+@using (Html.BeginForm())
+{
+    <div class="page-inner">
+        <div class="panel-title">
+            <h3 class="breadcrumb-header"> Update Teacher's Class</h3>
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    Oh snap! @TempData["Error"].
+                </div>
+            }
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    Success! @TempData["Success"].
+                </div>
+            }
+            @if (TempData["Info"] != null)
+            {
+                <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    Info! @TempData["Info"].
+                </div>
+            }
+        </div>
+        <div id="main-wrapper">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="panel panel-white">
+                        <div class="panel-body">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(model => model.TeachClassId)
+
+                            <div class="row">
+                                <div class="form-group col-md-3">
+                                    <input type="hidden" name="perId" value="@Model.perId" />
+                                    <label for="ageRangeField">Session</label>
+                                    @Html.DropDownList("sesId", (SelectList)ViewData["Session"], "Select Session", new { required = "required", @class = "form-control" })
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="ageRangeField">Class</label>
+                                    @Html.DropDownList("classId", (SelectList)ViewData["Class"], "Select Class", new { required = "required", @class = "form-control" })
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="ageRangeField">Section</label>
+                                    @Html.DropDownList("secId", (SelectList)ViewData["Section"], "Select Section", new { required = "required", @class = "form-control" })
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="ageRangeField">Subject</label>
+                                    @Html.DropDownList("subId", (SelectList)ViewData["SubJect"], "Select Subject", new { required = "required", @class = "form-control" })
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

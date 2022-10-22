@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewBag.Title = "_GetExtraFeeStatus";
+}
+@if (TempData["Fee"] != null)
+{
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">Extra Fee Status</h3>
+    </div>
+    <div id="main-wrapper">
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-white">
+
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+
+                                        <th>
+                                            Name
+                                        </th>
+                                        <th>
+                                            Roll No
+                                        </th>
+                                        <th>
+                                            Session
+                                        </th>
+                                        <th>
+                                            Section
+                                        </th>
+                                        <th>
+                                            Class
+                                        </th>
+                                        <th>
+                                            Fee Type
+                                        </th>
+                                        <th>
+                                            Amount
+                                        </th>
+                                        <th>
+                                            Status
+                                        </th>
+                                        <th>
+                                            Date
+                                        </th>
+                                    </tr>
+                                </thead> @foreach (var i in (List<SMS.Models.StdFeeDetail>)TempData["Fee"])
+                                {
+                                    <tr>
+                                        <td>@i.Stdname</td>
+                                        <td>@i.RollNo</td>
+                                        <td>@i.Ses</td>
+                                        <td>@i.Sec</td>
+                                        <td>@i.Class</td>
+                                        <td>@i.Fee</td>
+                                        <td>@i.FeeAmt</td>
+                                        <td>@i.FeePaidStatus</td>
+                                        @if (i.FeePaidStatus == "Paid")
+                                        {
+                                            <td>@i.FeeDate.ToString("dd MMM yyyy")</td>
+                                        }
+                                        else
+                                        {
+                                            <td>01/01/0000</td>
+                                        }
+
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                    
+}
+
+

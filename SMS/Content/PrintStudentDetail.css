@@ -1,0 +1,194 @@
+﻿
+    @media print {
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .row::after {
+            display: table;
+            content: "";
+            clear: both;
+        }
+
+        .border {
+            border-bottom: 1px solid black;
+            width: 100%;
+        }
+
+        .col-2 {
+            width: 16.66%;
+            display: inline-block;
+            padding: 1px;
+        }
+
+        .col-1 {
+            width: 8.33%;
+            float: left;
+            padding: 1px;
+        }
+
+        .col-3 {
+            width: 23%;
+            float: left;
+            padding: 1px;
+        }
+
+        .col-4 {
+            width: 32%;
+            float: left;
+            padding: 1px;
+        }
+
+        .col-6 {
+            width: 49%;
+            float: left;
+            padding: 1px;
+        }
+
+        .col-5 {
+            width: 41%;
+            float: left;
+            padding: 1px;
+        }
+
+        .col-12 {
+            width: 100%;
+            float: left;
+        }
+
+        .container {
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        h4, p {
+            float: left;
+            padding: 10px 0px;
+            font-size: small;
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+            float: right;
+            margin-right: 1px;
+        }
+
+        .profile-img {
+            width: 100px;
+            height: auto;
+            float: right;
+            margin-right: -25px;
+            margin-bottom: 50px;
+        }
+
+        h1, h2 {
+            padding: 10px;
+            text-align: center;
+        }
+    }
+
+    @media screen and (min-width: 720px) {
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .row::after {
+            display: table;
+            content: "";
+            clear: both;
+        }
+
+        .border {
+            border-bottom: 1px solid black;
+            width: 100%;
+        }
+
+        .col-2 {
+            width: 16.66%;
+            display: inline-block;
+            padding: 1px;
+        }
+
+        .col-12 {
+            width: 100%;
+            float: left;
+        }
+
+        .col-1 {
+            width: 8.33%;
+            float: left;
+            padding: 1px;
+        }
+
+        .col-3 {
+            width: 23%;
+            float: left;
+            padding: 1px;
+        }
+
+        .col-4 {
+            width: 32%;
+            float: left;
+            padding: 1px;
+        }
+
+        .col-5 {
+            width: 41%;
+            float: left;
+            padding: 1px;
+        }
+
+        .col-6 {
+            width: 49%;
+            float: left;
+            padding: 1px;
+        }
+
+        .container {
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        h4, p {
+            float: left;
+            padding: 10px 0px;
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+            float: right;
+            margin-right: 1px;
+        }
+
+        .profile-img {
+            width: 150px;
+            height: auto;
+            float: right;
+            margin-right: -50px;
+            margin-bottom: 50px;
+        }
+
+        h1, h2 {
+            padding: 10px;
+            text-align: center;
+        }
+
+        h1 {
+            padding-top: 50px;
+        }
+    }
+

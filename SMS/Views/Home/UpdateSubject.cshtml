@@ -1,0 +1,88 @@
+﻿@model SMS.Models.Subject
+
+@{
+    ViewBag.Title = "UpdateSubject";
+}
+
+@using (Html.BeginForm("UpdateSubject", "Home"))
+{
+    <div class="page-inner">
+        <div class="panel-title">
+            <h3 class="breadcrumb-header"> Update Subject</h3>
+        </div>
+        <div id="main-wrapper">
+            <div class="row">
+
+                <div class="col-md-12">
+
+
+                    <div class="panel panel-white">
+                        <div class="panel-body">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(model => model.subId)
+                            <div class="col-md-3">
+
+                                <div class="form-group">
+                                    <label>Subject Name</label>
+                                    @Html.EditorFor(model => model.subName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.subName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+
+                                <div class="form-group">
+                                    <label>Subject Code</label>
+                                    @Html.EditorFor(model => model.subCode, new { htmlAttributes = new { @class = "form-control", @id = "SCode" } })
+                                    @Html.ValidationMessageFor(model => model.subCode, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label for="ageRangeField">Is Visible</label>
+                                <select id="ageRangeField" name="isVisible" class="form-control">
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <input type="submit" value="Save" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+        <script type="text/javascript">
+    $(function () {
+
+        $("#SCode").change(function () {
+
+            var t = $(this).val();
+
+            if (t !== "") {
+
+                $.post("@Url.Action("CheckisAlphaNumeric", "Home")?val=" + t, function (res) {
+                    if (res.Success === "true") {
+                        return true;
+                    }
+                    else if (res.Success === "False") {
+                        alert("Subject Code must be AlphaNumeric!");
+                        return false;
+                    }
+                });
+            } else {
+                //Let's clear the values and disable :)
+                alert("Please Enter Subject Code!");
+            }
+
+        });
+    });
+
+        </script>
+

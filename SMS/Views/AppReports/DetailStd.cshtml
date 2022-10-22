@@ -1,0 +1,187 @@
+﻿
+@model SMS.Models.RegViewModel
+@{
+    ViewBag.Title = "DetailStd";
+}
+
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">@Html.DisplayFor(model => model.perName)'s Info  <input type="button" class="btn btn-success" value="Print info" onclick="print1()" style="float:right" /></h3>
+
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-body" id="Print">
+                        <div id="rootwizard">
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="exampleInputName"><b>Student Name:</b></label>
+                                    <label for="exampleInputName">&nbsp;&nbsp; @Html.DisplayFor(model => model.perName)</label>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="exampleInputName"><b>Father/Gaurdian Name:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.perGarName)
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="exampleInputName"><b>Roll Number:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.stdRollNo)
+                                </div>
+                            </div>
+
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="exampleInputName"><b>Email:</b> </label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.perEmail)
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="exampleInputName"><b>CNIC:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.perCNIC)
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="exampleInputName"><b>DOB:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.perDOB)
+                                </div>
+                            </div>
+
+                            <hr />
+                            <div class="row">
+
+                                <div class="col-md-3">
+                                    <label for="exampleInputName"><b>Blood Group:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.perBloodGrp)
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="exampleInputName"><b>Contact One:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.perContactOne)
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="exampleInputName"><b>Contact Two:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.perContactTwo)
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="exampleInputName"><b>Student Status:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.stdStatus)
+                                </div>
+                            </div>
+                            <hr />
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="exampleInputName"><b>Campus:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.campusname)
+
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="exampleInputName"><b>Session:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.sesName)
+
+
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="exampleInputName"><b>Section:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.secName)
+                                </div>
+
+                                <div class="col-md-3">
+                                    &nbsp;&nbsp;
+                                    <label for="exampleInputName"><b>Class:</b></label>
+                                    @Html.DisplayFor(model => model.ClassName)
+                                </div>
+                            </div>
+
+                            <hr />
+                            <div class="row">
+
+                                <div class="col-md-4">
+                                    <label for="exampleInputName"><b>City:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.CityName)
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="exampleInputName"><b>Area:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.AreaName)
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="exampleInputName"><b>Student Image:</b></label>
+                                    <img src="~/Images/@Model.perImage" alt="Image" height="35" width="35" />
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="exampleInputName"><b>Current Address:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.perCurrentAdrs)
+                                </div>
+
+                                <div class="col-lg-offset-6">
+                                    <label for="exampleInputName"><b>Permanent Address:</b></label>
+                                    &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.perPermanantAdrs)
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <hr />
+                   
+                </div>
+
+            </div>
+
+        </div><!-- Row -->
+    </div><!-- Main Wrapper -->
+
+</div>
+
+<script type="text/javascript">
+    //window.onload = load();
+    //function load() {
+    //    window.print();
+    //}
+    function print1() {
+        var prtContent = document.getElementById('Print');
+        var mywindow = window.open('', '', 'height=700,width=900');
+        mywindow.document.write('<html><head>');
+        mywindow.document.write('<link href = "/Content/milligram.min.css" rel = "stylesheet" />')
+        mywindow.document.write('<link href = "/Content/style.css" rel = "stylesheet" />')
+        mywindow.document.write('</head><body>');
+        mywindow.document.write(prtContent.innerHTML);
+        mywindow.document.write('</body></html>');
+        mywindow.document.close();
+        setTimeout(function () {
+            mywindow.print();
+            mywindow.close();
+        }, 500)
+
+    }
+</script>
+

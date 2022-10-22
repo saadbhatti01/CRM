@@ -1,0 +1,74 @@
+﻿@model SMS.Models.InstSession
+
+@{
+    ViewBag.Title = "UpdateSession";
+}
+
+@using (Html.BeginForm("UpdateSession", "Home"))
+{
+<div class="page-inner">
+    <div class="panel-title">
+        <h3 class="breadcrumb-header"> Update Session</h3>
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+
+            <div class="col-md-12">
+
+
+                <div class="panel panel-white">
+                    <div class="panel-body">
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.sesId)
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Session Name</label>
+                                @Html.EditorFor(model => model.sesName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.sesName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Session Code</label>
+                                @Html.EditorFor(model => model.sesCode, new { htmlAttributes = new { @class = "form-control", Maxlength = "2" } })
+                                @Html.ValidationMessageFor(model => model.sesCode, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Start Date</label>
+                                @Html.EditorFor(model => model.sesStartDate, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.sesStartDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+
+                            <div class="form-group">
+                                <label>End Date</label>
+                                @Html.EditorFor(model => model.sesEndDate, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.sesEndDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Status</label>
+                                <select id="ageRangeField" name="sesStatus" class="form-control">
+                                    <option value="Open">Open</option>
+                                    <option value="Closed">Closed</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input type="submit" value="Save" class="btn btn-primary" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}

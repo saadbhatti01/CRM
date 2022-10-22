@@ -1,0 +1,246 @@
+﻿
+@{
+    ViewBag.Title = "PrintCard";
+}
+
+
+@if (TempData["Student"] != null)
+{
+    <div class="page-inner">
+        <div class="page-title">
+            <h3 class="breadcrumb-header">
+                Print Student Identity Cards <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-sm" style="float: right;">Read Me</a>
+
+            </h3>
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">  Usefull Info</h4>
+                        </div>
+                        <div class="modal-body">
+                            you can print ID Card of student.
+                            Enter roll no then click on show button, desired student's data will be shown and then click on print button.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    Oh snap! @TempData["Error"].
+                </div>
+            }
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    Success! @TempData["SuccessMessage"].
+                </div>
+            }
+            @if (TempData["Info"] != null)
+            {
+                <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    Info! @TempData["Info"].
+                </div>
+            }
+        </div>
+        <div id="main-wrapper">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-white">
+                        <div class="panel-body">
+                            <div id="rootwizard">
+                                <div class="row m-b-lg">
+                                    <div class="col-md-6">
+                                        <form action="~/IdentityCard/PrintCard" method="post">
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label for="ageRangeField">Enter RollNumber</label>
+                                                    <input type="text" placeholder="Roll Number" name="RollNo" class="form-control" id="nameField">
+                                                    <input type="hidden" name="id" value="1" />
+                                                </div>
+                                                <div class="form-group col-md-12">
+                                                    <input type="submit" class="btn btn-primary" name="submit" value="Show">
+                                                </div>
+                                            </div>
+
+
+                                        </form>
+                                        <hr />
+                                        @if (TempData["Std"] != null)
+                                        {
+                                            var i = TempData["Std"] as SMS.Models.Student;
+                                            <div class="page-title">
+                                                <h3 class="breadcrumb-header">Student Information</h3>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered">
+
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Father Name</th>
+                                                        <th>Roll Number</th>
+                                                        <th>Class</th>
+                                                        <th>Section</th>
+
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>@i.pr.perName</td>
+                                                        <td>@i.pr.perGarName</td>
+                                                        <td>@i.stdRollNo</td>
+                                                        <td>@i.cls.classname</td>
+                                                        <td>@i.sec.secName</td>
+                                                    </tr>
+
+
+                                                </table>
+                                            </div>
+                                            <a href="@Url.Action("Card", new { RollNo = i.stdRollNo })" target="_blank" class="btn btn-success">Print Student Card</a>
+                                        }
+                                    </div>
+                                    <div class="col-md-6">
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div><!-- Row -->
+        </div><!-- Main Wrapper -->
+
+    </div>
+}
+else if (TempData["Person"] != null)
+{
+    <div class="page-inner">
+        <div class="page-title">
+            <h3 class="breadcrumb-header">
+                Print Person Identity Cards
+                <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-sm" style="float: right;">Read Me</a>
+            </h3>
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">  Usefull Info</h4>
+                        </div>
+                        <div class="modal-body">
+                            You can print Person ID Card.
+                            Enter code --------> Click on "SHOW" button, by clicking you willl see the details ---------> Click on "PRINT PERSON CARD" button, by clicking you will see the print view -------> Press Ctrl+P for Printing.
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    Oh snap! @TempData["Error"].
+                </div>
+            }
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    Success! @TempData["SuccessMessage"].
+                </div>
+            }
+            @if (TempData["Info"] != null)
+            {
+                <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    Info! @TempData["Info"].
+                </div>
+            }
+        </div>
+        <div id="main-wrapper">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-white">
+                        <div class="panel-body">
+                            <div id="rootwizard">
+                                <div class="row m-b-lg">
+                                    <div class="col-md-6">
+                                        <form action="~/IdentityCard/PrintCard" method="post">
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label for="ageRangeField">Enter Code</label>
+                                                    <input type="text" placeholder="Code Number" name="Code" class="form-control" id="nameField">
+                                                    <input type="hidden" name="id" value="2" />
+                                                </div>
+                                                <div class="form-group col-md-12">
+                                                    <input type="submit" class="btn btn-primary" name="submit" value="Show">
+                                                </div>
+                                            </div>
+
+
+                                        </form>
+                                        <hr />
+                                        @if (TempData["Per"] != null)
+                                        {
+                                            var i = TempData["Per"] as SMS.Models.Person;
+                                            <div class="page-title">
+                                                <h3 class="breadcrumb-header">Person Information</h3>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered">
+
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Father Name</th>
+                                                        <th>Code</th>
+                                                        <th>Contact #</th>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>@i.perName</td>
+                                                        <td>@i.perGarName</td>
+                                                        <td>@i.perCode</td>
+                                                        <td>@i.perContactOne</td>
+                                                    </tr>
+
+
+                                                </table>
+                                            </div>
+                                            <a href="@Url.Action("Card", new { Code = i.perCode })" target="_blank" class="btn btn-success">Print Person Card</a>
+                                        }
+                                    </div>
+                                    <div class="col-md-6">
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div><!-- Row -->
+        </div><!-- Main Wrapper -->
+
+    </div>
+}
+
+

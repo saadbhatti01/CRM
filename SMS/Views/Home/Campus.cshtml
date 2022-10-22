@@ -1,0 +1,123 @@
+﻿@model IEnumerable<SMS.Models.Campus>
+
+@{
+    ViewBag.Title = "Campus";
+}
+
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">Campus</h3>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["SuccessMessage"].
+            </div>
+
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="panel panel-white">
+
+
+                    <div class="panel-body">
+                        <form action="~/Home/Campus" method="post">
+                            <div class="col-sm-3 form-group">
+                                <label for="dateField">Name</label><br>
+                                <input type="text" name="campusname" placeholder="" id="nameField" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-3 form-group">
+
+                                <label for="dateField">Address</label><br>
+                                <input type="text" name="Address" placeholder="" id="nameField" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-3 form-group">
+
+                                <label for="dateField">Phone Number</label><br>
+                                <input type="number" name="PhoneNo" placeholder="" id="nameField" class="form-control" required>
+                            </div>
+                            <div class="col-md-3 form-group">
+
+                                <label for="dateField">Campus Code</label><br>
+                                <input type="text" maxlength="2" name="CampCode" placeholder="" id="nameField" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-5 form-group">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="panel panel-white">
+
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+
+
+                                        <th>Campus Name</th>
+                                        <th>Campus Code</th>
+                                        <th>Address</th>
+                                        <th>Phone Number</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                @if (TempData["Campus"] != null)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tbody>
+                                            <tr>
+                                                <td>@item.campusname</td>
+                                                <td>@item.CampCode</td>
+                                                <td>@item.Address</td>
+                                                <td>@item.PhoneNo</td>
+                                                <td>
+                                                    <a title="Update Campus" class="counter" href="@Url.Action("UpdateCampus", new { id = item.camId })">
+                                                        <i class="fa fa-edit" style="font-size:20px"></i>
+                                                    </a>
+                                                    <a title="Delete Campus" class="counter" href="@Url.Action("DelCampus", new { id = item.camId })">
+                                                        <i class="fa fa-trash" style="font-size:20px;color:red"></i>
+                                                    </a>
+                                                </td>
+
+
+
+                                            </tr>
+                                        </tbody>
+                                    }
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

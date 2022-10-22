@@ -1,0 +1,169 @@
+﻿
+@if (TempData["No"] != null)
+{
+    if (TempData["Session"] != null)
+    {
+        <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            Info! @TempData["No"] in @TempData["Session"] Session.
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            Info! @TempData["No"].
+        </div>
+    }
+}
+
+@if (TempData["StdMarks"] != null)
+{
+    <div class="page-title">
+        @if (TempData["Session"] != null)
+        {
+            <h3 class="breadcrumb-header">
+                Student Complete Exam Info of @TempData["Session"] Session
+                <input type="button" class="btn btn-success" value="Print info" onclick="PrintExam()" style="float:right" />
+            </h3>
+
+        }
+        else
+        {
+            <h3 class="breadcrumb-header">
+                Student Complete Exam Info of All Session
+                <input type="button" class="btn btn-success" value="Print info" onclick="PrintExam()" style="float:right" />
+            </h3>
+        }
+    </div>
+    <div id="table-wrapper">
+        <div id="table-scroll">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Roll #</th>
+                            <th>Subject</th>
+                            <th>Exam</th>
+                            <th>Oral</th>
+                            <th>Obj</th>
+                            <th>Sub</th>
+                            <th>Obtain</th>
+                            <th>Total</th>
+                            <th>Date</th>
+
+                        </tr>
+                    </thead>
+
+                    @foreach (var i in (List<SMS.Models.StdObtainMarks>)TempData["StdMarks"])
+                    {
+                        <tbody>
+                            <tr>
+                                <td>@i.std.pr.perName</td>
+                                <td>@i.std.stdRollNo</td>
+                                <td>@i.sb.subName-@i.sb.subCode</td>
+                                <td>@i.et.etname</td>
+                                <td>@i.smt1</td>
+                                <td>@i.smt2</td>
+                                <td>@i.smt3</td>
+                                <td>@i.totalObtainMarks</td>
+                                <td>@i.subTotalMarks</td>
+                                <td>@i.CreatedDate.ToString("dd-MMM-yyyy")</td>
+                            </tr>
+                        </tbody>
+                    }
+
+
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+}
+
+@if (TempData["StdMarks"] != null)
+{
+    <div hidden id="PrintExamination">
+        <div class="panel-heading clearfix">
+            @if (Session["InsName"] != null)
+            {
+            <p>
+                <img src="@Session["InsImage"]" width="65" height="65" style="float:left;" />
+                <h2 style="text-align: center;">@Session["InsName"]</h2>
+                @if (TempData["Session"] != null)
+                {
+                <h3 style="text-align: center;">Student Complete Exam Info of  @TempData["Session"] Session</h3>
+                }
+                else
+                {
+                <h3 style="text-align: center;">Student Complete Exam Info of All Session</h3>
+                }
+            </p>
+            }
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Roll #</th>
+                    <th>Subject</th>
+                    <th>Exam</th>
+                    <th>Oral</th>
+                    <th>Obj</th>
+                    <th>Sub</th>
+                    <th>Obtain</th>
+                    <th>Total</th>
+                    <th>Date</th>
+
+                </tr>
+            </thead>
+
+            @foreach (var i in (List<SMS.Models.StdObtainMarks>)TempData["StdMarks"])
+            {
+                <tbody>
+                    <tr>
+                        <td>@i.std.pr.perName</td>
+                        <td>@i.std.stdRollNo</td>
+                        <td>@i.sb.subName-@i.sb.subCode</td>
+                        <td>@i.et.etname</td>
+                        <td>@i.smt1</td>
+                        <td>@i.smt2</td>
+                        <td>@i.smt3</td>
+                        <td>@i.totalObtainMarks</td>
+                        <td>@i.subTotalMarks</td>
+                        <td>@i.CreatedDate.ToString("dd-MMM-yyyy")</td>
+                    </tr>
+                </tbody>
+            }
+
+
+
+        </table>
+
+
+    </div>
+}
+
+<script type="text/javascript">
+    function PrintExam() {
+        var prtContent = document.getElementById('PrintExamination');
+        var mywindow = window.open('', '', 'height=700,width=900');
+        mywindow.document.write('<html><head>');
+        mywindow.document.write('<link href = "/Content/bootstrap.min.css" rel = "stylesheet" />')
+        mywindow.document.write('<link href = "/Content/Print.css" rel = "stylesheet" />')
+        mywindow.document.write('</head><body>');
+        mywindow.document.write(prtContent.innerHTML);
+        mywindow.document.write('</body></html>');
+        mywindow.document.close();
+        setTimeout(function () {
+            mywindow.print();
+            mywindow.close();
+        }, 500)
+
+    }
+</script>
+
+
+

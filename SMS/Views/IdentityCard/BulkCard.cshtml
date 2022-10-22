@@ -1,0 +1,151 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Card</title>
+    <link href="~/Content/IdentityCard.css" rel="stylesheet" />
+
+
+</head>
+<body>
+    @if (TempData["StdList"] != null)
+    {
+        int no = 1;
+    <div class="container" id="PrintStudent">
+        @foreach (var i in (List<SMS.Models.Student>)TempData["StdList"])
+        {
+            <div class="col-sm-6">
+
+                <table align="center" border="1" cellspacing="0" cellpadding="3px" class="table-1">
+
+
+                    <tr>
+                        <th><img src="@Session["InsImage"]" alt="" class="image" height="35" width="35"></th>
+                        <th colspan="3">@Session["InsName"]</th>
+
+                    </tr>
+
+                    <tbody>
+                        <tr>
+                            <th>Name:</th>
+                            <td>@i.pr.perName</td>
+
+                            <td rowspan="3" colspan="2"><img src="~/Images/@i.pr.perImage" alt="" class="img"></td>
+                        </tr>
+                        <tr>
+                            <th>Gardian's Name:</th>
+                            <td>@i.pr.perGarName</td>
+
+                        </tr>
+                        <tr>
+                            <th>Contact #</th>
+                            <td>@i.pr.perContactOne</td>
+
+                        </tr>
+                        <tr>
+                            <th>Roll No</th>
+                            <td>@i.stdRollNo</td>
+                            <th>Class</th>
+                            <td>@i.cls.classname</td>
+
+                        </tr>
+                        <tr>
+                            <th>Section</th>
+                            <td>@i.sec.secName</td>
+                            <th>Session</th>
+                            <td>@i.ses.sesName</td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="4" align="center" class="barcode">
+                                @if (TempData["BarcodeList"] != null)
+                                {
+                                    foreach (var b in (List<SMS.Models.BulkBarcode>)TempData["BarcodeList"])
+                                    {
+                                        if (b.StdId == i.stdId)
+                                        {
+                                            <img src="@b.Barcode" alt="" style="height:50px !important; width:150px!important">
+                                        }
+
+                                    }
+
+                                }
+
+                            </td>
+                        </tr>
+                    </tbody>
+
+
+                </table>
+
+            </div>
+            <div class="col-sm-6">
+
+                <table align="center" border="1" cellspacing="0" class="table-instruction">
+                    <tbody>
+                        <tr>
+
+                            <td class="instructions">Instructions <p>This card is a property of @Session["InsName"] <br /> Contact # @Session["ContactNo"]</p></td>
+                        </tr>
+                        <tr>
+                            <td class="barcode" align="center">
+                                @if (TempData["BarcodeList"] != null)
+                                {
+                                    foreach (var b in (List<SMS.Models.BulkBarcode>)TempData["BarcodeList"])
+                                    {
+                                        if (b.StdId == i.stdId)
+                                        {
+                                            <img src="@b.Barcode" alt="" style="height:70px !important; width:150px!important">
+                                        }
+
+                                    }
+
+                                }
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            if (no == 4)
+            {
+                <p style="page-break-after: always"></p>
+                no = 0;
+            }
+            no++;
+        }
+
+
+
+        <script type="text/javascript">
+            function print1() {
+                var prtContent = document.getElementById('PrintStudent');
+                var mywindow = window.open('', '', 'height=700,width=900');
+                mywindow.document.write('<html><head>');
+                //mywindow.document.write('<link href = "/Content/bootstrap.min.css" rel = "stylesheet" />')
+                mywindow.document.write('<link href = "/Content/IdentityCard.css" rel = "stylesheet" />')
+                mywindow.document.write('</head><body>');
+                mywindow.document.write(prtContent.innerHTML);
+                mywindow.document.write('</body></html>');
+                mywindow.document.close();
+                setTimeout(function () {
+                    mywindow.print();
+                    mywindow.close();
+                }, 500)
+
+            }
+        </script>
+        <script>
+            window.onload = print1();
+        </script>
+
+
+    </div>
+    }
+
+</body>
+</html>

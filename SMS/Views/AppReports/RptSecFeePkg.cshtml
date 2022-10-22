@@ -1,0 +1,106 @@
+﻿
+@{
+    ViewBag.Title = "RptSecFeePkg";
+}
+
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">Section Wise Fee Package Report</h3>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["Success"].
+            </div>
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-body">
+                        <div id="rootwizard">
+                            <div class="row m-b-lg">
+                                <div class="col-md-6">
+                                    <form>
+                                        <div class="row">
+                                            <div class="form-group col-md-4">
+                                                <label for="ageRangeField">Session</label>
+                                                @Html.DropDownList("sesId", (SelectList)ViewData["Session"], "Select Session", new { required = "required", @class = "form-control" })
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="ageRangeField">Class</label>
+                                                @Html.DropDownList("classId", (SelectList)ViewData["Class"], "Select Class", new { required = "required", @class = "form-control" })
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="ageRangeField">Section</label>
+                                                @Html.DropDownList("secId", (SelectList)ViewData["Section"], "Select Section", new { required = "required", @class = "form-control", @id = "secId" })
+                                            </div>
+                                              </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <input class="btn btn-primary" type="button" id="show" value="Show">
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <hr />
+                                </div>
+                                <div class="col-md-12">
+                                    <div id="FeeDetail">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div><!-- Row -->
+    </div><!-- Main Wrapper -->
+
+</div>
+
+<script src="../../assets/plugins/jquery/jquery-3.1.0.min.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#show").click(function (event) {
+            var secId = $("#secId").val();
+            var sesId = $("#sesId").val();
+            var classId = $("#classId").val();
+            if (classId != "" || classId != null) {
+                $.ajax({
+                    url: "@Url.Action("_SecFeePkg", "AppReports")",
+                    data: { SesId: sesId, SecId: secId, ClassId: classId },
+                    type: "Get",
+                    dataType: "html",
+                    success: function (data) {
+                        //Whatever result you have got from your controller with html partial view replace with a specific html.
+                        // HTML DOM replace
+                        $("#FeeDetail").html(data);
+                    }
+                });
+            } else {
+
+            }
+
+        });
+    });
+</script>

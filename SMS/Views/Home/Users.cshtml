@@ -1,0 +1,138 @@
+﻿@model IEnumerable<SMS.Models.Login>
+
+@{
+    ViewBag.Title = "Users";
+}
+
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">Users</h3>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["SuccessMessage"].
+            </div>
+
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+
+        <div class="row">
+
+            @*<div class="col-md-12">
+            <div class="panel panel-white">
+
+
+                <div class="panel-body">
+                    <form action="~/Home/Users" method="post">
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-md-3 form-group">
+                                    <label for="dateField">Name</label>
+                                    <input type="text" name="usrName" placeholder="" id="nameField" class="form-control">
+                                </div>
+
+                                <div class="col-lg-3 form-group">
+                                    <label for="dateField">User Name</label>
+                                    <input type="text" name="usrLogin" placeholder="" id="nameField" class="form-control">
+                                </div>
+
+                                <div class="col-lg-3 form-group">
+                                    <label for="dateField">Password</label>
+                                    <input type="password" name="usrPassword" placeholder="" id="nameField" class="form-control">
+                                </div>
+
+                                <div class="col-lg-3 form-group">
+                                    <label for="ageRangeField">Role</label>
+                                    @Html.DropDownList("roleId", (SelectList)ViewData["name"], "--Select a Role--", new { required = "required", @class="form-control" })
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3 form-group">
+                                    <label for="ageRangeField">User Status</label>
+                                    <select id="ageRangeField" name="usrStatus" class="form-control">
+                                        <option value="Active">Active</option>
+                                        <option value="Deactive">Deactive</option>
+                                    </select>
+                                </div>
+
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input class="btn btn-primary" type="submit" value="save">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+
+            </div>
+        </div>*@
+            <div class="col-md-12">
+                <div class="panel panel-white">
+
+                    <div class="panel-body">
+                        <div id="table-wrapper">
+                            <div id="table-scroll">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+
+                                                <th>Name</th>
+                                                <th>Username</th>
+                                                <th>Role</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        @if (TempData["User"] != null)
+                                        {
+                                            foreach (var item in Model)
+                                            {
+                                                <tbody>
+                                                    <tr>
+                                                        <td>@item.usrName</td>
+                                                        <td>@item.usrLogin</td>
+                                                        <td>@item.role.name</td>
+                                                        <td>@item.usrStatus</td>
+                                                        <td>
+                                                            <a title="Update User" class="counter" href="@Url.Action("UpdateUser", new { id = item.id })">
+                                                                <i class="fa fa-edit" style="font-size:20px"></i>
+                                                            </a>
+                                                            @*<a title="Delete User" class="counter" href="@Url.Action("DelUser", new { id = item.id })">
+                                                                <i class="fa fa-trash" style="font-size:20px;color:red"></i>
+                                                            </a>*@
+                                                        </td>
+
+                                                    </tr>
+                                                </tbody>
+                                            }
+                                        }
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

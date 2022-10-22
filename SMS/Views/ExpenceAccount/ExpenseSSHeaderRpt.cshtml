@@ -1,0 +1,216 @@
+﻿
+@{
+    ViewBag.Title = "ExpenseSSHeaderRpt";
+}
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">
+            Account Sub Sub Header Report
+            <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-sm" style="float: right;">Read Me</a>
+        </h3>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">  Usefull Info</h4>
+                    </div>
+                    <div class="modal-body">
+                        You can Check Sub Sub header reports (Like: Salaries of Staff,teachers and netbills etc).
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+        </div>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["Success"].
+            </div>
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-body">
+                        <div id="rootwizard">
+                            <div class="row m-b-lg">
+                                <div class="col-md-12">
+                                    <form>
+                                        <div class="row">
+                                            <div class="form-group col-md-3">
+                                                <label for="ageRangeField">Select Header</label>
+                                                @Html.DropDownList("subSubHeader", (SelectList)ViewData["Header"], "--Select Header--", new { required = "required", @class = "form-control", @onchange = "javascript:GetSubHeader(this.value);" })
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="ageRangeField">Sub Header</label>
+                                                <select id="subHeader" name="subHeader" class="form-control"></select>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="ageRangeField">Sub sub Header</label>
+                                                <select id="ssHeader" name="ssHeader" class="form-control" onchange="GetsubSubHeader(this.value);"></select>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="ageRangeField">Entry Status</label>
+                                                <select id="Status" class="form-control">
+                                                    <option value="Both">Both</option>
+                                                    <option value="Locked">Locked</option>
+                                                    <option value="UnLocked">UnLocked</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="ageRangeField">From Date</label>
+                                                <input type="text" id="fromDate" class="form-control date-picker" />
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="ageRangeField">To Date</label>
+                                                <input type="text" id="toDate" class="form-control date-picker" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <input class="btn btn-primary" type="button" id="show" value="Show">
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <hr />
+                                </div>
+                                <div class="col-md-12">
+                                    <div id="ExpenseDetail">
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- Row -->
+    </div><!-- Main Wrapper -->
+
+</div>
+<script src="../../assets/plugins/jquery/jquery-3.1.0.min.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#show").click(function (event) {
+            var header = $("#subSubHeader").val();
+            var subHeader = $("#subHeader").val();
+            var subSubHeader = $("#ssHeader").val();
+            var fromDate = $("#fromDate").val();
+            var toDate = $("#toDate").val();
+            var status = $("#Status").val();
+            if (header != "" && header != null) {
+                if (fromDate != "" && fromDate != null && toDate != "" && toDate != null) {
+                    if (subHeader != "" && subHeader != null && subHeader != "Select Sub Header" && subHeader != 0) {
+                        if (subSubHeader != "" && subSubHeader != null && subSubHeader != "Select Sub Sub Header" && subSubHeader != 0)
+                        {
+                            $.ajax({
+                    url: "@Url.Action("_ExpensesubSubRpt", "ExpenceAccount")",
+                    data: { Header: header, SubHeader: subHeader, ssHeader: subSubHeader, ToDate: toDate, FromDate: fromDate, Status: status },
+                    type: "Get",
+                    dataType: "html",
+                    success: function (data) {
+                        //Whatever result you have got from your controller with html partial view replace with a specific html.
+                        // HTML DOM replace
+                        $("#ExpenseDetail").html(data);
+                    }
+                });
+                        }
+                        else
+                        {
+                            alert("Please select sub Sub header for Report");
+                        }
+
+                    } else {
+                        alert("Please select sub header for Report");
+                    }
+
+
+                } else {
+                    alert("Please select From date and To date for Report");
+                }
+
+            } else {
+                alert("Please select Expense for Report");
+            }
+
+        });
+    });
+</script>
+
+<script language="javascript" type="text/javascript">
+
+    function GetSubHeader(_headerId) {
+        var procemessage = "<option value='0'> Please wait...</option>";
+        $("#subHeader").html(procemessage).show();
+        var url = "/ExpenceAccount/PopulatSubHeader/";
+
+        $.ajax({
+            url: url,
+            data: { HeaderId: _headerId },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                var markup = "<option value='0'>Select Sub Header</option>";
+                for (var x = 0; x < data.length; x++) {
+                    markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                }
+                $("#subHeader").html(markup).show();
+            },
+            error: function (reponse) {
+                alert("Whooaaa! Something went wrong..");
+            }
+        });
+
+    }
+</script>
+
+
+<script>
+    $(function () {
+        $("#subHeader").change(function (event) {
+            var _ssheader = $("#subHeader").val();
+            var procemessage = "<option value='0'> Please wait...</option>";
+            $("#ssHeader").html(procemessage).show();
+            var url = "/ExpenceAccount/PopulatssHeader/";
+
+            $.ajax({
+                url: url,
+                data: { ssheader: _ssheader },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup = "<option value='0'>Select Sub Sub Header</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#ssHeader").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("Whooaaa! Something went wrong..");
+                }
+            });
+        });
+    });
+</script>
+

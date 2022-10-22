@@ -1,0 +1,881 @@
+﻿@if (TempData["No"] != null)
+{
+    if (TempData["Session"] != null)
+    {
+        <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            Info! @TempData["No"] in @TempData["Session"] Session.
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            Info! @TempData["No"].
+        </div>
+    }
+}
+@*Student Detail*@
+@if (TempData["Std"] != null)
+{
+    var s = TempData["Std"] as SMS.Models.Student;
+
+    <div class="page-inner">
+        <div class="page-title">
+            <h3 class="breadcrumb-header">
+                @s.pr.perName's Info
+                <input type="button" class="btn btn-success" value="Print All info" onclick="PrintAll()" style="float:right" />
+            </h3>
+        </div>
+        <div id="main-wrapper">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-white">
+                        <div class="panel-body" id="Print">
+                            <div id="rootwizard">
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="exampleInputName"><b>Student Name:</b></label>
+                                        <label for="exampleInputName">&nbsp;&nbsp; @s.pr.perName</label>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label for="exampleInputName"><b>Father/Gaurdian Name:</b></label>
+                                        &nbsp;&nbsp;
+                                        @s.pr.perGarName
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label for="exampleInputName"><b>Roll Number:</b></label>
+                                        &nbsp;&nbsp;
+                                        @s.stdRollNo
+                                    </div>
+                                </div>
+
+                                <hr />
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="exampleInputName"><b>Email:</b> </label>
+                                        &nbsp;&nbsp;
+                                        @s.pr.perEmail
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label for="exampleInputName"><b>CNIC:</b></label>
+                                        &nbsp;&nbsp;
+                                        @s.pr.perCNIC
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="exampleInputName"><b>DOB:</b></label>
+                                        &nbsp;&nbsp;
+                                        @s.pr.perDOB
+                                    </div>
+                                </div>
+
+                                <hr />
+                                <div class="row">
+
+                                    <div class="col-md-3">
+                                        <label for="exampleInputName"><b>Blood Group:</b></label>
+                                        &nbsp;&nbsp;
+                                        @s.pr.perBloodGrp
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="exampleInputName"><b>Contact One:</b></label>
+                                        &nbsp;&nbsp;
+                                        @s.pr.perContactOne
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="exampleInputName"><b>Contact Two:</b></label>
+                                        &nbsp;&nbsp;
+                                        @s.pr.perContactTwo
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="exampleInputName"><b>Student Status:</b></label>
+                                        &nbsp;&nbsp;
+                                        @s.stdStatus
+                                    </div>
+                                </div>
+                                <hr />
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label for="exampleInputName"><b>Campus:</b></label>
+                                        &nbsp;&nbsp;
+                                        @s.cam.campusname
+
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="exampleInputName"><b>Session:</b></label>
+                                        &nbsp;&nbsp;
+                                        @s.ses.sesName
+
+
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="exampleInputName"><b>Section:</b></label>
+                                        &nbsp;&nbsp;
+                                        @s.sec.secName
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        &nbsp;&nbsp;
+                                        <label for="exampleInputName"><b>Class:</b></label>
+                                        @s.cls.classname
+                                    </div>
+                                </div>
+
+                                <hr />
+                                <div class="row">
+
+                                    <div class="col-md-4">
+                                        <label for="exampleInputName"><b>City:</b></label>
+                                        &nbsp;&nbsp;
+                                        @s.pr.city.CityName
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="exampleInputName"><b>Area:</b></label>
+                                        &nbsp;&nbsp;
+                                        @s.pr.area.AreaName
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="exampleInputName"><b>Student Image:</b></label>
+                                        <img src="~/Images/@s.pr.perImage" alt="Image" height="35" width="35" />
+                                    </div>
+                                </div>
+
+                                <hr />
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="exampleInputName"><b>Cast:</b></label>
+                                        &nbsp;&nbsp;
+                                        @s.pr.perCast
+                                    </div>
+
+                                    <div class="col-lg-offset-4">
+                                        <label for="exampleInputName"><b>Religion:</b></label>
+                                        &nbsp;&nbsp;
+                                        @s.pr.perReligion
+                                    </div>
+
+                                </div>
+                                <hr />
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="exampleInputName"><b>Current Address:</b></label>
+                                        &nbsp;&nbsp;
+                                        @s.pr.perCurrentAdrs
+                                    </div>
+
+                                    <div class="col-lg-offset-6">
+                                        <label for="exampleInputName"><b>Permanent Address:</b></label>
+                                        &nbsp;&nbsp;
+                                        @s.pr.perPermanantAdrs
+                                    </div>
+
+                                </div>
+                                @if (TempData["PreInfo"] != null)
+                                {
+                                    <hr />
+                                    var std = TempData["PreInfo"] as SMS.Models.StudentPreEduInfo;
+                                    <h3 class="breadcrumb-header">@s.pr.perName's Previous Educational Info  </h3>
+                                    <div class="row">
+
+                                        <div class="col-md-4">
+                                            <label for="exampleInputName"><b>Degree:</b></label>
+                                            &nbsp;&nbsp;
+                                            @std.degree.DegreeName
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="exampleInputName"><b>Institute:</b></label>
+                                            &nbsp;&nbsp;
+                                            @std.stdIns.Name
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="exampleInputName"><b>Passing Date:</b></label>
+                                            &nbsp;&nbsp;
+                                            @std.PassingDate.ToString("dd-MMM-yyyy")
+                                        </div>
+
+                                    </div>
+
+                                    <hr />
+                                    <div class="row">
+
+                                        <div class="col-md-4">
+                                            <label for="exampleInputName"><b>Total Marks:</b></label>
+                                            &nbsp;&nbsp;
+                                            @std.TotalMarks
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="exampleInputName"><b>Obtain Marks:</b></label>
+                                            &nbsp;&nbsp;
+                                            @std.ObtainMarks
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="exampleInputName"><b>Roll Number:</b></label>
+                                            &nbsp;&nbsp;
+                                            @std.RollNo
+                                        </div>
+
+                                    </div>
+
+                                    <hr />
+                                }
+                            </div>
+
+                        </div>
+                        <hr />
+
+                    </div>
+
+                </div>
+
+            </div><!-- Row -->
+        </div><!-- Main Wrapper -->
+
+    </div>
+}
+
+
+
+@*Accounts Detail*@
+
+@if (TempData["Fee"] != null)
+{
+    double TotalFee = 0;
+    <div class="page-title">
+        @if (TempData["Session"] != null)
+        {
+            <h3 class="breadcrumb-header">
+                Student Complete Account Info of @TempData["Session"] Session
+               
+            </h3>
+
+        }
+        else
+        {
+            <h3 class="breadcrumb-header">
+                Student Complete Account Info of All Session
+               
+            </h3>
+        }
+    </div>
+
+    <div id="table-wrapper">
+        <div id="table-scroll">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Roll No
+                        </th>
+                        <th>
+                            Session
+                        </th>
+                        <th>
+                            Section
+                        </th>
+                        <th>
+                            Class
+                        </th>
+                        <th>
+                            Fee
+                        </th>
+                        <th>
+                            Amount(Rs.)
+                        </th>
+                        <th>
+                            Pending(Rs.)
+                        </th>
+                        <th>
+                            Status
+                        </th>
+                        <th>
+                            Date
+                        </th>
+                    </tr>
+
+                    @foreach (var i in (List<SMS.Models.StdFeeDetail>)TempData["Fee"])
+                    {
+                        <tr>
+                            <td>@i.Stdname</td>
+                            <td>@i.RollNo</td>
+                            <td>@i.Ses</td>
+                            <td>@i.Sec</td>
+                            <td>@i.Class</td>
+                            <td>@i.Fee</td>
+                            <td>@i.FeeAmt</td>
+                            @if (i.FeePaidStatus == "Partial")
+                            {
+                                <td>@i.PandingAmt</td>
+                            }
+                            else
+                            {
+                                <td>0</td>
+                            }
+                            <td>@i.FeePaidStatus</td>
+
+                            <td>@i.FeeDate.ToString("dd MMM yyyy")</td>
+
+                        </tr>
+
+                        TotalFee = TotalFee + i.FeeAmt;
+                    }
+                    <h3>Total Fee  = @TotalFee/Rs. </h3>
+                </table>
+
+            </div>
+        </div>
+    </div>
+}
+
+
+
+@*Examination Detail*@
+
+
+@if (TempData["StdMarks"] != null)
+{
+    <div class="page-title">
+        @if (TempData["Session"] != null)
+        {
+            <h3 class="breadcrumb-header">
+                Student Complete Exam Info of @TempData["Session"] Session
+               
+            </h3>
+
+        }
+        else
+        {
+            <h3 class="breadcrumb-header">
+                Student Complete Exam Info of All Session
+              
+            </h3>
+        }
+    </div>
+    <div id="table-wrapper">
+        <div id="table-scroll">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Roll #</th>
+                            <th>Subject</th>
+                            <th>Exam</th>
+                            <th>Oral</th>
+                            <th>Obj</th>
+                            <th>Sub</th>
+                            <th>Obtain</th>
+                            <th>Total</th>
+                            <th>Date</th>
+
+                        </tr>
+                    </thead>
+
+                    @foreach (var i in (List<SMS.Models.StdObtainMarks>)TempData["StdMarks"])
+                    {
+                        <tbody>
+                            <tr>
+                                <td>@i.std.pr.perName</td>
+                                <td>@i.std.stdRollNo</td>
+                                <td>@i.sb.subName-@i.sb.subCode</td>
+                                <td>@i.et.etname</td>
+                                <td>@i.smt1</td>
+                                <td>@i.smt2</td>
+                                <td>@i.smt3</td>
+                                <td>@i.totalObtainMarks</td>
+                                <td>@i.subTotalMarks</td>
+                                <td>@i.CreatedDate.ToString("dd-MMM-yyyy")</td>
+                            </tr>
+                        </tbody>
+                    }
+
+
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+}
+
+
+@*Attendance Detail*@
+
+
+@if (TempData["Attendance"] != null)
+{
+    int Sr = 1;
+    <div class="page-title">
+        @if (TempData["Session"] != null)
+        {
+            <h3 class="breadcrumb-header">
+                Student Complete Attendance Info of @TempData["Session"] Session
+               
+            </h3>
+        }
+        else
+        {
+            <h3 class="breadcrumb-header">
+                Student Complete Attendance Info of All Session
+             
+            </h3>
+        }
+    </div>
+    <div id="table-wrapper">
+        <div id="table-scroll">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Sr.</th>
+                            <th>IN Time</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+
+                    @foreach (var item in (List<SMS.Models.Attendance>)TempData["Attendance"])
+                    {
+                        <tbody>
+
+                            <tr>
+                                <td>@Sr</td>
+                                <td>@item.attenTime</td>
+                                <td>@item.attenDate.ToString("dd-MMM-yyyy")</td>
+                            </tr>
+
+                        </tbody>
+                        Sr = Sr + 1;
+                    }
+                </table>
+
+            </div>
+        </div>
+    </div>
+}
+
+
+@*Print All Detail*@
+<div hidden id="PrintAll">
+
+    <div class="panel-heading clearfix">
+        @if (Session["InsName"] != null)
+        {
+        <p class="panel-title">
+            <img src="@Session["InsImage"]" style="float:left; width:65px !important; height:65px!important;" />
+            <h2 style="text-align: center;">@Session["InsName"]</h2>
+
+            @if (TempData["Session"] != null)
+            {
+            <h3 style="text-align: center;">Student Complete History of  @TempData["Session"] Session</h3>
+            }
+            else
+            {
+                <h3 style="text-align: center;">Student Complete History of All Session Report</h3>
+            }
+        </p>
+        }
+    </div>
+
+    @if (TempData["Std"] != null)
+    {
+        var s = TempData["Std"] as SMS.Models.Student;
+        <div class="row container">
+            <div class="col-12"><h2>@s.pr.perName's  Profile</h2></div>
+        </div>
+        <div class="row container border">
+            <div class="col-5">
+                <div class="row border">
+                    <div class="col-12">
+                        <h4>Roll Number:</h4>
+                        <p>@s.stdRollNo</p>
+                    </div>
+                </div>
+                <div class="row border">
+                    <div class="col-12">
+                        <h4>Contact One:</h4>
+                        <p>@s.pr.perContactOne</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <h4>Email:</h4>
+                        <p>@s.pr.perEmail</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-5">
+                <div class="row border">
+                    <div class="col-12">
+                        <h4>Father/Gardian Name:</h4>
+                        <p>@s.pr.perGarName</p>
+                    </div>
+                </div>
+                <div class="row border">
+                    <div class="col-12">
+                        <h4>Contact Two:</h4>
+                        <p>@s.pr.perContactTwo</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <h4>CNIC:</h4>
+                        <p>@s.pr.perCNIC</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-1">
+                <img src="~/Images/@s.pr.perImage" alt="Profile Image" class="profile-img" style="width: 60px; height:60px;">
+            </div>
+        </div>
+        <div class="row container border">
+            <div class="col-3">
+                <h4>Blood Group:</h4>
+                <p>@s.pr.perBloodGrp</p>
+            </div>
+            <div class="col-3">
+                <h4>DOB:</h4>
+                <p>@s.pr.perDOB</p>
+            </div>
+            <div class="col-3">
+                <h4>Cast:</h4>
+                <p>@s.pr.perCast</p>
+            </div>
+            <div class="col-3">
+                <h4>Religion:</h4>
+                <p>@s.pr.perReligion</p>
+            </div>
+
+        </div>
+
+        <div class="row container border">
+            <div class="col-3">
+                <h4>Campus:</h4>
+                <p>@s.cam.campusname</p>
+            </div>
+            <div class="col-3">
+                <h4>Session:</h4>
+                <p>@s.ses.sesName</p>
+            </div>
+            <div class="col-3 ">
+                <h4>Section:</h4>
+                <p>@s.sec.secName</p>
+            </div>
+            <div class="col-3 ">
+                <h4>Class:</h4>
+                <p>@s.cls.classname</p>
+            </div>
+
+        </div>
+        <div class="row container border">
+            <div class="col-4">
+                <h4>City:</h4>
+                <p>@s.pr.city.CityName</p>
+            </div>
+            <div class="col-4">
+                <h4>Area:</h4>
+                <p>@s.pr.area.AreaName</p>
+            </div>
+            <div class="col-3">
+                <h4>Student Status:</h4>
+                <p>@s.stdStatus</p>
+            </div>
+        </div>
+        <div class="row container border">
+            <div class="col-6">
+                <h4>Current Address:</h4>
+                <p>@s.pr.perCurrentAdrs</p>
+            </div>
+            <div class="col-6">
+                <h4>Permanent Address:</h4>
+                <p>@s.pr.perPermanantAdrs</p>
+            </div>
+
+
+        </div>
+
+        <p style="page-break-after:auto"></p>
+    }
+
+    @if (TempData["Fee"] != null)
+    {
+        double TotalFee = 0;
+
+        <div class="panel-heading clearfix">
+            @if (Session["InsName"] != null)
+            {
+            <p>
+                @if (TempData["Session"] != null)
+                {
+                    <h3 style="text-align: center;">Student Complete Account Info of  @TempData["Session"] Session</h3>
+                }
+                else
+                {
+                    <h3 style="text-align: center;">Student Complete Account Info of All Session</h3>
+                }
+            </p>
+            }
+        </div>
+        <table class="table table-bordered">
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Roll No
+                </th>
+                <th>
+                    Session
+                </th>
+                <th>
+                    Section
+                </th>
+                <th>
+                    Class
+                </th>
+                <th>
+                    Fee
+                </th>
+                <th>
+                    Amount(Rs.)
+                </th>
+                <th>
+                    Pending(Rs.)
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Date
+                </th>
+            </tr>
+
+            @foreach (var i in (List<SMS.Models.StdFeeDetail>)TempData["Fee"])
+            {
+                <tr>
+                    <td>@i.Stdname</td>
+                    <td>@i.RollNo</td>
+                    <td>@i.Ses</td>
+                    <td>@i.Sec</td>
+                    <td>@i.Class</td>
+                    <td>@i.Fee</td>
+                    <td>@i.FeeAmt</td>
+                    @if (i.FeePaidStatus == "Partial")
+                    {
+                        <td>@i.PandingAmt</td>
+                    }
+                    else
+                    {
+                        <td>0</td>
+                    }
+                    <td>@i.FeePaidStatus</td>
+
+                    <td>@i.FeeDate.ToString("dd MMM yyyy")</td>
+
+                </tr>
+
+                TotalFee = TotalFee + i.FeeAmt;
+            }
+            <h3>Total Fee  = @TotalFee/Rs. </h3>
+        </table>
+
+    }
+
+
+
+    @if (TempData["StdMarks"] != null)
+    {
+
+        <div class="panel-heading clearfix">
+            @if (Session["InsName"] != null)
+            {
+            <p>
+                @if (TempData["Session"] != null)
+                {
+                    <h3 style="text-align: center;">Student Complete Exam Info of  @TempData["Session"] Session</h3>
+                }
+                else
+                {
+                    <h3 style="text-align: center;">Student Complete Exam Info of All Session</h3>
+                }
+            </p>
+            }
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Roll #</th>
+                    <th>Subject</th>
+                    <th>Exam</th>
+                    <th>Oral</th>
+                    <th>Obj</th>
+                    <th>Sub</th>
+                    <th>Obtain</th>
+                    <th>Total</th>
+                    <th>Date</th>
+
+                </tr>
+            </thead>
+
+            @foreach (var i in (List<SMS.Models.StdObtainMarks>)TempData["StdMarks"])
+            {
+                <tbody>
+                    <tr>
+                        <td>@i.std.pr.perName</td>
+                        <td>@i.std.stdRollNo</td>
+                        <td>@i.sb.subName-@i.sb.subCode</td>
+                        <td>@i.et.etname</td>
+                        <td>@i.smt1</td>
+                        <td>@i.smt2</td>
+                        <td>@i.smt3</td>
+                        <td>@i.totalObtainMarks</td>
+                        <td>@i.subTotalMarks</td>
+                        <td>@i.CreatedDate.ToString("dd-MMM-yyyy")</td>
+                    </tr>
+                </tbody>
+            }
+
+
+
+        </table>
+    }
+
+    @if (TempData["Attendance"] != null)
+    {
+        int Sr = 1;
+        <div class="panel-heading clearfix">
+            @if (Session["InsName"] != null)
+            {
+            <p>
+                @if (TempData["Session"] != null)
+                {
+                    <h3 style="text-align: center;">Student Complete Attendance Info of  @TempData["Session"] Session</h3>
+                }
+                else
+                {
+                    <h3 style="text-align: center;">Student Complete Attendance Info of All Session</h3>
+                }
+            </p>
+            }
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Sr.</th>
+                    <th>IN Time</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+
+            @foreach (var item in (List<SMS.Models.Attendance>)TempData["Attendance"])
+            {
+                <tbody>
+
+                    <tr>
+                        <td>@Sr</td>
+                        <td>@item.attenTime</td>
+                        <td>@item.attenDate.ToString("dd-MMM-yyyy")</td>
+                    </tr>
+
+                </tbody>
+                Sr = Sr + 1;
+            }
+        </table>
+    }
+
+</div>
+
+
+
+@*Accounts Print*@
+<script type="text/javascript">
+    function PrintAccounts() {
+        var prtContent = document.getElementById('PrintAccount');
+        var mywindow = window.open('', '', 'height=1000,width=1400');
+        mywindow.document.write('<html><head>');
+        mywindow.document.write('<link href = "/Content/bootstrap.min.css" rel = "stylesheet" />')
+        mywindow.document.write('<link href = "/Content/Print.css" rel = "stylesheet" />')
+        mywindow.document.write('</head><body>');
+        mywindow.document.write(prtContent.innerHTML);
+        mywindow.document.write('</body></html>');
+        mywindow.document.close();
+        setTimeout(function () {
+            mywindow.print();
+            mywindow.close();
+        }, 500)
+
+    }
+</script>
+@*Examination Print*@
+<script type="text/javascript">
+    function PrintExam() {
+        var prtContent = document.getElementById('PrintExamination');
+        var mywindow = window.open('', '', 'height=700,width=900');
+        mywindow.document.write('<html><head>');
+        mywindow.document.write('<link href = "/Content/bootstrap.min.css" rel = "stylesheet" />')
+        mywindow.document.write('<link href = "/Content/Print.css" rel = "stylesheet" />')
+        mywindow.document.write('</head><body>');
+        mywindow.document.write(prtContent.innerHTML);
+        mywindow.document.write('</body></html>');
+        mywindow.document.close();
+        setTimeout(function () {
+            mywindow.print();
+            mywindow.close();
+        }, 500)
+
+    }
+</script>
+@*Attendance Print*@
+<script type="text/javascript">
+    function PrintAttendance() {
+        var prtContent = document.getElementById('PrintAttendance');
+        var mywindow = window.open('', '', 'height=700,width=900');
+        mywindow.document.write('<html><head>');
+        mywindow.document.write('<link href = "/Content/bootstrap.min.css" rel = "stylesheet" />')
+        mywindow.document.write('<link href = "/Content/Print.css" rel = "stylesheet" />')
+        mywindow.document.write('</head><body>');
+        mywindow.document.write(prtContent.innerHTML);
+        mywindow.document.write('</body></html>');
+        mywindow.document.close();
+        setTimeout(function () {
+            mywindow.print();
+            mywindow.close();
+        }, 500)
+
+    }
+</script>
+
+@*Print All Detail*@
+<script type="text/javascript">
+    function PrintAll() {
+        var prtContent = document.getElementById('PrintAll');
+        var mywindow = window.open('', '', 'height=700,width=900');
+        mywindow.document.write('<html><head>');
+        mywindow.document.write('<link href = "/Content/bootstrap.min.css" rel = "stylesheet" />')
+        mywindow.document.write('<link href = "/Content/Print.css" rel = "stylesheet" />')
+        mywindow.document.write('<link href = "/Content/PrintStudentDetail.css" rel = "stylesheet" />')
+        mywindow.document.write('</head><body>');
+        mywindow.document.write(prtContent.innerHTML);
+        mywindow.document.write('</body></html>');
+        mywindow.document.close();
+        setTimeout(function () {
+            mywindow.print();
+            mywindow.close();
+        }, 500)
+
+    }
+</script>

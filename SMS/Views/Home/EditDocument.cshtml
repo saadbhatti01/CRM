@@ -1,0 +1,116 @@
+﻿@model SMS.Models.Documents
+
+@{
+    ViewBag.Title = "EditDocument";
+}
+
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">Update Document Record</h3>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["Success"].
+            </div>
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-body">
+                        <div id="rootwizard">
+                            @using (Html.BeginForm("EditDocument", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+                                <div class="row m-b-lg">
+                                    <div class="col-md-12">
+
+                                        <div class="row">
+                                            <div class="form-group col-md-3">
+                                                <label for="exampleInputName">Session</label>
+                                                <input type="hidden" name="From" value="@ViewBag.From" />
+                                                @Html.DropDownList("sesId", (SelectList)ViewData["Session"], "--Select Session--", new { required = "required", @class = "form-control" })
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="exampleInputName">Class</label>
+                                                @Html.DropDownList("classId", (SelectList)ViewData["Class"], "--Select Class--", new { required = "required", @class = "form-control" })
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="exampleInputName">Section</label>
+                                                @Html.DropDownList("secId", (SelectList)ViewData["Section"], "--Select Section--", new { required = "required", @class = "form-control" })
+
+                                            </div>
+                                            <div class="form-group  col-md-3">
+                                                <label for="exampleInputName">Subject</label>
+                                                @Html.DropDownList("subId", (SelectList)ViewData["SubJect"], "--Select Subject--", new { required = "required", @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-3">
+                                                <label for="exampleInputName">Documents Title</label>
+                                                @Html.EditorFor(model => model.DocTitle, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.DocTitle, "", new { @class = "text-danger" })
+                                            </div>
+                                            <div class="form-group  col-md-3">
+                                                <label for="exampleInputName2">Status</label>
+                                                <select name="isVisible" class="form-control">
+                                                    <option value="true">Visible</option>
+                                                    <option value="False">In Visible</option>
+
+                                                </select>
+                                            </div>
+                                            <div class="form-group  col-md-3">
+                                                <label for="ageRangeField">Expiry</label>
+                                                @Html.EditorFor(model => model.ExpiryDate, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.ExpiryDate, "", new { @class = "text-danger" })
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="ageRangeField">Upload New File</label>
+                                                <input type="file" name="file" class="form-control">
+                                            </div>
+                                           
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <label for="ageRangeField">Note</label>
+                                                @Html.EditorFor(model => model.Note, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger" })
+                                            </div>
+                                            <div class="col-md-6 form-group">
+                                                <label for="ageRangeField">Personal Note(Only For Me)</label>
+                                                @Html.EditorFor(model => model.PersonalNote, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.PersonalNote, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="row col-md-12 form-group">
+                                            <input class="btn btn-primary" type="submit" value="Update">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- Row -->
+    </div><!-- Main Wrapper -->
+
+</div>
+

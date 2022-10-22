@@ -1,0 +1,154 @@
+﻿
+@{
+    ViewBag.Title = "LogInDetail";
+}
+@{ 
+    var s = TempData["Std"] as SMS.Models.StdFeeDetail;
+    var p = TempData["Parent"] as SMS.Models.StdFeeDetail;
+}
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">
+            Login Details
+            <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-sm" style="float: right;">Read Me</a>
+        </h3>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">  Usefull Info</h4>
+                    </div>
+                    <div class="modal-body">
+                        Here you can see any Student Login credentials and his father credentials(if Relation Marked).<br />
+                        Just type Student roll number, student credentails will be populated.
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+        </div>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["Success"].
+            </div>
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-body">
+                        <div id="rootwizard">
+                            <div class="row m-b-lg">
+                                <div class="col-md-6">
+                                    <form action="~/Panel/LogInDetail" method="post">
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label for="ageRangeField">Enter RollNumber</label>
+                                                <input type="text" placeholder="Roll Number" name="RollNo" class="form-control" id="nameField">
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <input type="submit" class="btn btn-primary" name="submit" value="Show">
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <hr />
+                                </div>
+                                <div class="col-md-6">
+                                    @if (s != null)
+                                    {<div class="page-title">
+                                            <h3 class="breadcrumb-header">Student LogIn Details</h3>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+
+                                                <tr>
+                                                    <th>Student Name</th>
+                                                    <th>Student Login</th>
+                                                    <th>Student Pasword</th>
+                                                    <th>Student Image</th>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>@s.Stdname</td>
+                                                    <td>@s.LogIn</td>
+                                                    <td>@s.Password</td>
+                                                    <td><img src="~/Images/@s.Image" width="35" height="35" /></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    }
+                                    @if(@ViewBag.Post != null && s == null)
+                                    {
+                                        <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            Info! No Student credentials found.
+                                        </div>
+                                    }
+                                    @if (p != null)
+                                    {
+                                        <div class="page-title">
+                                            <h3 class="breadcrumb-header">Parent LogIn Details</h3>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+
+                                                <tr>
+                                                    <th>Father Name</th>
+                                                    <th>Father Code</th>
+                                                    <th>Father Login</th>
+                                                    <th>Father Pasword</th>
+                                                    <th>Father Image</th>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>@p.FatherName</td>
+                                                    <td>@p.FatherCode</td>
+                                                    <td>@p.LogIn</td>
+                                                    <td>@p.Password</td>
+                                                    <td><img src="~/Images/@p.Image" width="35" height="35" /></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    }
+                                    @if(@ViewBag.Post != null && p == null)
+                                    {
+                                        <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            Info! No Parent credentials found.
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div><!-- Row -->
+    </div><!-- Main Wrapper -->
+
+</div>
+

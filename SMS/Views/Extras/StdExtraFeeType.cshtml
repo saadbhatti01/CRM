@@ -1,0 +1,240 @@
+﻿@model SMS.Models.StudentExtraFee
+
+@{
+    ViewBag.Title = "StdExtraFeeType";
+}
+
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">
+            Student Extra Fee Type
+            <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-sm" style="float: right;">Read Me</a>
+        </h3>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">  Usefull Info</h4>
+                    </div>
+                    <div class="modal-body">
+                        Here you can receive the fee of any extra activity.
+                        Enter roll no in the Roll No box ----> Click "SHOW" , by clicking the fields will be populated ---------> Enter paid amount --------> Enter paid date -------->
+                        Click "SAVE", by clicking you will see the Received fee details.
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+        </div>
+
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["SuccessMessage"].
+            </div>
+
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="panel panel-white">
+
+
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <form action="~/Extras/StdExtraFeeType" method="post">
+
+                                    <div class="row">
+                                        <div class="col-md-6 form-group">
+                                            <label for="ageRangeField">Enter Roll Number</label>
+                                            <input type="text" placeholder="" name="StdRoll" id="nameField" required class="form-control">
+
+                                        </div>
+
+                                        <div class="col-sm-12 form-group">
+                                            <input class="btn btn-primary" name="submitButton" type="submit" value="Show">
+
+                                        </div>
+                                    </div>
+
+                                </form>
+                                <form action="" method="post" name="ClassForm" onsubmit="return validateForm()">
+                                    <div class="row">
+                                        <div class="col-md-6 form-group">
+                                            <label for="ageRangeField">Roll Number</label>
+                                            <input type="text" placeholder="" name="RollNo" value="@ViewBag.StdRoll" id="nameField" required readonly class="form-control">
+                                        </div>
+
+                                        <div class="col-md-6 form-group">
+                                            <label for="ageRangeField">Student Name</label>
+                                            <input type="text" placeholder="" name="cfpAmt" value="@ViewBag.StdName" id="nameField" required readonly class="form-control">
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 form-group">
+                                            <label for="ageRangeField">Session</label>
+                                            <input type="text" placeholder="" name="sesId" value="@ViewBag.StdSes" id="nameField" required readonly class="form-control">
+                                        </div>
+
+                                        <div class="col-md-6 form-group">
+                                            <label for="ageRangeField">Section</label>
+                                            <input type="text" placeholder="" secId name="cfpAmt" value="@ViewBag.StdSec" id="nameField" required readonly class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 form-group">
+                                            <label for="ageRangeField">Class</label>
+                                            <input type="text" placeholder="" classId name="cfpAmt" value="@ViewBag.StdClass" id="nameField" required readonly class="form-control">
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            @if (ViewData["EFeeType"] != null)
+                                            {
+                                                <label for="ageRangeField">Fee Type</label>
+                                                @Html.DropDownList("eftId", (SelectList)ViewData["EFeeType"], "--Select Extra Fee Type--", new { required = "required", @class = "form-control" })
+                                            }
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 form-group">
+                                            <label for="nameField">Paid Amount</label>
+                                            <input type="number" placeholder="0" contextmenu="0" min="0" name="Amount" value="" required class="form-control">
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label for="nameField">Date</label>
+                                            <input type="text"  name="eDate" value="" required class="form-control date-picker">
+                                        </div>
+                                        <div class="col-md-12 form-group">
+                                            <input type="text" name="Remarks" placeholder="Remarks" class="form-control" />
+                                        </div>
+
+                                    </div>
+                                    
+
+
+                                    <div class="row col-md-12 form-group">
+                                        <input class="btn btn-primary" type="submit" name="submitButton" value="Save">
+                                    </div>
+                                </form>
+                            </div>
+                            @if (ViewData["FeeDetail"] != null)
+                            {
+                                <div class="col-md-6">
+                                    <div class="page-title">
+                                        <h3 class="breadcrumb-header">Student Extra Fee Type</h3>
+                                    </div>
+                                   
+                                       <div class="table-responsive">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+
+                                                            <th>Fee Name</th>
+                                                        </tr>
+                                                    </thead>
+                                                    @if (ViewData["FeeDetail"] != null)
+                                                    {
+                                                        foreach (var item in (IEnumerable<SMS.Models.ExtraFeeType>)ViewData["FeeDetail"])
+                                                        {
+                                                            <tbody>
+
+                                                                <tr>
+                                                                    <td>@item.eftName</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        }
+                                                    }
+                                                </table>
+                                            </div>
+                                       
+                                </div>
+                            }
+                            @if (ViewData["ExtraFeeDetail"] != null)
+                            {
+                                <div class="col-md-6">
+                                    <div class="page-title">
+                                        <h3 class="breadcrumb-header">Student Extra Fee Type</h3>
+                                    </div>
+                                  
+                                    <div class="table-responsive">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+
+                                                            <th>Fee Name</th>
+                                                            <th>Received Amount</th>
+                                                            <th>Fee Status</th>
+                                                            <th>Received Date</th>
+                                                        </tr>
+                                                    </thead>
+                                                    @if (ViewData["FeeDetail"] != null)
+                                                    {
+                                                        foreach (var item in (IEnumerable<SMS.Models.StudentExtraFee>)ViewData["ExtraFeeDetail"])
+                                                        {
+                                                            <tbody>
+
+                                                                <tr>
+                                                                    <td>@item.eft.eftName</td>
+                                                                    <td>@item.Amount</td>
+                                                                    <td>Fee Received</td>
+                                                                    <td>@item.eDate.ToString("dd MMM yyyy")</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        }
+                                                    }
+                                                </table>
+                                            </div>
+                                       
+                                </div>
+                            }
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+      </div>
+    </div>
+
+
+</div>
+<script src="~/scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/Validation.js"></script>
+
+<script>
+    function validateForm() {
+        var x = document.forms["ClassForm"]["MaxDic"].value;
+
+        if (x > 100) {
+            alert("Discount overloaded Muximum is 100.");
+            return false;
+        }
+        else {
+            return true;
+        }
+
+    }
+</script>

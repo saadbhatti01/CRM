@@ -1,0 +1,2001 @@
+﻿@if (TempData["Kids"] != null)
+{
+    TempData.Keep("Kids");
+}
+@if (TempData["TeacherClasses"] != null)
+{
+    TempData.Keep("TeacherClasses");
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Student Management System is a very user-friendly online web based software for your institute  management.">
+    <meta name="keywords" content="SMS, Student Management System, Student Management System">
+    <meta name="author" content="Universal Solz">
+    <!-- The above 6 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <!-- Title -->
+    <title>Student Management System(ERP)</title>
+    <link rel="shortcut icon" href="~/img/logo.png" type="image/x-icon">
+    <!-- Styles -->
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <link href="../../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../../assets/plugins/icomoon/style.css" rel="stylesheet">
+    <link href="../../assets/plugins/uniform/css/default.css" rel="stylesheet" />
+    <link href="../../assets/plugins/switchery/switchery.min.css" rel="stylesheet" />
+    <link href="../../assets/plugins/nvd3/nv.d3.min.css" rel="stylesheet">
+    <link href="~/Content/Progressbar.css" rel="stylesheet" />
+    @*<link href="../../assets/plugins/datatables/css/jquery.datatables.min.css" rel="stylesheet" type="text/css" />
+
+        <link href="../../assets/plugins/datatables/css/jquery.datatables_themeroller.css" rel="stylesheet" type="text/css" />*@
+
+
+
+    <link href="../../assets/plugins/bootstrap-datepicker/css/datepicker3.css" rel="stylesheet" type="text/css" />
+
+    <!-- Theme Styles -->
+    <link href="../../assets/css/space.min.css" rel="stylesheet">
+    <link href="../../assets/css/custom.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="page-sidebar-fixed page-header-fixed">
+
+    <!-- Page Container -->
+    <div class="page-container">
+        <!-- Page Sidebar -->
+        <div class="page-sidebar">
+            <a class="logo-box" href="~/Home/Index">
+                <span><img src="@Session["InsImage"]" width="65" height="65" title="@Session["InsName"]" /></span>
+                <i class="icon-close" id="sidebar-toggle-button-close"></i>
+            </a>
+            <div class="page-sidebar-inner">
+                @if (System.Configuration.ConfigurationManager.AppSettings["ProjectLevel"] == "Low")
+                {
+                    <div class="page-sidebar-menu">
+
+                        @if (Convert.ToInt32(Session["RoleId"]) == 10)
+                        {
+                            <ul class="accordion-menu">
+
+                                <li>
+                                    <a href="~/Home/Index" class="hidden">
+                                        <i class="menu-icon icon-home4"></i><span>Dashboard</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-user-tie"></i><span>Super Admin Panel</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Home/InsituteInfo"> Institute Information</a></li>
+                                        <li><a href="~/Home/Campus">Campus</a></li>
+                                        <li><a href="~/Home/Sessions">Sessions</a></li>
+                                        <li><a href="~/Home/Classes">Classes</a></li>
+                                        <li><a href="~/Home/Sections">Sections</a></li>
+                                        <li><a href="~/Home/FeeType">Fee Type</a></li>
+                                        <li><a href="~/Student/ClassFeePkg">Class Fee Package</a></li>
+                                        <li><a href="~/TeacherPanel/AssignTeacherToClass">Assign Teacher To Class </a></li>
+                                        <li><a href="~/Home/Subject">Subject</a></li>
+                                        <li><a href="~/Examination/ExamType">Create ExamType</a></li>
+                                        <li><a href="~/Examination/SubjectMarkType">Subject Mark Type</a></li>
+                                        <li><a href="~/StudentEducationalInfo/Degree">Degree</a></li>
+                                        <li><a href="~/StudentEducationalInfo/StudentInstitute">Student Previous Institute</a></li>
+                                        <li><a href="~/BankInfo/Bank">Bank</a></li>
+                                        <li><a href="~/BankInfo/BankInfo">Bank Information</a></li>
+                                        <li><a href="~/Attendance/AddAttendanceParam">Attendance Parameters</a></li>
+                                        <li><a href="~/Home/AddPassingMarks">Passing Percentage </a></li>
+                                        <li><a href="@Url.Action("UploadDoument","Home", new { From = 1 })">Upload Documents</a></li>
+                                        <li><a href="~/Student/LockedDownReceivedFee">Fee Entry Locked</a></li>
+                                        <li><a href="~/Panel/LogInDetail">Login Detail</a></li>
+                                        <li><a href="~/UploadStudentData/DataFile">Upload Bulk Student Data</a></li>
+                                        <li><a href="~/Home/Users">Users </a></li>
+                                        <li><a href="~/Home/City">City </a></li>
+                                        <li><a href="~/Home/Area">Location </a></li>
+                                        <li><a href="~/Home/Role">Role </a></li>
+                                        <li><a href="~/Home/Term">Term</a></li>
+                                    </ul>
+                                </li>
+
+
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-bookmarks"></i><span>Registration</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Student/StdReg">Student Registration</a></li>
+                                        <li><a href="~/Student/ShowStd">Student Information</a></li>
+                                        <li><a href="@Url.Action("PrintCard","IdentityCard", new { id = 1})">Print Student Identity Card</a></li>
+                                        <li><a href="~/IdentityCard/BulkIDCard">Print Bulk Student Identity Card</a></li>
+                                        <li><a href="~/Student/GetLatestRollNo">Latest Roll Number</a></li>
+                                        <li><a href="~/Employee/EmpRegistration"> Person Registration</a></li>
+                                        <li><a href="~/Employee/ShowEmpData">Person Information</a></li>
+                                        <li><a href="@Url.Action("PrintCard","IdentityCard", new { id = 2})">Print Person Identity Card</a></li>
+                                        <li><a href="~/Relation/AddRelation"><span>Make Relation</span></a></li>
+                                        <li><a href="~/Attendance/PersonReg">Attendance Registration</a></li>
+
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-account_balance"></i><span>Accounts</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Student/StdFeePkg">Student Fee Package </a></li>
+                                        <li><a href="~/Student/BulkStdFeePkg">Bulk Student Fee Package </a></li>
+                                        <li><a href="~/Student/ReceiveStdFee">Receive Student Fee</a></li>
+                                        <li><a href="~/Student/BulkReceiveStdFee">Bulk Student Receive Fee</a></li>
+                                        <li><a href="~/Student/FeeVoucher">Download Voucher</a></li>
+                                        <li><a href="~/Student/BulkFeeVoucher">Bulk Fee Voucher</a></li>
+                                        @*<li><a href="~/Student/MultipleFeeVoucher">Multiple Fee Voucher</a></li>*@
+                                        <li><a href="~/Student/DownloadAllFeeVoucher">Download Receipt</a></li>
+                                        <li><a href="~/Student/BulkFeeReceipt">Download Bulk Fee Receipt</a></li>
+                                        <li><a href="~/Student/StudentFeeReport">Fee Reports</a></li>
+                                    </ul>
+                                </li>
+
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-coin-dollar"></i><span>Direct Fees</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Student/DirectReceivedFee">Direct Received Fee</a></li>
+                                        <li><a href="~/Student/StudentFeeReport">Direct Fee Reports</a></li>
+                                        <li><a href="~/Student/DirectFeeVoucher">Download Direct Fee Voucher</a></li>
+                                        <li><a href="~/Student/DirectFeeReceipt">Download Direct Fee Receipt</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-pageview"></i><span>Examination</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Examination/StdObtMark">Class Obtain Marks</a></li>
+                                        <li><a href="~/Examination/StdSingleObt">Student Obtain Marks</a></li>
+                                        <li><a href="~/Examination/ShowStdMarks">Student Marks</a></li>
+                                        <li><a href="~/Examination/PromoteStudent">Promote Student</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-extension"></i><span>Extras</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Extras/ExtraFeeType">Create Extras</a></li>
+                                        <li><a href="~/Extras/StdExtraFeeType">Receive Extras</a></li>
+                                        <li><a href="~/Extras/BulkStdExtraFeeType">Receive Bulk Extras</a></li>
+                                        @*<li><a href="~/Extras/ExtraFeeReport">Extra Fee Report</a></li>*@
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-chat_bubble"></i><span>Short Courses</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/ShortCourse/AddShortCourseSubject">Add Short Course</a></li>
+                                        <li><a href="~/ShortCourse/AddStdToShortCourse">Receive Fee</a></li>
+                                    </ul>
+                                </li>
+
+
+
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-coin-dollar"></i><span>Finance</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/ExpenceAccount/AddAccountHeader">Add Header</a></li>
+                                        <li><a href="~/ExpenceAccount/AddAccountEntries">Add Finance Detail</a></li>
+                                        <li><a href="~/ExpenceAccount/AccountEntryLocked">Finance Entry Lock Down</a></li>
+                                        <li><a href="~/ExpenceAccount/ExpenseHeaderRpt"> Header Report</a></li>
+                                        <li><a href="~/ExpenceAccount/ExpenseSHeaderRpt">Sub Header Report</a></li>
+                                        <li><a href="~/ExpenceAccount/ExpenseSSHeaderRpt">Sub Sub Header Report</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-mail3"></i><span>SMS</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/SMS/ModuleName">Module Name</a></li>
+                                        <li><a href="~/SMS/SMSAllotment">Allotment</a></li>
+                                        <li><a href="~/SMS/SMSModule">SMS Module</a></li>
+                                        <li><a href="~/SMS/SentSMS">Sent SMS Detail</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-settings"></i><span>Setting</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Home/ChangePassword">Change Password</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-details"></i><span>Logs</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Logs/ReceivedFeeLogsByUser">Received Fee By User</a></li>
+                                        <li><a href="~/Logs/ReceivedFeeLogsByDate">Received Fee By Date</a></li>
+                                        <li><a href="~/Logs/ReceivedFeeLogsByStudent ">Received Fee By Student</a></li>
+                                        <li><a href="~/Logs/LoginLogs ">Login Logs</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="~/Attendance/Mark" target="_blank"><i class="menu-icon icon-help_outline"></i><span>Attendance</span></a>
+                                </li>
+
+                                <li class="menu-divider"></li>
+
+
+                                <li>
+                                    <a href="#">
+                                        <i class="menu-icon icon-receipt"></i><span style="font-size:20px;">Reports</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-user-check"></i><span>Enrollments</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptSessionWise">Session Wise</a></li>
+                                        <li><a href="~/AppReports/RptClassWise">Class Wise</a></li>
+                                        <li><a href="~/AppReports/RptSectionWise">Section Wise</a></li>
+                                        <li><a href="~/AppReports/RptCampusWise">Campus Wise</a></li>
+                                        <li><a href="~/AppReports/RptDateWise">Date Wise</a></li>
+                                        <li><a href="~/AppReports/RptBloodGrpWise">Blood Group Wise</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-account_box"></i><span>Class Fee Packages</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptClassFeePkg">Class Wise</a></li>
+                                        <li><a href="~/AppReports/RptSecFeePkg">Section Wise</a></li>
+                                        <li><a href="~/AppReports/RptFeeTypePkg">Fee type Wise</a></li>
+                                        <li><a href="~/AppReports/RptMaxDiscountFeePkg">Max Discount</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-account_balance_wallet"></i><span>Student Fee Pakage</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptStdFeePkgSes">Session Wise</a></li>
+                                        <li><a href="~/AppReports/RptStdFeePkgClass">Class Wise</a></li>
+                                        <li><a href="~/AppReports/RptStdFeePkgSec">Section Wise</a></li>
+                                        <li><a href="~/AppReports/RptStdFeePkgType">Fee type Wise</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-account_balance_wallet"></i><span>Received Fee</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptStdSesFee">Session Wise</a></li>
+                                        <li><a href="~/AppReports/RptStdClassFee">Class Wise</a></li>
+                                        <li><a href="~/AppReports/RptStdSecFee">Section Wise</a></li>
+                                        <li><a href="~/AppReports/RptStdTypeFee">Fee Type Wise</a></li>
+                                        <li><a href="~/AppReports/RptStdDateWiseFee">Date Wise Fee</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-extension"></i><span>Extras</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptExtraFeeSes">Session Wise</a></li>
+                                        <li><a href="~/AppReports/RptExtraFeeClass">Class Wise</a></li>
+                                        <li><a href="~/AppReports/RptExtraFeeType">Fee Wise</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-file-empty"></i><span>Examination</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptExamClass">Class Wise</a></li>
+                                        <li><a href="~/AppReports/RptExamSec">Section Wise</a></li>
+                                        <li><a href="~/AppReports/RptExamSubject">Subject Wise</a></li>
+                                        <li><a href="~/AppReports/RptExamType">Exam Wise</a></li>
+                                        <li><a href="~/AppReports/RptStudentExam">Student Wise Exam Report</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-assignment"></i><span>Short course</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptShortCourseAll">Short Course</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-user-minus"></i><span>Attendance</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptDateWiseStdAtten">Date Wise Student Attendance Report</a></li>
+                                        <li><a href="~/AppReports/RptAttenSession">Session Wise Student Attendance Report</a></li>
+                                        <li><a href="~/AppReports/RptAttenStd">Student Wise Attendance Report</a></li>
+                                        <li><a href="~/AppReports/RptAttenTeacher">Teacher Attendance Report</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="~/StudentMainReport/MainReport"><i class="menu-icon icon-history"></i><span>Student History</span></a></li>
+
+                            </ul>
+                        }
+                        else if (Convert.ToInt32(Session["RoleId"]) == 1)
+                        {
+                            <ul class="accordion-menu">
+
+                                <li>
+                                    <a href="~/Home/Index" class="hidden">
+                                        <i class="menu-icon icon-home4"></i><span>Dashboard</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-user-tie"></i><span>Admin Panel</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Home/InsituteInfo"> Institute Information</a></li>
+                                        <li><a href="~/Home/Campus">Campus</a></li>
+                                        <li><a href="~/Home/Sessions">Sessions</a></li>
+                                        <li><a href="~/Home/Classes">Classes</a></li>
+                                        <li><a href="~/Home/Sections">Sections</a></li>
+                                        <li><a href="~/Home/FeeType">Fee Type</a></li>
+                                        <li><a href="~/Home/Subject">Subject</a></li>
+                                        <li><a href="~/Examination/ExamType">Create ExamType</a></li>
+                                        <li><a href="~/Examination/SubjectMarkType">Subject Mark Type</a></li>
+                                        <li><a href="~/StudentEducationalInfo/Degree">Degree</a></li>
+                                        <li><a href="~/StudentEducationalInfo/StudentInstitute">Student Previous Institute</a></li>
+                                        <li><a href="~/Attendance/AddAttendanceParam">Attendance Parameters</a></li>
+                                        <li><a href="~/Home/AddPassingMarks">Passing Percentage </a></li>
+                                        <li><a href="~/Panel/LogInDetail">Login Detail</a></li>
+                                        <li><a href="~/Home/Users">Users </a></li>
+                                        <li><a href="~/Home/City">City </a></li>
+                                        <li><a href="~/Home/Area">Location </a></li>
+                                        <li><a href="~/Home/Role">Role </a></li>
+                                    </ul>
+                                </li>
+
+
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-bookmarks"></i><span>Registration</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Student/StdReg">Student Registration</a></li>
+                                        <li><a href="~/Student/ShowStd">Student Information</a></li>
+                                        <li><a href="@Url.Action("PrintCard","IdentityCard", new { id = 1})">Print Student Identity Card</a></li>
+                                        <li><a href="~/IdentityCard/BulkIDCard">Print Bulk Student Identity Card</a></li>
+                                        <li><a href="~/Student/GetLatestRollNo">Latest Roll Number</a></li>
+                                        <li><a href="~/Employee/EmpRegistration"> Person Registration</a></li>
+                                        <li><a href="~/Employee/ShowEmpData">Person Information</a></li>
+                                        <li><a href="@Url.Action("PrintCard","IdentityCard", new { id = 2})">Print Person Identity Card</a></li>
+                                        <li><a href="~/Relation/AddRelation"><span>Make Relation</span></a></li>
+                                        <li><a href="~/Attendance/PersonReg">Attendance Registration</a></li>
+
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-coin-dollar"></i><span>Direct Fees</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Student/DirectReceivedFee">Direct Received Fee</a></li>
+                                        <li><a href="~/Student/StudentFeeReport">Direct Fee Reports</a></li>
+                                        <li><a href="~/Student/DirectFeeVoucher">Download Fee Voucher</a></li>
+                                        <li><a href="~/Student/BulkDirectFeeVoucher">Download Bulk Fee Voucher</a></li>
+                                        @*<li><a href="~/Student/DirectFeeReceipt">Download Direct Fee Receipt</a></li>*@
+                                    </ul>
+                                </li>
+                                @*<li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-account_balance"></i><span>Accounts</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Student/FeeVoucher">Download Voucher</a></li>
+                                        <li><a href="~/Student/BulkFeeVoucher">Bulk Fee Voucher</a></li>
+                                        <li><a href="~/Student/DownloadAllFeeVoucher">Download Receipt</a></li>
+                                        <li><a href="~/Student/BulkFeeReceipt">Download Bulk Fee Receipt</a></li>
+                                    </ul>
+                                </li>*@
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-pageview"></i><span>Examination</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+
+                                        <li><a href="~/Examination/StdObtMark">Class Obtain Marks</a></li>
+                                        <li><a href="~/Examination/StdSingleObt">Student Obtain Marks</a></li>
+                                        <li><a href="~/Examination/ShowStdMarks">Student Marks</a></li>
+                                        <li><a href="~/Examination/PromoteStudent">Promote Student</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-mail3"></i><span>SMS</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/SMS/SMSAllotment">Allotment</a></li>
+                                        <li><a href="~/SMS/SMSModule">SMS Module</a></li>
+                                        <li><a href="~/SMS/CustomSMS">Custom SMS</a></li>
+                                        <li><a href="~/SMS/SentSMS">Sent SMS Detail</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-mail3"></i><span>Upload Student Data</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/UploadStudentData/DownloadFile">Download Sample File</a></li>
+                                        <li><a href="~/UploadStudentData/UploadDataFile">Upload Data File</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-settings"></i><span>Setting</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Home/ChangePassword">Change Password</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="~/Attendance/Mark" target="_blank"><i class="menu-icon icon-help_outline"></i><span>Attendance</span></a>
+                                </li>
+
+                                <li class="menu-divider"></li>
+
+
+                                <li>
+                                    <a href="#">
+                                        <i class="menu-icon icon-receipt"></i><span style="font-size:20px;">Reports</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-user-check"></i><span>Enrollments</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptSessionWise">Session Wise</a></li>
+                                        <li><a href="~/AppReports/RptClassWise">Class Wise</a></li>
+                                        <li><a href="~/AppReports/RptSectionWise">Section Wise</a></li>
+                                        <li><a href="~/AppReports/RptCampusWise">Campus Wise</a></li>
+                                        <li><a href="~/AppReports/RptDateWise">Date Wise</a></li>
+                                        <li><a href="~/AppReports/RptBloodGrpWise">Blood Group Wise</a></li>
+                                    </ul>
+                                </li>
+
+                                
+                                
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-account_balance_wallet"></i><span>Received Fee</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptStdSesFee">Session Wise</a></li>
+                                        <li><a href="~/AppReports/RptStdClassFee">Class Wise</a></li>
+                                        <li><a href="~/AppReports/RptStdSecFee">Section Wise</a></li>
+                                        <li><a href="~/AppReports/RptStdTypeFee">Fee Type Wise</a></li>
+                                        <li><a href="~/AppReports/RptStdDateWiseFee">Date Wise Fee</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-file-empty"></i><span>Examination</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptExamClass">Class Wise</a></li>
+                                        <li><a href="~/AppReports/RptExamSec">Section Wise</a></li>
+                                        <li><a href="~/AppReports/RptExamSubject">Subject Wise</a></li>
+                                        <li><a href="~/AppReports/RptExamType">Exam Wise</a></li>
+                                        <li><a href="~/AppReports/RptStudentExam">Student Wise Exam Report</a></li>
+                                        <li><a href="~/AppReports/RptPassStudent">Pass Student Report</a></li>
+                                        <li><a href="~/AppReports/RptFailStudent">Fail Student Report</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-user-minus"></i><span>Attendance</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptDateWiseStdAtten">Date Wise Student Attendance Report</a></li>
+                                        <li><a href="~/AppReports/RptAttenSession">Session Wise Student Attendance Report</a></li>
+                                        <li><a href="~/AppReports/RptAttenStd">Student Wise Attendance Report</a></li>
+                                        <li><a href="~/AppReports/RptAttenTeacher">Teacher Attendance Report</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="~/StudentMainReport/Student_Performance"><i class="menu-icon icon-perm_media"></i><span>Performance Report</span></a>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-history"></i><span>Student History</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/StudentMainReport/MainReport">Current Session Student History</a></li>
+                                        <li><a href="~/StudentMainReport/AllSessionReport">All Current Session Student History</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        }
+                        else if (Convert.ToInt32(Session["RoleId"]) == 2)
+                        {
+                            <ul class="accordion-menu">
+
+                                <li>
+                                    <a href="~/Home/Index" class="hidden">
+                                        <i class="menu-icon icon-home4"></i><span>Dashboard</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-bookmarks"></i><span>Registration</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Student/StdReg">Student Registration</a></li>
+                                        <li><a href="~/Student/ShowStd">Student Information</a></li>
+                                        <li><a href="@Url.Action("PrintCard","IdentityCard", new { id = 1})">Print Student Identity Card</a></li>
+                                        <li><a href="~/IdentityCard/BulkIDCard">Print Bulk Student Identity Card</a></li>
+                                        <li><a href="~/Student/GetLatestRollNo">Latest Roll Number</a></li>
+                                        <li><a href="~/Employee/EmpRegistration"> Person Registration</a></li>
+                                        <li><a href="~/Employee/ShowEmpData">Person Information</a></li>
+                                        <li><a href="@Url.Action("PrintCard","IdentityCard", new { id = 2})">Print Person Identity Card</a></li>
+                                        <li><a href="~/Relation/AddRelation"><span>Make Relation</span></a></li>
+                                        <li><a href="~/Attendance/PersonReg">Attendance Registration</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-coin-dollar"></i><span>Direct Fees</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Student/DirectReceivedFee">Direct Received Fee</a></li>
+                                        <li><a href="~/Student/StudentFeeReport">Direct Fee Reports</a></li>
+                                        <li><a href="~/Student/DirectFeeVoucher">Download Direct Fee Voucher</a></li>
+                                        <li><a href="~/Student/BulkDirectFeeVoucher">Download Bulk Fee Voucher</a></li>
+                                        @*<li><a href="~/Student/DirectFeeReceipt">Download Direct Fee Receipt</a></li>*@
+                                    </ul>
+                                </li>
+
+                                @*<li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-account_balance"></i><span>Accounts</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+
+                                        <li><a href="~/Student/FeeVoucher">Download Voucher</a></li>
+                                        <li><a href="~/Student/BulkFeeVoucher">Bulk Fee Voucher</a></li>
+                                        <li><a href="~/Student/DownloadAllFeeVoucher">Download Receipt</a></li>
+                                        <li><a href="~/Student/BulkFeeReceipt">Download Bulk Fee Receipt</a></li>
+                                        <li><a href="~/Student/StudentFeeReport">Fee Reports</a></li>
+                                    </ul>
+                                </li>*@
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-pageview"></i><span>Examination</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Examination/StdObtMark">Class Obtain Marks</a></li>
+                                        <li><a href="~/Examination/StdSingleObt">Student Obtain Marks</a></li>
+                                        <li><a href="~/Examination/ShowStdMarks">Student Marks</a></li>
+                                        <li><a href="~/Examination/PromoteStudent">Promote Student</a></li>
+                                    </ul>
+                                </li>
+
+                               
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-settings"></i><span>Setting</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Home/ChangePassword">Change Password</a></li>
+                                    </ul>
+                                </li>
+
+
+                                <li>
+                                    <a href="~/Attendance/Mark" target="_blank"><i class="menu-icon icon-help_outline"></i><span>Attendance</span></a>
+                                </li>
+
+                                <li class="menu-divider"></li>
+
+
+                                <li>
+                                    <a href="#">
+                                        <i class="menu-icon icon-receipt"></i><span style="font-size:20px;">Reports</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-user-check"></i><span>Enrollments</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptSessionWise">Session Wise</a></li>
+                                        <li><a href="~/AppReports/RptClassWise">Class Wise</a></li>
+                                        <li><a href="~/AppReports/RptSectionWise">Section Wise</a></li>
+                                        <li><a href="~/AppReports/RptCampusWise">Campus Wise</a></li>
+                                        <li><a href="~/AppReports/RptDateWise">Date Wise</a></li>
+                                        <li><a href="~/AppReports/RptBloodGrpWise">Blood Group Wise</a></li>
+                                    </ul>
+                                </li>
+
+                             
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-account_balance_wallet"></i><span>Received Fee</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptStdSesFee">Session Wise</a></li>
+                                        <li><a href="~/AppReports/RptStdClassFee">Class Wise</a></li>
+                                        <li><a href="~/AppReports/RptStdSecFee">Section Wise</a></li>
+                                        <li><a href="~/AppReports/RptStdTypeFee">Fee Type Wise</a></li>
+                                        <li><a href="~/AppReports/RptStdDateWiseFee">Date Wise Fee</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-file-empty"></i><span>Examination</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptExamClass">Class Wise</a></li>
+                                        <li><a href="~/AppReports/RptExamSec">Section Wise</a></li>
+                                        <li><a href="~/AppReports/RptExamSubject">Subject Wise</a></li>
+                                        <li><a href="~/AppReports/RptExamType">Exam Wise</a></li>
+                                        <li><a href="~/AppReports/RptStudentExam">Student Wise Exam Report</a></li>
+                                    </ul>
+                                </li>
+
+                                
+
+                                
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-user-minus"></i><span>Attendance</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptDateWiseStdAtten">Date Wise Student Attendance Report</a></li>
+                                        <li><a href="~/AppReports/RptAttenSession">Session Wise Student Attendance Report</a></li>
+                                        <li><a href="~/AppReports/RptAttenStd">Student Wise Attendance Report</a></li>
+                                        <li><a href="~/AppReports/RptAttenTeacher">Teacher Attendance Report</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="~/StudentMainReport/MainReport"><i class="menu-icon icon-history"></i><span>Student History</span></a></li>
+
+
+                            </ul>
+                        }
+                        else if (Convert.ToInt32(Session["RoleId"]) == 3)
+                        {
+                            <ul class="accordion-menu">
+
+                                <li>
+                                    <a href="~/Home/Index">
+                                        <i class="menu-icon icon-home4"></i><span>Dashboard</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-school"></i><span>Accounts</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Panel/StdFeePkg">Fee Package</a></li>
+                                        <li><a href="~/Panel/StdPaidFee">Paid Fee </a></li>
+                                        <li><a href="~/Panel/StdUpcomingFee">Upcoming Fee </a></li>
+                                    </ul>
+                                </li>
+
+
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-extension"></i><span>Examination</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Panel/StdResult">Result</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="~/Panel/MyDocuments">
+                                        <i class="menu-icon icon-cloud-download"></i><span>Documents</span>
+                                    </a>
+                                </li>
+
+                                @*<li>
+                                        <a href="javascript:void(0);">
+                                            <i class="menu-icon icon-settings"></i><span>Attendance Report</span><i class="accordion-icon fa fa-angle-left"></i>
+                                        </a>
+                                        <ul class="sub-menu">
+                                            <li><a href="#">Weekly</a></li>
+                                            <li><a href="#">Mid Month</a></li>
+                                            <li><a href="#"> Monthly</a></li>
+                                        </ul>
+                                    </li>*@
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-settings"></i><span>Setting</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Home/ChangePassword">Change Password</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="menu-divider"></li>
+                            </ul>
+                        }
+                        else if (Convert.ToInt32(Session["RoleId"]) == 4)
+                        {
+                            <ul class="accordion-menu">
+
+                                <li>
+                                    <a href="~/Home/Index">
+                                        <i class="menu-icon icon-home4"></i><span>Dashboard</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-school"></i><span>My Kid's</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        @if (TempData["Kids"] != null)
+                                        {
+                                            foreach (var i in (List<SMS.Models.StdFeeDetail>)TempData["Kids"])
+                                            {
+                                                <li><a href="@Url.Action("ParentChildDetail","Panel", new { id = i.stdId})"> @i.Stdname</a></li>
+                                            }
+                                        }
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-school"></i><span>Accounts</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Panel/ParentFeePkg">Fee Package</a></li>
+                                        <li><a href="~/Panel/ParentPaidFee">Paid Fee </a></li>
+                                        <li><a href="#">Upcoming Fee </a></li>
+                                    </ul>
+                                </li>
+
+
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-extension"></i><span>Examination</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Panel/ParentViewResult">View Result</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-settings"></i><span>Setting</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Home/ChangePassword">Change Password</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="menu-divider"></li>
+                            </ul>
+                        }
+                        else if (Convert.ToInt32(Session["RoleId"]) == 5)
+                        {
+                            <ul class="accordion-menu">
+                                <li>
+                                    <a href="~/Home/Index">
+                                        <i class="menu-icon icon-home4"></i><span>Dashboard</span>
+                                    </a>
+                                </li>
+                                <li class="menu-divider"></li>
+                                <li>
+                                    <a href="#">
+                                        <span style="font-size:20px;">Your Classes</span>
+                                    </a>
+                                </li>
+
+                                @if (TempData["TeacherClasses"] != null)
+                                {
+                                    List<int> classList = new List<int>();
+                                    int sect = 0;
+                                    foreach (var cls in (List<SMS.Models.TeacherClass>)TempData["TeacherClasses"])
+                                    {
+
+                                        if (classList.Contains(cls.classId))
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            <li>
+                                                <a href="javascript:void(0);">
+                                                    <i class="menu-icon icon-school"></i><span>@cls.cls.classname</span><i class="accordion-icon fa fa-angle-left"></i>
+                                                </a>
+                                                <ul class="sub-menu">
+                                                    @if (TempData["TeacherClasses"] != null)
+                                                    {
+                                                        foreach (var sec in (List<SMS.Models.TeacherClass>)TempData["TeacherClasses"])
+                                                        {
+                                                            if (cls.classId == sec.classId && sect != sec.secId)
+                                                            {
+                                                                <li><a href="@Url.Action("ClassMarking","TeacherPanel", new { id = sec.TeachClassId})"> @sec.sec.secName</a></li>
+                                                                sect = sec.secId;
+                                                            }
+
+                                                        }
+                                                    }
+                                                </ul>
+                                            </li>
+                                            classList.Add(cls.classId);
+                                        }
+
+                                    }
+                                }
+                                <li class="menu-divider"></li>
+
+                                <li>
+                                    <a href="~/TeacherPanel/StdSingleObt">
+                                        <i class="menu-icon icon-user-check"></i><span>Student Obtain Marks</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="~/TeacherPanel/StdExamReport">
+                                        <i class="menu-icon icon-receipt"></i><span>Student Marks Report</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("UploadDoument","Home", new { From = 2 })">
+                                        <i class="menu-icon icon-download3"></i><span>Upload Documents</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-settings"></i><span>Setting</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Home/ChangePassword">Change Password</a></li>
+                                    </ul>
+                                </li>
+
+                            </ul>
+                        }
+
+                    </div>
+                }
+                else
+                {
+                    <div class="page-sidebar-menu">
+
+                        @if (Convert.ToInt32(Session["RoleId"]) == 10)
+                        {
+                            <ul class="accordion-menu">
+
+                                <li>
+                                    <a href="~/Home/Index" class="hidden">
+                                        <i class="menu-icon icon-home4"></i><span>Dashboard</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-user-tie"></i><span>Super Admin Panel</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Home/InsituteInfo"> Institute Information</a></li>
+                                        <li><a href="~/Home/Campus">Campus</a></li>
+                                        <li><a href="~/Home/Sessions">Sessions</a></li>
+                                        <li><a href="~/Home/Classes">Classes</a></li>
+                                        <li><a href="~/Home/Sections">Sections</a></li>
+                                        <li><a href="~/Home/FeeType">Fee Type</a></li>
+                                        <li><a href="~/Student/ClassFeePkg">Class Fee Package</a></li>
+                                        <li><a href="~/TeacherPanel/AssignTeacherToClass">Assign Teacher To Class </a></li>
+                                        <li><a href="~/Home/Subject">Subject</a></li>
+                                        <li><a href="~/Examination/ExamType">Create ExamType</a></li>
+                                        <li><a href="~/Examination/SubjectMarkType">Subject Mark Type</a></li>
+                                        <li><a href="~/StudentEducationalInfo/Degree">Degree</a></li>
+                                        <li><a href="~/StudentEducationalInfo/StudentInstitute">Student Previous Institute</a></li>
+                                        <li><a href="~/BankInfo/Bank">Bank</a></li>
+                                        <li><a href="~/BankInfo/BankInfo">Bank Information</a></li>
+                                        <li><a href="~/Attendance/AddAttendanceParam">Attendance Parameters</a></li>
+                                        <li><a href="~/Home/AddPassingMarks">Passing Percentage </a></li>
+                                        <li><a href="@Url.Action("UploadDoument","Home", new { From = 1 })">Upload Documents</a></li>
+                                        <li><a href="~/Student/LockedDownReceivedFee">Fee Entry Locked</a></li>
+                                        <li><a href="~/Panel/LogInDetail">Login Detail</a></li>
+                                        <li><a href="~/UploadStudentData/DataFile">Upload Bulk Student Data</a></li>
+                                        <li><a href="~/Home/Users">Users </a></li>
+                                        <li><a href="~/Home/City">City </a></li>
+                                        <li><a href="~/Home/Area">Location </a></li>
+                                        <li><a href="~/Home/Role">Role </a></li>
+                                        <li><a href="~/Home/Term">Term</a></li>
+                                    </ul>
+                                </li>
+
+
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-bookmarks"></i><span>Registration</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Student/StdReg">Student Registration</a></li>
+                                        <li><a href="~/Student/ShowStd">Student Information</a></li>
+                                        <li><a href="@Url.Action("PrintCard","IdentityCard", new { id = 1})">Print Student Identity Card</a></li>
+                                        <li><a href="~/IdentityCard/BulkIDCard">Print Bulk Student Identity Card</a></li>
+                                        <li><a href="~/Student/GetLatestRollNo">Latest Roll Number</a></li>
+                                        <li><a href="~/Employee/EmpRegistration"> Person Registration</a></li>
+                                        <li><a href="~/Employee/ShowEmpData">Person Information</a></li>
+                                        <li><a href="@Url.Action("PrintCard","IdentityCard", new { id = 2})">Print Person Identity Card</a></li>
+                                        <li><a href="~/Relation/AddRelation"><span>Make Relation</span></a></li>
+                                        <li><a href="~/Attendance/PersonReg">Attendance Registration</a></li>
+
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-account_balance"></i><span>Accounts</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Student/StdFeePkg">Student Fee Package </a></li>
+                                        <li><a href="~/Student/BulkStdFeePkg">Bulk Student Fee Package </a></li>
+                                        <li><a href="~/Student/ReceiveStdFee">Receive Student Fee</a></li>
+                                        <li><a href="~/Student/BulkReceiveStdFee">Bulk Student Receive Fee</a></li>
+                                        <li><a href="~/Student/FeeVoucher">Download Voucher</a></li>
+                                        <li><a href="~/Student/BulkFeeVoucher">Bulk Fee Voucher</a></li>
+                                        @*<li><a href="~/Student/MultipleFeeVoucher">Multiple Fee Voucher</a></li>*@
+                                        <li><a href="~/Student/DownloadAllFeeVoucher">Download Receipt</a></li>
+                                        <li><a href="~/Student/BulkFeeReceipt">Download Bulk Fee Receipt</a></li>
+                                        <li><a href="~/Student/StudentFeeReport">Fee Reports</a></li>
+                                    </ul>
+                                </li>
+
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-coin-dollar"></i><span>Direct Fees</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Student/DirectReceivedFee">Direct Received Fee</a></li>
+                                        <li><a href="~/Student/StudentFeeReport">Direct Fee Reports</a></li>
+                                        <li><a href="~/Student/DirectFeeVoucher">Download Direct Fee Voucher</a></li>
+                                        <li><a href="~/Student/DirectFeeReceipt">Download Direct Fee Receipt</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-pageview"></i><span>Examination</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Examination/StdObtMark">Class Obtain Marks</a></li>
+                                        <li><a href="~/Examination/StdSingleObt">Student Obtain Marks</a></li>
+                                        <li><a href="~/Examination/ShowStdMarks">Student Marks</a></li>
+                                        <li><a href="~/Examination/PromoteStudent">Promote Student</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-extension"></i><span>Extras</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Extras/ExtraFeeType">Create Extras</a></li>
+                                        <li><a href="~/Extras/StdExtraFeeType">Receive Extras</a></li>
+                                        <li><a href="~/Extras/BulkStdExtraFeeType">Receive Bulk Extras</a></li>
+                                        @*<li><a href="~/Extras/ExtraFeeReport">Extra Fee Report</a></li>*@
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-chat_bubble"></i><span>Short Courses</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/ShortCourse/AddShortCourseSubject">Add Short Course</a></li>
+                                        <li><a href="~/ShortCourse/AddStdToShortCourse">Receive Fee</a></li>
+                                    </ul>
+                                </li>
+
+
+
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-coin-dollar"></i><span>Finance</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/ExpenceAccount/AddAccountHeader">Add Header</a></li>
+                                        <li><a href="~/ExpenceAccount/AddAccountEntries">Add Finance Detail</a></li>
+                                        <li><a href="~/ExpenceAccount/AccountEntryLocked">Finance Entry Lock Down</a></li>
+                                        <li><a href="~/ExpenceAccount/ExpenseHeaderRpt"> Header Report</a></li>
+                                        <li><a href="~/ExpenceAccount/ExpenseSHeaderRpt">Sub Header Report</a></li>
+                                        <li><a href="~/ExpenceAccount/ExpenseSSHeaderRpt">Sub Sub Header Report</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-mail3"></i><span>SMS</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/SMS/ModuleName">Module Name</a></li>
+                                        <li><a href="~/SMS/SMSAllotment">Allotment</a></li>
+                                        <li><a href="~/SMS/SMSModule">SMS Module</a></li>
+                                        <li><a href="~/SMS/SentSMS">Sent SMS Detail</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-settings"></i><span>Setting</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Home/ChangePassword">Change Password</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-details"></i><span>Logs</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Logs/ReceivedFeeLogsByUser">Received Fee By User</a></li>
+                                        <li><a href="~/Logs/ReceivedFeeLogsByDate">Received Fee By Date</a></li>
+                                        <li><a href="~/Logs/ReceivedFeeLogsByStudent ">Received Fee By Student</a></li>
+                                        <li><a href="~/Logs/LoginLogs ">Login Logs</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="~/Attendance/Mark" target="_blank"><i class="menu-icon icon-help_outline"></i><span>Attendance</span></a>
+                                </li>
+
+                                <li class="menu-divider"></li>
+
+
+                                <li>
+                                    <a href="#">
+                                        <i class="menu-icon icon-receipt"></i><span style="font-size:20px;">Reports</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-user-check"></i><span>Enrollments</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptSessionWise">Session Wise</a></li>
+                                        <li><a href="~/AppReports/RptClassWise">Class Wise</a></li>
+                                        <li><a href="~/AppReports/RptSectionWise">Section Wise</a></li>
+                                        <li><a href="~/AppReports/RptCampusWise">Campus Wise</a></li>
+                                        <li><a href="~/AppReports/RptDateWise">Date Wise</a></li>
+                                        <li><a href="~/AppReports/RptBloodGrpWise">Blood Group Wise</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-account_box"></i><span>Class Fee Packages</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptClassFeePkg">Class Wise</a></li>
+                                        <li><a href="~/AppReports/RptSecFeePkg">Section Wise</a></li>
+                                        <li><a href="~/AppReports/RptFeeTypePkg">Fee type Wise</a></li>
+                                        <li><a href="~/AppReports/RptMaxDiscountFeePkg">Max Discount</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-account_balance_wallet"></i><span>Student Fee Pakage</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptStdFeePkgSes">Session Wise</a></li>
+                                        <li><a href="~/AppReports/RptStdFeePkgClass">Class Wise</a></li>
+                                        <li><a href="~/AppReports/RptStdFeePkgSec">Section Wise</a></li>
+                                        <li><a href="~/AppReports/RptStdFeePkgType">Fee type Wise</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-account_balance_wallet"></i><span>Received Fee</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptStdSesFee">Session Wise</a></li>
+                                        <li><a href="~/AppReports/RptStdClassFee">Class Wise</a></li>
+                                        <li><a href="~/AppReports/RptStdSecFee">Section Wise</a></li>
+                                        <li><a href="~/AppReports/RptStdTypeFee">Fee Type Wise</a></li>
+                                        <li><a href="~/AppReports/RptStdDateWiseFee">Date Wise Fee</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-extension"></i><span>Extras</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptExtraFeeSes">Session Wise</a></li>
+                                        <li><a href="~/AppReports/RptExtraFeeClass">Class Wise</a></li>
+                                        <li><a href="~/AppReports/RptExtraFeeType">Fee Wise</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-file-empty"></i><span>Examination</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptExamClass">Class Wise</a></li>
+                                        <li><a href="~/AppReports/RptExamSec">Section Wise</a></li>
+                                        <li><a href="~/AppReports/RptExamSubject">Subject Wise</a></li>
+                                        <li><a href="~/AppReports/RptExamType">Exam Wise</a></li>
+                                        <li><a href="~/AppReports/RptStudentExam">Student Wise Exam Report</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-assignment"></i><span>Short course</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptShortCourseAll">Short Course</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-user-minus"></i><span>Attendance</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptDateWiseStdAtten">Date Wise Student Attendance Report</a></li>
+                                        <li><a href="~/AppReports/RptAttenSession">Session Wise Student Attendance Report</a></li>
+                                        <li><a href="~/AppReports/RptAttenStd">Student Wise Attendance Report</a></li>
+                                        <li><a href="~/AppReports/RptAttenTeacher">Teacher Attendance Report</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="~/StudentMainReport/MainReport"><i class="menu-icon icon-history"></i><span>Student History</span></a></li>
+
+                            </ul>
+                        }
+                        else if (Convert.ToInt32(Session["RoleId"]) == 1)
+                        {
+                            <ul class="accordion-menu">
+
+                                <li>
+                                    <a href="~/Home/Index" class="hidden">
+                                        <i class="menu-icon icon-home4"></i><span>Dashboard</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-user-tie"></i><span>Admin Panel</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Home/InsituteInfo"> Institute Information</a></li>
+                                        <li><a href="~/Home/Campus">Campus</a></li>
+                                        <li><a href="~/Home/Sessions">Sessions</a></li>
+                                        <li><a href="~/Home/Classes">Classes</a></li>
+                                        <li><a href="~/Home/Sections">Sections</a></li>
+                                        <li><a href="~/Home/FeeType">Fee Type</a></li>
+                                        <li><a href="~/Student/ClassFeePkg">Class Fee Package</a></li>
+                                        <li><a href="~/TeacherPanel/AssignTeacherToClass">Assign Teacher To Class </a></li>
+                                        <li><a href="~/Home/Subject">Subject</a></li>
+                                        <li><a href="~/Examination/ExamType">Create ExamType</a></li>
+                                        <li><a href="~/Examination/SubjectMarkType">Subject Mark Type</a></li>
+                                        <li><a href="~/StudentEducationalInfo/Degree">Degree</a></li>
+                                        <li><a href="~/StudentEducationalInfo/StudentInstitute">Student Previous Institute</a></li>
+                                        <li><a href="~/BankInfo/Bank">Bank</a></li>
+                                        <li><a href="~/BankInfo/BankInfo">Bank Information</a></li>
+                                        <li><a href="~/Attendance/AddAttendanceParam">Attendance Parameters</a></li>
+                                        <li><a href="~/Home/AddPassingMarks">Passing Percentage </a></li>
+                                        <li><a href="@Url.Action("UploadDoument","Home", new { From = 1 })">Upload Documents</a></li>
+
+                                        <li><a href="~/Student/LockedDownReceivedFee">Fee Entry Locked</a></li>
+                                        <li><a href="~/Panel/LogInDetail">Login Detail</a></li>
+                                        <li><a href="~/Home/Users">Users </a></li>
+                                        <li><a href="~/Home/City">City </a></li>
+                                        <li><a href="~/Home/Area">Location </a></li>
+                                        <li><a href="~/Home/Role">Role </a></li>
+                                        <li><a href="~/Home/Term">Term</a></li>
+                                    </ul>
+                                </li>
+
+
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-bookmarks"></i><span>Registration</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Student/StdReg">Student Registration</a></li>
+                                        <li><a href="~/Student/ShowStd">Student Information</a></li>
+                                        <li><a href="@Url.Action("PrintCard","IdentityCard", new { id = 1})">Print Student Identity Card</a></li>
+                                        <li><a href="~/IdentityCard/BulkIDCard">Print Bulk Student Identity Card</a></li>
+                                        <li><a href="~/Student/GetLatestRollNo">Latest Roll Number</a></li>
+                                        <li><a href="~/Employee/EmpRegistration"> Person Registration</a></li>
+                                        <li><a href="~/Employee/ShowEmpData">Person Information</a></li>
+                                        <li><a href="@Url.Action("PrintCard","IdentityCard", new { id = 2})">Print Person Identity Card</a></li>
+                                        <li><a href="~/Relation/AddRelation"><span>Make Relation</span></a></li>
+                                        <li><a href="~/Attendance/PersonReg">Attendance Registration</a></li>
+
+                                    </ul>
+                                </li>
+
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-account_balance"></i><span>Accounts</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+
+                                        <li><a href="~/Student/StdFeePkg">Student Fee Package </a></li>
+                                        <li><a href="~/Student/BulkStdFeePkg">Bulk Student Fee Package </a></li>
+                                        <li><a href="~/Student/ReceiveStdFee">Receive Student Fee</a></li>
+                                        <li><a href="~/Student/BulkReceiveStdFee">Bulk Student Receive Fee</a></li>
+                                        <li><a href="~/Student/FeeVoucher">Download Voucher</a></li>
+                                        <li><a href="~/Student/BulkFeeVoucher">Bulk Fee Voucher</a></li>
+                                        <li><a href="~/Student/DownloadAllFeeVoucher">Download Receipt</a></li>
+                                        <li><a href="~/Student/BulkFeeReceipt">Download Bulk Fee Receipt</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-pageview"></i><span>Examination</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+
+                                        <li><a href="~/Examination/StdObtMark">Class Obtain Marks</a></li>
+                                        <li><a href="~/Examination/StdSingleObt">Student Obtain Marks</a></li>
+                                        <li><a href="~/Examination/ShowStdMarks">Student Marks</a></li>
+                                        <li><a href="~/Examination/PromoteStudent">Promote Student</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-extension"></i><span>Extras</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Extras/ExtraFeeType">Create Extras</a></li>
+                                        <li><a href="~/Extras/StdExtraFeeType">Receive Extras</a></li>
+                                        <li><a href="~/Extras/BulkStdExtraFeeType">Receive Bulk Extras</a></li>
+                                        @*<li><a href="~/Extras/ExtraFeeReport">Extra Fee Report</a></li>*@
+                                    </ul>
+                                </li>
+
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-coin-dollar"></i><span>Direct Fees</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Student/DirectReceivedFee">Direct Received Fee</a></li>
+                                        <li><a href="~/Student/StudentFeeReport">Direct Fee Reports</a></li>
+                                        <li><a href="~/Student/DirectFeeVoucher">Download Direct Fee Voucher</a></li>
+                                        <li><a href="~/Student/DirectFeeReceipt">Download Direct Fee Receipt</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-chat_bubble"></i><span>Short Courses</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/ShortCourse/AddShortCourseSubject">Add Short Course</a></li>
+                                        <li><a href="~/ShortCourse/AddStdToShortCourse">Receive Fee</a></li>
+                                    </ul>
+                                </li>
+
+
+
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-coin-dollar"></i><span>Finance</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/ExpenceAccount/AddAccountHeader">Add Header</a></li>
+                                        <li><a href="~/ExpenceAccount/AddAccountEntries">Add Finance Detail</a></li>
+                                        <li><a href="~/ExpenceAccount/AccountEntryLocked">Finance Entry Lock Down</a></li>
+                                        <li><a href="~/ExpenceAccount/ExpenseHeaderRpt"> Header Report</a></li>
+                                        <li><a href="~/ExpenceAccount/ExpenseSHeaderRpt">Sub Header Report</a></li>
+                                        <li><a href="~/ExpenceAccount/ExpenseSSHeaderRpt">Sub Sub Header Report</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-mail3"></i><span>SMS</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/SMS/SMSAllotment">Allotment</a></li>
+                                        <li><a href="~/SMS/SMSModule">SMS Module</a></li>
+                                        <li><a href="~/SMS/CustomSMS">Custom SMS</a></li>
+                                        <li><a href="~/SMS/SentSMS">Sent SMS Detail</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-mail3"></i><span>Upload Student Data</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/UploadStudentData/DownloadFile">Download Sample File</a></li>
+                                        <li><a href="~/UploadStudentData/UploadDataFile">Upload Data File</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-settings"></i><span>Setting</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Home/ChangePassword">Change Password</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-details"></i><span>Logs</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Logs/ReceivedFeeLogsByUser">Received Fee By User</a></li>
+                                        <li><a href="~/Logs/ReceivedFeeLogsByDate">Received Fee By Date</a></li>
+                                        <li><a href="~/Logs/ReceivedFeeLogsByStudent ">Received Fee By Student</a></li>
+                                        <li><a href="~/Logs/LoginLogs ">Login Logs</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="~/Attendance/Mark" target="_blank"><i class="menu-icon icon-help_outline"></i><span>Attendance</span></a>
+                                </li>
+
+                                <li class="menu-divider"></li>
+
+
+                                <li>
+                                    <a href="#">
+                                        <i class="menu-icon icon-receipt"></i><span style="font-size:20px;">Reports</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-user-check"></i><span>Enrollments</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptSessionWise">Session Wise</a></li>
+                                        <li><a href="~/AppReports/RptClassWise">Class Wise</a></li>
+                                        <li><a href="~/AppReports/RptSectionWise">Section Wise</a></li>
+                                        <li><a href="~/AppReports/RptCampusWise">Campus Wise</a></li>
+                                        <li><a href="~/AppReports/RptDateWise">Date Wise</a></li>
+                                        <li><a href="~/AppReports/RptBloodGrpWise">Blood Group Wise</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-account_box"></i><span>Class Fee Packages</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptClassFeePkg">Class Wise</a></li>
+                                        <li><a href="~/AppReports/RptSecFeePkg">Section Wise</a></li>
+                                        <li><a href="~/AppReports/RptFeeTypePkg">Fee type Wise</a></li>
+                                        <li><a href="~/AppReports/RptMaxDiscountFeePkg">Max Discount</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-account_balance_wallet"></i><span>Student Fee Pakage</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptStdFeePkgSes">Session Wise</a></li>
+                                        <li><a href="~/AppReports/RptStdFeePkgClass">Class Wise</a></li>
+                                        <li><a href="~/AppReports/RptStdFeePkgSec">Section Wise</a></li>
+                                        <li><a href="~/AppReports/RptStdFeePkgType">Fee type Wise</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-account_balance_wallet"></i><span>Received Fee</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptStdSesFee">Session Wise</a></li>
+                                        <li><a href="~/AppReports/RptStdClassFee">Class Wise</a></li>
+                                        <li><a href="~/AppReports/RptStdSecFee">Section Wise</a></li>
+                                        <li><a href="~/AppReports/RptStdTypeFee">Fee Type Wise</a></li>
+                                        <li><a href="~/AppReports/RptStdDateWiseFee">Date Wise Fee</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-file-empty"></i><span>Examination</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptExamClass">Class Wise</a></li>
+                                        <li><a href="~/AppReports/RptExamSec">Section Wise</a></li>
+                                        <li><a href="~/AppReports/RptExamSubject">Subject Wise</a></li>
+                                        <li><a href="~/AppReports/RptExamType">Exam Wise</a></li>
+                                        <li><a href="~/AppReports/RptStudentExam">Student Wise Exam Report</a></li>
+                                        <li><a href="~/AppReports/RptPassStudent">Pass Student Report</a></li>
+                                        <li><a href="~/AppReports/RptFailStudent">Fail Student Report</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-extension"></i><span>Extras</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptExtraFeeSes">Session Wise</a></li>
+                                        <li><a href="~/AppReports/RptExtraFeeClass">Class Wise</a></li>
+                                        <li><a href="~/AppReports/RptExtraFeeType">Fee Wise</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-assignment"></i><span>Short course</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptShortCourseAll">Short Course</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-user-minus"></i><span>Attendance</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptDateWiseStdAtten">Date Wise Student Attendance Report</a></li>
+                                        <li><a href="~/AppReports/RptAttenSession">Session Wise Student Attendance Report</a></li>
+                                        <li><a href="~/AppReports/RptAttenStd">Student Wise Attendance Report</a></li>
+                                        <li><a href="~/AppReports/RptAttenTeacher">Teacher Attendance Report</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="~/StudentMainReport/Student_Performance"><i class="menu-icon icon-perm_media"></i><span>Performance Report</span></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-history"></i><span>Student History</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/StudentMainReport/MainReport">Current Session Student History</a></li>
+                                        <li><a href="~/StudentMainReport/AllSessionReport">All Current Session Student History</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        }
+                        else if (Convert.ToInt32(Session["RoleId"]) == 2)
+                        {
+                            <ul class="accordion-menu">
+
+                                <li>
+                                    <a href="~/Home/Index" class="hidden">
+                                        <i class="menu-icon icon-home4"></i><span>Dashboard</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-bookmarks"></i><span>Registration</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Student/StdReg">Student Registration</a></li>
+                                        <li><a href="~/Student/ShowStd">Student Information</a></li>
+                                        <li><a href="@Url.Action("PrintCard","IdentityCard", new { id = 1})">Print Student Identity Card</a></li>
+                                        <li><a href="~/IdentityCard/BulkIDCard">Print Bulk Student Identity Card</a></li>
+                                        <li><a href="~/Student/GetLatestRollNo">Latest Roll Number</a></li>
+                                        <li><a href="~/Employee/EmpRegistration"> Person Registration</a></li>
+                                        <li><a href="~/Employee/ShowEmpData">Person Information</a></li>
+                                        <li><a href="@Url.Action("PrintCard","IdentityCard", new { id = 2})">Print Person Identity Card</a></li>
+                                        <li><a href="~/Relation/AddRelation"><span>Make Relation</span></a></li>
+                                        <li><a href="~/Attendance/PersonReg">Attendance Registration</a></li>
+
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-account_balance"></i><span>Accounts</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Student/StdFeePkg">Student Fee Package </a></li>
+                                        <li><a href="~/Student/BulkStdFeePkg">Bulk Student Fee Package </a></li>
+                                        <li><a href="~/Student/ReceiveStdFee">Receive Student Fee</a></li>
+                                        <li><a href="~/Student/BulkReceiveStdFee">Bulk Student Receive Fee</a></li>
+                                        <li><a href="~/Student/FeeVoucher">Download Voucher</a></li>
+                                        <li><a href="~/Student/BulkFeeVoucher">Bulk Fee Voucher</a></li>
+                                        <li><a href="~/Student/DownloadAllFeeVoucher">Download Receipt</a></li>
+                                        <li><a href="~/Student/BulkFeeReceipt">Download Bulk Fee Receipt</a></li>
+                                        <li><a href="~/Student/StudentFeeReport">Fee Reports</a></li>
+                                    </ul>
+                                </li>
+                                @*<li>
+                                        <a href="javascript:void(0);">
+                                            <i class="menu-icon icon-coin-dollar"></i><span>Direct Fees</span><i class="accordion-icon fa fa-angle-left"></i>
+                                        </a>
+                                        <ul class="sub-menu">
+                                            <li><a href="~/Student/DirectReceivedFee">Direct Received Fee</a></li>
+                                            <li><a href="~/Student/StudentFeeReport">Direct Fee Reports</a></li>
+                                            <li><a href="~/Student/DirectFeeVoucher">Download Direct Fee Voucher</a></li>
+                                            <li><a href="~/Student/DirectFeeReceipt">Download Direct Fee Receipt</a></li>
+                                        </ul>
+                                    </li>*@
+
+
+
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-pageview"></i><span>Examination</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Examination/StdObtMark">Class Obtain Marks</a></li>
+                                        <li><a href="~/Examination/StdSingleObt">Student Obtain Marks</a></li>
+                                        <li><a href="~/Examination/ShowStdMarks">Student Marks</a></li>
+                                        <li><a href="~/Examination/PromoteStudent">Promote Student</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-extension"></i><span>Extras</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Extras/ExtraFeeType">Create Extras</a></li>
+                                        <li><a href="~/Extras/StdExtraFeeType">Receive Extras</a></li>
+                                        <li><a href="~/Extras/BulkStdExtraFeeType">Receive Bulk Extras</a></li>
+                                        @*<li><a href="~/Extras/ExtraFeeReport">Extra Fee Report</a></li>*@
+                                    </ul>
+                                </li>
+
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-chat_bubble"></i><span>Short Courses</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/ShortCourse/AddShortCourseSubject">Add Short Course</a></li>
+                                        <li><a href="~/ShortCourse/AddStdToShortCourse">Receive Fee</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-coin-dollar"></i><span>Finance</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/ExpenceAccount/AddAccountHeader">Add Header</a></li>
+                                        <li><a href="~/ExpenceAccount/AddAccountEntries">Add Finance Detail</a></li>
+                                        <li><a href="~/ExpenceAccount/AccountEntryLocked">Finance Entry Lock Down</a></li>
+                                        <li><a href="~/ExpenceAccount/ExpenseHeaderRpt"> Header Report</a></li>
+                                        <li><a href="~/ExpenceAccount/ExpenseSHeaderRpt">Sub Header Report</a></li>
+                                        <li><a href="~/ExpenceAccount/ExpenseSSHeaderRpt">Sub Sub Header Report</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-settings"></i><span>Setting</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Home/ChangePassword">Change Password</a></li>
+                                    </ul>
+                                </li>
+
+
+                                <li>
+                                    <a href="~/Attendance/Mark" target="_blank"><i class="menu-icon icon-help_outline"></i><span>Attendance</span></a>
+                                </li>
+
+                                <li class="menu-divider"></li>
+
+
+                                <li>
+                                    <a href="#">
+                                        <i class="menu-icon icon-receipt"></i><span style="font-size:20px;">Reports</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-user-check"></i><span>Enrollments</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptSessionWise">Session Wise</a></li>
+                                        <li><a href="~/AppReports/RptClassWise">Class Wise</a></li>
+                                        <li><a href="~/AppReports/RptSectionWise">Section Wise</a></li>
+                                        <li><a href="~/AppReports/RptCampusWise">Campus Wise</a></li>
+                                        <li><a href="~/AppReports/RptDateWise">Date Wise</a></li>
+                                        <li><a href="~/AppReports/RptBloodGrpWise">Blood Group Wise</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-account_box"></i><span>Class Fee Packages</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptClassFeePkg">Class Wise</a></li>
+                                        <li><a href="~/AppReports/RptSecFeePkg">Section Wise</a></li>
+                                        <li><a href="~/AppReports/RptFeeTypePkg">Fee type Wise</a></li>
+                                        <li><a href="~/AppReports/RptMaxDiscountFeePkg">Max Discount</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-account_balance_wallet"></i><span>Student Fee Pakage</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptStdFeePkgSes">Session Wise</a></li>
+                                        <li><a href="~/AppReports/RptStdFeePkgClass">Class Wise</a></li>
+                                        <li><a href="~/AppReports/RptStdFeePkgSec">Section Wise</a></li>
+                                        <li><a href="~/AppReports/RptStdFeePkgType">Fee type Wise</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-account_balance_wallet"></i><span>Received Fee</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptStdSesFee">Session Wise</a></li>
+                                        <li><a href="~/AppReports/RptStdClassFee">Class Wise</a></li>
+                                        <li><a href="~/AppReports/RptStdSecFee">Section Wise</a></li>
+                                        <li><a href="~/AppReports/RptStdTypeFee">Fee Type Wise</a></li>
+                                        <li><a href="~/AppReports/RptStdDateWiseFee">Date Wise Fee</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-file-empty"></i><span>Examination</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptExamClass">Class Wise</a></li>
+                                        <li><a href="~/AppReports/RptExamSec">Section Wise</a></li>
+                                        <li><a href="~/AppReports/RptExamSubject">Subject Wise</a></li>
+                                        <li><a href="~/AppReports/RptExamType">Exam Wise</a></li>
+                                        <li><a href="~/AppReports/RptStudentExam">Student Wise Exam Report</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-extension"></i><span>Extras</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptExtraFeeSes">Session Wise</a></li>
+                                        <li><a href="~/AppReports/RptExtraFeeClass">Class Wise</a></li>
+                                        <li><a href="~/AppReports/RptExtraFeeType">Fee Wise</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-assignment"></i><span>Short course</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptShortCourseAll">Short Course</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-user-minus"></i><span>Attendance</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/AppReports/RptDateWiseStdAtten">Date Wise Student Attendance Report</a></li>
+                                        <li><a href="~/AppReports/RptAttenSession">Session Wise Student Attendance Report</a></li>
+                                        <li><a href="~/AppReports/RptAttenStd">Student Wise Attendance Report</a></li>
+                                        <li><a href="~/AppReports/RptAttenTeacher">Teacher Attendance Report</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="~/StudentMainReport/MainReport"><i class="menu-icon icon-history"></i><span>Student History</span></a></li>
+
+
+                            </ul>
+                        }
+                        else if (Convert.ToInt32(Session["RoleId"]) == 3)
+                        {
+                            <ul class="accordion-menu">
+
+                                <li>
+                                    <a href="~/Home/Index">
+                                        <i class="menu-icon icon-home4"></i><span>Dashboard</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-school"></i><span>Accounts</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Panel/StdFeePkg">Fee Package</a></li>
+                                        <li><a href="~/Panel/StdPaidFee">Paid Fee </a></li>
+                                        <li><a href="~/Panel/StdUpcomingFee">Upcoming Fee </a></li>
+                                    </ul>
+                                </li>
+
+
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-extension"></i><span>Examination</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Panel/StdResult">Result</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="~/Panel/MyDocuments">
+                                        <i class="menu-icon icon-cloud-download"></i><span>Documents</span>
+                                    </a>
+                                </li>
+
+                                @*<li>
+                                        <a href="javascript:void(0);">
+                                            <i class="menu-icon icon-settings"></i><span>Attendance Report</span><i class="accordion-icon fa fa-angle-left"></i>
+                                        </a>
+                                        <ul class="sub-menu">
+                                            <li><a href="#">Weekly</a></li>
+                                            <li><a href="#">Mid Month</a></li>
+                                            <li><a href="#"> Monthly</a></li>
+                                        </ul>
+                                    </li>*@
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-settings"></i><span>Setting</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Home/ChangePassword">Change Password</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="menu-divider"></li>
+                            </ul>
+                        }
+                        else if (Convert.ToInt32(Session["RoleId"]) == 4)
+                        {
+                            <ul class="accordion-menu">
+
+                                <li>
+                                    <a href="~/Home/Index">
+                                        <i class="menu-icon icon-home4"></i><span>Dashboard</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-school"></i><span>My Kid's</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        @if (TempData["Kids"] != null)
+                                        {
+                                            foreach (var i in (List<SMS.Models.StdFeeDetail>)TempData["Kids"])
+                                            {
+                                                <li><a href="@Url.Action("ParentChildDetail","Panel", new { id = i.stdId})"> @i.Stdname</a></li>
+                                            }
+                                        }
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-school"></i><span>Accounts</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Panel/ParentFeePkg">Fee Package</a></li>
+                                        <li><a href="~/Panel/ParentPaidFee">Paid Fee </a></li>
+                                        <li><a href="#">Upcoming Fee </a></li>
+                                    </ul>
+                                </li>
+
+
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-extension"></i><span>Examination</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Panel/ParentViewResult">View Result</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-settings"></i><span>Setting</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Home/ChangePassword">Change Password</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="menu-divider"></li>
+                            </ul>
+                        }
+                        else if (Convert.ToInt32(Session["RoleId"]) == 5)
+                        {
+                            <ul class="accordion-menu">
+                                <li>
+                                    <a href="~/Home/Index">
+                                        <i class="menu-icon icon-home4"></i><span>Dashboard</span>
+                                    </a>
+                                </li>
+                                <li class="menu-divider"></li>
+                                <li>
+                                    <a href="#">
+                                        <span style="font-size:20px;">Your Classes</span>
+                                    </a>
+                                </li>
+
+                                @if (TempData["TeacherClasses"] != null)
+                                {
+                                    List<int> classList = new List<int>();
+                                    int sect = 0;
+                                    foreach (var cls in (List<SMS.Models.TeacherClass>)TempData["TeacherClasses"])
+                                    {
+
+                                        if (classList.Contains(cls.classId))
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            <li>
+                                                <a href="javascript:void(0);">
+                                                    <i class="menu-icon icon-school"></i><span>@cls.cls.classname</span><i class="accordion-icon fa fa-angle-left"></i>
+                                                </a>
+                                                <ul class="sub-menu">
+                                                    @if (TempData["TeacherClasses"] != null)
+                                                    {
+                                                        foreach (var sec in (List<SMS.Models.TeacherClass>)TempData["TeacherClasses"])
+                                                        {
+                                                            if (cls.classId == sec.classId && sect != sec.secId)
+                                                            {
+                                                                <li><a href="@Url.Action("ClassMarking","TeacherPanel", new { id = sec.TeachClassId})"> @sec.sec.secName</a></li>
+                                                                sect = sec.secId;
+                                                            }
+
+                                                        }
+                                                    }
+                                                </ul>
+                                            </li>
+                                            classList.Add(cls.classId);
+                                        }
+
+                                    }
+                                }
+                                <li class="menu-divider"></li>
+
+                                <li>
+                                    <a href="~/TeacherPanel/StdSingleObt">
+                                        <i class="menu-icon icon-user-check"></i><span>Student Obtain Marks</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="~/TeacherPanel/StdExamReport">
+                                        <i class="menu-icon icon-receipt"></i><span>Student Marks Report</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("UploadDoument","Home", new { From = 2 })">
+                                        <i class="menu-icon icon-download3"></i><span>Upload Documents</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="menu-icon icon-settings"></i><span>Setting</span><i class="accordion-icon fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="~/Home/ChangePassword">Change Password</a></li>
+                                    </ul>
+                                </li>
+
+                            </ul>
+                        }
+
+                    </div>
+                }
+
+            </div>
+        </div><!-- /Page Sidebar -->
+        <!-- Page Content -->
+        <div class="page-content">
+            <!-- Page Header -->
+            <div class="page-header">
+
+                <nav class="navbar navbar-default">
+                    <div class="container-fluid">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <div class="navbar-header">
+                            <div class="logo-sm">
+                                <a href="javascript:void(0)" id="sidebar-toggle-button"><i class="fa fa-bars"></i></a>
+                                <a class="logo-box" href="~/Home/Index"><span></span></a>
+                            </div>
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                <i class="fa fa-angle-down"></i>
+                            </button>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav">
+                                <li><a href="javascript:void(0)" id="collapsed-sidebar-toggle-button"><i class="fa fa-bars"></i></a></li>
+                                <li><a href="javascript:void(0)" id="toggle-fullscreen"><i class="fa fa-expand"></i></a></li>
+                            </ul>
+                            <ul class="nav navbar-nav navbar-right">
+                                @if (Session["InsName"] != null)
+                                {
+                                    <li class="dropdown user-dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="~/Images/avatar.jpg" alt="" class="img-circle"></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="/Home/ChangePassword">Account Settings</a></li>
+                                            <li><a href="/Home/Logout">Log Out</a></li>
+                                        </ul>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li><a href="~/Home/LogInUser" class="right-sidebar-toggle"><i class="fa fa-sign-in"></i></a></li>
+                                }
+
+                            </ul>
+                        </div><!-- /.navbar-collapse -->
+                    </div><!-- /.container-fluid -->
+                </nav>
+            </div><!-- /Page Header -->
+            <!-- Page Inner -->
+            @RenderBody()<!-- /Page Inner -->
+        </div><!-- /Page Content -->
+    </div><!-- /Page Container -->
+    <!-- Javascripts -->
+    <script src="../../assets/plugins/jquery/jquery-3.1.0.min.js"></script>
+    <script src="../../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="../../assets/plugins/uniform/js/jquery.uniform.standalone.js"></script>
+    <script src="../../assets/plugins/switchery/switchery.min.js"></script>
+
+    <script src="../../assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="../../assets/plugins/d3/d3.min.js"></script>
+    <script src="../../assets/plugins/nvd3/nv.d3.min.js"></script>
+    <script src="../../assets/js/space.min.js"></script>
+    <script src="../../assets/js/pages/dashboard.js"></script>
+    <script src="../../assets/plugins/datatables/js/jquery.datatables.min.js"></script>
+    <script src="../../assets/js/pages/table-data.js"></script>
+    <script src="~/Scripts/Progressbar.js"></script>
+
+
+
+
+
+</body>
+
+</html>

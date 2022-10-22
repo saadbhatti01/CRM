@@ -1,0 +1,230 @@
+﻿
+@{
+    ViewBag.Title = "BulkReceiveStdFee";
+}
+
+
+
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">
+            Receive Bulk Student Fee
+            <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-sm" style="float: right;">Read Me</a>
+        </h3>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">  Usefull Info</h4>
+                    </div>
+                    <div class="modal-body">
+                        Receive whole class Fee in one go .
+                        Select Session -----> Select Class -------> Select Section -------> Click "SHOW" button, by clicking this button class fee package will be populated -------> Enter paid amount -----> Enter Paid Date ------> Click receive fee.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["SuccessMessage"].
+            </div>
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-body">
+                        <div id="rootwizard">
+                            <div class="row m-b-lg">
+                                <div class="col-md-6">
+                                    <form action="~/Student/BulkReceiveStdFee" method="post">
+                                        <div class="row">
+                                            <div class="form-group col-md-4">
+                                                <label for="exampleInputName2">Session</label>
+                                                @Html.DropDownList("sesId", (SelectList)ViewData["Session"], "Select Session", new { @class = "form-control", required = "required" })
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="exampleInputName2">Class</label>
+                                                @Html.DropDownList("classId", (SelectList)ViewData["Class"], "Select Class", new { @class = "form-control", required = "required" })
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="exampleInputName2">Section</label>
+                                                @Html.DropDownList("secId", (SelectList)ViewData["Section"], "Select Section", new { @class = "form-control", required = "required", @id = "secId" })
+                                            </div>
+
+                                            <div class="form-group col-md-12">
+                                                <input class="btn btn-primary" name="submitButton" type="submit" value="Show">
+                                            </div>
+                                        </div>
+                                    
+                                    <div class="row">
+                                        @if (ViewData["FeeType"] != null)
+                                        {
+                                            <div class="form-group col-md-6">
+                                                <label for="ageRangeField">Fee Type</label>
+                                                @Html.DropDownList("feeTypeId", (SelectList)ViewData["FeeType"], "--Select Fee Type--", new { required = "required", @class = "form-control" })
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="nameField">Paid Amount</label>
+                                            <input type="number" placeholder="0" class="form-control" min="0" name="FeeAmt">
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="nameField">Paid Date</label>
+                                            <input type="text" class="form-control date-picker" name="FeeDate" value="">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <input type="text" name="sfpRemarks" placeholder="Remarks" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <input type="submit" value="Receive Fee" class="btn btn-primary" />
+                                        </div>
+                                    </div>
+                                    </form>
+                                    <hr />
+                                </div>
+                                <div class="col-md-6">
+                                    @if (TempData["FeeDetail"] != null)
+                                    {
+                                        <div class="panel-heading clearfix">
+                                            <h2 class="panel-title"><b>Class Fee Packages</b></h2>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Fee Type</th>
+                                                        <th>Fee Amount(/Rs.)</th>
+                                                        <th>Max Discount</th>
+                                                    </tr>
+                                                </thead>
+                                                @foreach (var item in (List<SMS.Models.StdFeeDetail>)TempData["FeeDetail"])
+                                                {
+                                                    <tbody>
+
+                                                        <tr>
+                                                            <td>@item.FeeName</td>
+                                                            <td>@item.FeeAmt</td>
+                                                            <td>@item.Dis%</td>
+                                                        </tr>
+                                                    </tbody>
+                                                }
+
+                                            </table>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="row m-b-lg">
+                                <div class="col-md-6">
+                                    @if (TempData["NfPaid"] != null)
+                                    {
+                                        <div class="panel-heading clearfix">
+                                            <h2 class="panel-title"><b>Different Fee Package Student whom fee not paid</b></h2>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Roll#</th>
+                                                        <th>Class</th>
+                                                        <th>Section</th>
+                                                        <th>Fee</th>
+                                                        <th>Amount(Rs.)</th>
+                                                    </tr>
+                                                </thead>
+                                                @foreach (var item in (List<SMS.Models.StdFeeDetail>)TempData["NfPaid"])
+                                                {
+                                                    <tbody>
+
+                                                        <tr>
+                                                            <td>@item.Stdname</td>
+                                                            <td>@item.RollNo</td>
+                                                            <td>@item.Class</td>
+                                                            <td>@item.Sec</td>
+                                                            <td>@item.FeeName</td>
+                                                            <td>@item.FeeAmt</td>
+                                                        </tr>
+                                                    </tbody>
+                                                }
+
+                                            </table>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="col-md-6">
+                                    @if (TempData["nfpStd"] != null)
+                                    {
+                                        <div class="panel-heading clearfix">
+                                            <h2 class="panel-title"><b>Please Create Fee Package Of these Students</b></h2>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Roll#</th>
+                                                        <th>Class</th>
+                                                        <th>Section</th>
+                                                    </tr>
+                                                </thead>
+                                                @foreach (var item in (List<SMS.Models.Student>)TempData["nfpStd"])
+                                                {
+                                                    <tbody>
+
+                                                        <tr>
+                                                            <td>@item.pr.perName</td>
+                                                            <td>@item.stdRollNo</td>
+                                                            <td>@item.cls.classname</td>
+                                                            <td>@item.sec.secName</td>
+                                                        </tr>
+                                                    </tbody>
+                                                }
+
+                                            </table>
+                                        </div>
+                                    }
+                                </div>
+                               
+                            </div> 
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div><!-- Row -->
+    </div><!-- Main Wrapper -->
+
+</div>

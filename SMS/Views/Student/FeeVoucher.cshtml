@@ -1,0 +1,293 @@
+﻿
+@{
+    ViewBag.Title = "FeeVoucher";
+}
+
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">
+            Print Student Fee Voucher
+            <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-sm" style="float: right;">Read Me</a>
+        </h3>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">  Usefull Info</h4>
+                    </div>
+                    <div class="modal-body">
+                        You can download fee voucher of singal student from here.
+                        Enter roll no -------> Voucher due date --------> Select month --------> select year --------> Click show --------> Click print
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+        </div>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["SuccessMessage"].
+            </div>
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-body">
+                        <div id="rootwizard">
+                            <div class="row m-b-lg">
+                                <div class="col-md-6">
+                                    <form action="~/Student/FeeVoucher" method="post">
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label for="exampleInputName2">Enter Roll Number</label>
+                                                <input type="text" class="form-control" name="RollNo" required>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="exampleInputName2">Voucher Due Date</label>
+                                                <input type="text" class="form-control date-picker" name="Due" required>
+                                            </div>
+
+                                            <div class="form-group col-md-6">
+                                                <label for="ageRangeField">Select Month</label>
+                                                <select id="month" name="month" class="form-control">
+                                                    <option value="1">January</option>
+                                                    <option value="2">Fabruary</option>
+                                                    <option value="3">March</option>
+                                                    <option value="4">April</option>
+                                                    <option value="5">May</option>
+                                                    <option value="6">June</option>
+                                                    <option value="7">July</option>
+                                                    <option value="8">August</option>
+                                                    <option value="9">September</option>
+                                                    <option value="10">October</option>
+                                                    <option value="11">November</option>
+                                                    <option value="12">December</option>
+                                                </select>
+
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="ageRangeField">Select Year</label>
+                                                <select id="year" name="Year" class="form-control">
+                                                    <option value="2015">2015</option>
+                                                    <option value="2016">2016</option>
+                                                    <option value="2017">2017</option>
+                                                    <option value="2018">2018</option>
+                                                    <option value="2019">2019</option>
+                                                    <option value="2020">2020</option>
+                                                    <option value="2021">2021</option>
+                                                    <option value="2022">2022</option>
+                                                    <option value="2024">2024</option>
+                                                    <option value="2024">2024</option>
+                                                    <option value="2025">2025</option>
+                                                    <option value="2026">2026</option>
+                                                    <option value="2027">2027</option>
+                                                    <option value="2028">2028</option>
+                                                    <option value="2029">2029</option>
+                                                    <option value="2030">2030</option>
+                                                    <option value="2031">2031</option>
+                                                    <option value="2032">2032</option>
+                                                    <option value="2033">2033</option>
+                                                    <option value="2034">2034</option>
+                                                    <option value="2035">2035</option>
+                                                    <option value="2036">2036</option>
+                                                    <option value="2037">2037</option>
+                                                    <option value="2038">2038</option>
+                                                    <option value="2039">2039</option>
+                                                    <option value="2040">2040</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-12">
+
+                                                <input class="btn btn-primary" name="submitButton" type="submit" value="Show">
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <hr />
+
+
+                                </div>
+                                <div class="col-md-6">
+                                    @if (TempData["AllVoucher"] != null)
+                                    {
+                                        <div class="panel-heading clearfix">
+                                            <h2 class="panel-title">
+                                                <b>Student Fee Voucher</b>
+                                                @*<a title="Print All Fee Voucher " class="counter" target="_blank" href="@Url.Action("DownloadVoucher", new { RollNo = ViewBag.RollNo, Month = ViewBag.Month, Year = ViewBag.Year, Due = @ViewBag.Due })">
+                                                    <i class="fa fa-print" style="font-size:30px; float:right"></i>
+                                                </a>*@
+                                            </h2>
+                                            @if (ViewData["Bank"] != null)
+                                            {
+                                                @Html.DropDownList("BankId", (SelectList)ViewData["Bank"], "Select Bank", new { @id = "BankId", @class = "form-control", style = "width: 190px; float:left" })
+                                            }
+
+                                        </div>
+                                        <br />
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Check</th>
+                                                        <th>Fee</th>
+                                                        <th>Status</th>
+                                                        <th>Amount</th>
+                                                        @*<th>Action</th>*@
+                                                    </tr>
+                                                </thead>
+                                                @foreach (var i in (IEnumerable<SMS.Models.StdFeePkg>)TempData["AllVoucher"])
+                                                {
+                                                    <tbody>
+                                                        <tr class="Data">
+                                                            <td><input type="checkbox" id="check" class="checkthis" /></td>
+                                                            <td hidden>
+                                                                <input type="hidden" id="SfpId" value="@i.sfpId" />
+                                                                <input type="hidden" id="Month" value="@ViewBag.Month" />
+                                                                <input type="hidden" id="Year" value="@ViewBag.Year" />
+                                                                <input type="hidden" id="DueDate" value="@ViewBag.Due" />
+                                                            </td>
+                                                            <td>@i.ft.feeTypeName</td>
+                                                            <td>UnPaid</td>
+                                                            <td>@Convert.ToDecimal(i.sfpAmt).ToString("#,##0.00")  </td>
+                                                            @*<td>
+                                                                <a title="Print Voucher" class="counter" target="_blank" href="@Url.Action("DownloadVoucher", new { id = i.sfpId, Due = @ViewBag.Due })">
+                                                                    <i class="fa fa-print" style="font-size:30px;"></i>
+                                                                </a>
+                                                            </td>*@
+                                                        </tr>
+                                                    </tbody>
+                                                }
+
+                                            </table>
+                                            <input type="button" class="btn btn-default" id="btnOn" formtarget="_blank" value="Print Selected Vouchers" />
+                                        </div>
+                                    }
+                                </div>
+
+
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="hidden" id="Voucher">
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div><!-- Row -->
+    </div><!-- Main Wrapper -->
+
+</div>
+<script src="../../assets/plugins/jquery/jquery-3.1.0.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+        $("#btnOn").hide();
+    });
+</script>
+
+
+<script type="text/javascript">
+    $(function () {
+        $(".table").on('change', '.checkthis', function () {
+            if ($(this).prop('checked')) {
+
+                $("#btnOn").show();
+            }
+            //else {
+
+            //    $("#btnOn").hide();
+            //}
+
+        });
+    });
+
+</script>
+
+<script type="text/javascript">
+
+    function getAllDetails() {
+        var data = [];
+
+        $('tr.Data').each(function () {
+            if ($(this).find("#check").prop("checked") == true) {
+                var Id = $(this).find("#SfpId").val();
+
+            }
+                var alldata = {
+                'sfpId': Id,
+                }
+            data.push(alldata);
+
+        });
+        return data;
+    }
+    $("#btnOn").click(function (e) {
+        var data = JSON.stringify(getAllDetails());
+        var month = $("#Month").val();
+        var year = $("#Year").val();
+        var Due = $("#DueDate").val();
+        var bank = $("#BankId").val();
+        if (bank == 0) {
+            bank = "0000";
+        }
+        var dataObject = JSON.stringify({
+            Month: month,
+            Year: year,
+            DueDate: Due,
+            BankId: bank,
+        });
+
+        $.ajax({
+            url: "@Url.Action("_GenVoucher", "Student")",
+            type: "Post",
+            datatype: 'json',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify({ 'SfpIds': data, 'Data': dataObject }),
+
+            success: function (data) {
+                {
+
+                    $("#Voucher").html(data);
+                   
+                    //window.open("/Student/DownloadVoucher")
+                    
+                  
+                }
+            },
+            error: function (e) {
+                alert("Error " + e + "");
+
+            }
+        });
+
+    });
+</script>

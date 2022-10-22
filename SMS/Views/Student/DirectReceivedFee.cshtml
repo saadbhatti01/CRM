@@ -1,0 +1,223 @@
+﻿@model SMS.Models.Student
+@{
+    ViewBag.Title = "DirectReceivedFee";
+}
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">Direct Student Received Fee</h3>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["SuccessMessage"].
+            </div>
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-body">
+                        <div id="rootwizard">
+                            <div class="row m-b-lg">
+                                <div class="col-md-12">
+                                    <form action="~/Student/DirectReceivedFee" method="post" id="ClassForm">
+                                        <div class="row">
+                                            <div class="form-group col-md-3">
+                                                <label for="exampleInputName">Campus</label>
+                                                @Html.DropDownList("camId", (SelectList)ViewData["Campus"], new { @class = "form-control", required = "required" })
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="exampleInputName">Session</label>
+                                                @Html.DropDownList("sesId", (SelectList)ViewData["Session"], new { @class = "form-control", required = "required" })
+                                            </div>
+                                            <div class="form-group  col-md-3">
+                                                <label for="exampleInputName2">Class</label>
+                                                @Html.DropDownList("classId", (SelectList)ViewData["Class"], "--Select Class--", new { @class = "form-control", required = "required" })
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="exampleInputEmail">Section</label>
+                                                @Html.DropDownList("secId", (SelectList)ViewData["Section"], "--Select Section--", new { @class = "form-control", required = "required", @id = "secId" })
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="ageRangeField">Fee Type</label>
+                                                @Html.DropDownList("feeTypeId", (SelectList)ViewData["FeeType"], new { @Name = "fee", required = "required", @class = "form-control" })
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="ageRangeField">Fee Month</label>
+                                                <input type="text" placeholder="" name="feeMonth" id="TotalMarks" class="date-picker form-control" required>
+                                                <input type="hidden" placeholder="" id="feeMonth" value="@ViewBag.FeeMonth">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="ageRangeField">Remarks</label>
+                                                <input type="text" placeholder="" name="Remarks" value="@ViewBag.Remarks" id="Remarks" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-3">
+                                                <input class="btn btn-primary" type="submit" value="Load Students Info" name="submitButton">
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+
+                            </div>
+                            <hr />
+                            <div class="col-md-12">
+                                @if (TempData["StdData"] != null)
+                                {
+                                    int Sr = 1;
+                                    <div class="panel-heading clearfix">
+                                        <h2 class="panel-title"><b>Enter Student Direct Fee</b></h2>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Sr.</th>
+                                                    <th>Roll No</th>
+                                                    <th>Student Name</th>
+                                                    <th>Fee Amount</th>
+                                                </tr>
+                                            </thead>
+                                            @foreach (var item in (IEnumerable<SMS.Models.Student>)TempData["StdData"])
+                                            {
+                                                <tbody>
+                                                    <tr class="StdData">
+                                                        <td>@Sr</td>
+                                                        <td>
+                                                            @item.stdRollNo
+                                                            <input type="hidden" id="StdId" value="@item.stdId" />
+                                                        </td>
+                                                        <td>
+                                                            @item.pr.perName
+                                                            <input type="hidden" id="name" value="@item.pr.perName" />
+                                                        </td>
+                                                        <td hidden>
+                                                            <input type="hidden" id="CampId" value="@item.camId" />
+                                                        </td>
+                                                        <td hidden>
+                                                            <input type="hidden" id="SesId" value="@item.sesId" />
+                                                        </td>
+                                                        <td hidden>
+                                                            <input type="hidden" id="ClassId" value="@item.classId" />
+                                                        </td>
+                                                        <td hidden>
+                                                            <input type="hidden" id="SecId" value="@item.secId" />
+                                                        </td>
+                                                        <td hidden>
+                                                            <input type="hidden" id="FeeId" value="@ViewBag.FeeId" />
+                                                        </td>
+                                                        <td>
+                                                            <input type='number' name="" id="amount" value="" class="form-control"
+                                                                   style="width: 6em" maxlength="6" min="0" oninput="validity.valid||(value='');" />
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                                Sr = Sr + 1;
+                                            }
+
+                                        </table>
+                                    </div>
+                                    <input class="btn btn-primary" type="submit" id="AjaxClick" value="Submit" />
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div><!-- Row -->
+        </div><!-- Main Wrapper -->
+
+    </div>
+</div>
+
+<script src="../../assets/plugins/jquery/jquery-3.1.0.min.js"></script>
+
+<script type="text/javascript">
+
+    function getAllDetails() {
+        var data = [];
+
+        $('tr.StdData').each(function () {
+            var Id = $(this).find("#StdId").val();
+            //var CampId = $(this).find("#CampId").val();
+            var SesId = $(this).find("#SesId").val();
+            var ClassId = $(this).find("#ClassId").val();
+            var SecId = $(this).find("#SecId").val();
+            var FeeId = $(this).find("#FeeId").val();
+            var Amount = $(this).find("#amount").val();
+            if (Amount == null || Amount == "") {
+                Amount = 0000;
+            }
+            var alldata = {
+                'stdId': Id,
+                'sesId': SesId,
+                'classId': ClassId,
+                'secId': SecId,
+                'feeTypeId': FeeId,
+                'feeAmount': Amount,
+                }
+            data.push(alldata);
+
+        });
+        return data;
+    }
+    $("#AjaxClick").click(function (e) {
+        var r = confirm("Are you sure you want to submit?");
+        if (r == false) {
+            return false;
+        }
+        else { 
+        var remarks = $("#Remarks").val();
+        var feeMonth = $("#feeMonth").val();
+
+        var data = JSON.stringify(getAllDetails());
+        var dataObject = JSON.stringify({
+            FeeMonth: feeMonth,
+            Remarks: remarks
+        });
+
+        $.ajax({
+            url: "@Url.Action("ReceivedDirectFee", "Student")",
+            type: "Post",
+            datatype: 'json',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify({ 'Data': dataObject, 'AccDetails': data }),
+
+            success: function (response) {
+                {
+                    alert(response.responseText);
+                    location.reload(true);
+                }
+            },
+            error: function (e) {
+                alert("Error " + e + "");
+
+            }
+        });
+
+    }
+
+    });
+</script>
+
+

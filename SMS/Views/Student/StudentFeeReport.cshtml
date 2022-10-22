@@ -1,0 +1,186 @@
+﻿
+@{
+    ViewBag.Title = "StudentFeeReport";
+}
+
+<div class="page-inner">
+    <div class="page-title">
+        <h3 class="breadcrumb-header">Student Fee Status </h3>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Oh snap! @TempData["Error"].
+            </div>
+        }
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Success! @TempData["SuccessMessage"].
+            </div>
+        }
+        @if (TempData["Info"] != null)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert" style="margin-bottom:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Info! @TempData["Info"].
+            </div>
+        }
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-body">
+                        <div id="rootwizard">
+                            <div class="row m-b-lg">
+                                <div class="col-md-12">
+                                    <form action="~/Student/ClassFeePkg" method="post">
+                                        <div class="row">
+                                            <div class="form-group col-md-3">
+                                                <label for="exampleInputName">Session</label>
+                                                @Html.DropDownList("sesId", (SelectList)ViewData["Session"], "--Select Session--", new { @class = "form-control", required = "required" })
+                                            </div>
+                                            <div class="form-group  col-md-3">
+                                                <label for="exampleInputName2">Class</label>
+                                                @Html.DropDownList("classId", (SelectList)ViewData["Class"], "--Select Class--", new { @class = "form-control", required = "required" })
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="exampleInputEmail">Section</label>
+                                                @Html.DropDownList("secId", (SelectList)ViewData["Section"], "--Select Section--", new { @class = "form-control", required = "required", @id = "secId" })
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="ageRangeField">Fee Type</label>
+                                                @Html.DropDownList("feeTypeId", (SelectList)ViewData["FeeType"], "--Select Fee Type--", new { required = "required", @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-3">
+                                                <label for="ageRangeField">Fee Status</label>
+                                                <select id="Status" class="form-control">
+                                                    <option value="Paid">Paid</option>
+                                                    <option value="UnPaid">UnPaid</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="ageRangeField">Select Month</label>
+                                                <input type="hidden" id="mon" value="@TempData["Month"]" />
+                                                <input type="hidden" id="yea" value="@TempData["Year"]" />
+                                                <select id="month" name="month" class="form-control">
+                                                    <option value="1">January</option>
+                                                    <option value="2">Fabruary</option>
+                                                    <option value="3">March</option>
+                                                    <option value="4">April</option>
+                                                    <option value="5">May</option>
+                                                    <option value="6">June</option>
+                                                    <option value="7">July</option>
+                                                    <option value="8">August</option>
+                                                    <option value="9">September</option>
+                                                    <option value="10">October</option>
+                                                    <option value="11">November</option>
+                                                    <option value="12">December</option>
+                                                </select>
+
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="ageRangeField">Select Year</label>
+                                                <select id="year" name="Year" class="form-control">
+                                                    <option value="2015">2015</option>
+                                                    <option value="2016">2016</option>
+                                                    <option value="2017">2017</option>
+                                                    <option value="2018">2018</option>
+                                                    <option value="2019">2019</option>
+                                                    <option value="2020">2020</option>
+                                                    <option value="2021">2021</option>
+                                                    <option value="2022">2022</option>
+                                                    <option value="2024">2024</option>
+                                                    <option value="2024">2024</option>
+                                                    <option value="2025">2025</option>
+                                                    <option value="2026">2026</option>
+                                                    <option value="2027">2027</option>
+                                                    <option value="2028">2028</option>
+                                                    <option value="2029">2029</option>
+                                                    <option value="2030">2030</option>
+                                                    <option value="2031">2031</option>
+                                                    <option value="2032">2032</option>
+                                                    <option value="2033">2033</option>
+                                                    <option value="2034">2034</option>
+                                                    <option value="2035">2035</option>
+                                                    <option value="2036">2036</option>
+                                                    <option value="2037">2037</option>
+                                                    <option value="2038">2038</option>
+                                                    <option value="2039">2039</option>
+                                                    <option value="2040">2040</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+
+                                            <div class="form-group col-md-12">
+                                                <input class="btn btn-primary" type="button" id="show" value="Show">
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-12">
+                            <div id="FeeDetail">
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div><!-- Row -->
+    </div><!-- Main Wrapper -->
+
+</div>
+
+<script src="../../assets/plugins/jquery/jquery-3.1.0.min.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#show").click(function (event) {
+            var status = $("#Status").val();
+            var secId = $("#secId").val();
+            var sesId = $("#sesId").val();
+            var classId = $("#classId").val();
+            var month = $("#month").val();
+            var year = $("#year").val();
+            var Fee = $("#feeTypeId").val();
+            if (Fee != "" || Fee != null) {
+                $.ajax({
+                    url: "@Url.Action("_GetFeeStatus", "Student")",
+                    data: { SesId: sesId, SecId: secId, ClassId: classId, fType: Fee, Status: status, Month: month, Year: year },
+                    type: "Get",
+                    dataType: "html",
+                    success: function (data) {
+                        //Whatever result you have got from your controller with html partial view replace with a specific html.
+                        // HTML DOM replace
+                        $("#FeeDetail").html(data);
+                    }
+                });
+            } else {
+
+            }
+
+        });
+    });
+</script>
+
+
+
+
+
+
